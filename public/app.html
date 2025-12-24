@@ -99,8 +99,12 @@
       <div class="cta-premium">
         <h3>💎 Consulta Especial</h3>
         <p>¿Dudas sobre amor, carrera o dinero?</p>
-        <button class="btn-premium">Preguntar - $0.99</button>
+        <button class="btn-premium" onclick="alert('Próximamente')">Preguntar - Próximamente</button>
       </div>
+      
+      <button class="btn-share" onclick="shareResults()">
+        📤 Compartir mi energía de hoy
+      </button>
     </main>
     
     <footer>
@@ -149,6 +153,32 @@
     document.getElementById('lucky-color').textContent = result.color;
     document.getElementById('lucky-number').textContent = result.number;
     document.getElementById('power-hour').textContent = result.hour;
+    
+    // Share function
+    function shareResults() {
+      const text = `🔮 Mi energía hoy según ASTRO3:
+
+☀️ ${western.name} (${western.element})
+🐉 ${chinese.animal} de ${chinese.element}
+👼 Arcángel ${archangel.name}
+
+✅ Mis acciones de hoy:
+1. ${result.actions[0]}
+2. ${result.actions[1]}
+3. ${result.actions[2]}
+
+🎨 Color: ${result.color} | 🔢 Número: ${result.number}
+
+Descubre tu guía cósmica: https://astro3-lovat.vercel.app`;
+
+      if (navigator.share) {
+        navigator.share({ title: 'Mi energía ASTRO3', text: text });
+      } else {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('¡Copiado! Pégalo en WhatsApp o donde quieras.');
+        });
+      }
+    }
   </script>
 </body>
 </html>
