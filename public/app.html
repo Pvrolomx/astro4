@@ -145,7 +145,7 @@
     document.getElementById('archangel').textContent = `${archangel.name} - ${archangel.domain}`;
     
     // Generate and display actions
-    const result = generateActions(western, chinese, archangel);
+    const result = generateActions(western, chinese, archangel, birthDate);
     document.getElementById('action-1').textContent = result.actions[0];
     document.getElementById('action-2').textContent = result.actions[1];
     document.getElementById('action-3').textContent = result.actions[2];

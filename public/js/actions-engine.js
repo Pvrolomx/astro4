@@ -43,7 +43,7 @@ const warnings = [
 const colors = ["Rojo", "Naranja", "Amarillo", "Verde", "Azul", "Índigo", "Violeta", "Blanco", "Dorado"];
 const hours = ["6-8 AM", "8-10 AM", "10-12 PM", "12-2 PM", "2-4 PM", "4-6 PM", "6-8 PM", "8-10 PM"];
 
-function generateActions(western, chinese, archangel) {
+function generateActions(western, chinese, archangel, birthDate) {
   const themes = [];
   
   // Basado en elemento occidental
@@ -59,27 +59,45 @@ function generateActions(western, chinese, archangel) {
   if (chinese.element === "Metal") themes.push("carrera", "finanzas");
   if (chinese.element === "Agua") themes.push("espiritual", "creatividad");
   
-  // Seleccionar 3 acciones únicas
-  const uniqueThemes = [...new Set(themes)].slice(0, 3);
-  while (uniqueThemes.length < 3) {
-    const randomTheme = Object.keys(actionTemplates)[Math.floor(Math.random() * 6)];
-    if (!uniqueThemes.includes(randomTheme)) uniqueThemes.push(randomTheme);
-  }
-  
-  const actions = uniqueThemes.map(theme => {
-    const pool = actionTemplates[theme];
-    return pool[Math.floor(Math.random() * pool.length)];
-  });
-  
-  // Generar extras basados en fecha
+  // Seed unico basado en fecha de nacimiento + fecha actual
   const today = new Date();
   const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const birthDay = birthDate.getDate();
+  const birthMonth = birthDate.getMonth();
+  const birthYear = birthDate.getFullYear();
+  const uniqueSeed = (dayOfYear * 31 + birthDay * 13 + birthMonth * 7 + birthYear) % 1000;
+  
+  // Funcion pseudo-random con seed
+  function seededRandom(seed, index) {
+    const x = Math.sin(seed + index) * 10000;
+    return x - Math.floor(x);
+  }
+  
+  // Seleccionar 3 temas unicos
+  const allThemes = Object.keys(actionTemplates);
+  const uniqueThemes = [...new Set(themes)].slice(0, 3);
+  let seedIndex = 0;
+  while (uniqueThemes.length < 3) {
+    const idx = Math.floor(seededRandom(uniqueSeed, seedIndex++) * allThemes.length);
+    const theme = allThemes[idx];
+    if (!uniqueThemes.includes(theme)) uniqueThemes.push(theme);
+  }
+  
+  // Seleccionar acciones unicas por tema
+  const actions = uniqueThemes.map((theme, i) => {
+    const pool = actionTemplates[theme];
+    const idx = Math.floor(seededRandom(uniqueSeed, seedIndex++ + i * 10) * pool.length);
+    return pool[idx];
+  });
+  
+  // Warning unico
+  const warningIdx = Math.floor(seededRandom(uniqueSeed, 100) * warnings.length);
   
   return {
     actions: actions,
-    warning: warnings[dayOfYear % warnings.length],
-    color: archangel ? archangel.color : colors[dayOfYear % colors.length],
-    number: (dayOfYear % 9) + 1,
-    hour: hours[dayOfYear % hours.length]
+    warning: warnings[warningIdx],
+    color: archangel ? archangel.color : colors[Math.floor(seededRandom(uniqueSeed, 200) * colors.length)],
+    number: Math.floor(seededRandom(uniqueSeed, 300) * 9) + 1,
+    hour: hours[Math.floor(seededRandom(uniqueSeed, 400) * hours.length)]
   };
 }
