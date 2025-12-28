@@ -108,8 +108,22 @@
         personalDay: numerology.personalDay
       };
       
-      var promptText = 'Contexto: ' + perfil.western + ', ' + perfil.chinese + ', ' + perfil.vedic + ', Vida ' + perfil.lifeNumber + ', Dia ' + perfil.personalDay + '. PREGUNTA: ' + pregunta + '. Responde DIRECTO, consejos ESPECIFICOS, maximo 120 palabras, lenguaje neutro.';
-      
+      var promptText = 'ERES UN GUIA ESPIRITUAL SABIO que domina 4 tradiciones ancestrales. ' +
+        'PERFIL COMPLETO DEL CONSULTANTE: ' +
+        '1) OCCIDENTAL (' + perfil.western + '): Este signo revela su personalidad externa y emociones. ' +
+        '2) CHINO (' + perfil.chinese + '): Este animal y elemento rigen sus ciclos de vida y destino. ' +
+        '3) VEDICO (' + perfil.vedic + '): Esta constelacion lunar gobierna su alma y proposito espiritual. ' +
+        '4) NUMEROLOGIA (Vida ' + perfil.lifeNumber + ' - ' + perfil.lifeMeaning + ', Dia Personal ' + perfil.personalDay + '): Estos numeros definen su mision de vida y la energia de HOY. ' +
+        'PREGUNTA DEL CONSULTANTE: ' + pregunta + '. ' +
+        'INSTRUCCIONES ESTRICTAS: ' +
+        '1. Responde DIRECTAMENTE a la pregunta - si preguntan SI o NO, responde claramente primero. ' +
+        '2. INTEGRA al menos 2 de los 4 sistemas en tu respuesta, explicando COMO se relacionan con la pregunta. ' +
+        '3. Da UN consejo CONCRETO y ACCIONABLE para HOY. ' +
+        '4. Usa lenguaje en segunda persona (tu, ti). ' +
+        '5. NO repitas la explicacion del perfil. ' +
+        '6. Maximo 150 palabras. ' +
+        '7. Habla como un mentor sabio y cercano, no como horoscopo de revista. ' +
+        'EJEMPLO DE BUENA RESPUESTA: Si preguntan sobre dinero y son Escorpio con Numero 11, di algo como: Tu intensidad de Escorpio combinada con tu Numero Maestro 11 te da intuicion financiera poderosa. HOY, con energia ' + perfil.personalDay + ', es buen momento para [accion concreta]. Confia en tu instinto pero verifica los numeros.';      
       try {
         var response = await fetch('/api/consulta', {
           method: 'POST',
