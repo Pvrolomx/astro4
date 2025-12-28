@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASTRO4 - Tu Día</title>
+  <title>ASTRO4 - Tu Energía de Hoy</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0a0a1a">
@@ -11,6 +11,7 @@
 <body>
   <div class="container">
     <header>
+      <a href="index.html" style="text-decoration:none;color:white;position:absolute;left:15px;top:15px;font-size:1.5rem;">← Inicio</a>
       <h1>🔮 ASTRO4</h1>
     </header>
     
@@ -28,8 +29,7 @@
             <div class="label">Occidental</div>
             <div class="value" id="western-sign">...</div>
           </div>
-        </div>
-        <div class="energy-item">
+        </div>        <div class="energy-item">
           <span class="icon">🐉</span>
           <div>
             <div class="label">Chino</div>
@@ -57,8 +57,7 @@
         <div class="action-item">
           <span class="action-number">1</span>
           <span id="action-1">...</span>
-        </div>
-        <div class="action-item">
+        </div>        <div class="action-item">
           <span class="action-number">2</span>
           <span id="action-2">...</span>
         </div>
@@ -87,8 +86,7 @@
             <span class="icon">🔢</span>
             <div class="label">Número</div>
             <div class="value" id="lucky-number">...</div>
-          </div>
-          <div class="extra-item">
+          </div>          <div class="extra-item">
             <span class="icon">⏰</span>
             <div class="label">Hora de Poder</div>
             <div class="value" id="power-hour">...</div>
@@ -97,11 +95,13 @@
       </section>
       
       <div class="cta-premium">
-        <h3>💎 Consulta Especial</h3>
+        <h3>💎 Consulta con Tu Guía</h3>
         <p>¿Dudas sobre amor, carrera o dinero?</p>
-        <textarea id="pregunta" placeholder="Escribe tu pregunta sobre amor, dinero, carrera..." rows="3" style="width:100%;padding:10px;border-radius:8px;margin:10px 0;background:#1a1a2e;color:white;border:1px solid #4a4a6a;"></textarea>
-        <button class="btn-premium" onclick="enviarConsulta()">✨ Consultar</button>
-        <div id="respuesta-consulta" style="margin-top:15px;padding:15px;background:rgba(255,255,255,0.1);border-radius:8px;display:none;"></div>      </div>
+        <textarea id="pregunta" placeholder="Escribe tu pregunta..." rows="3" style="width:100%;padding:10px;border-radius:8px;margin:10px 0;background:#1a1a2e;color:white;border:1px solid #4a4a6a;"></textarea>
+        <button class="btn-premium" id="btn-consultar" onclick="enviarConsulta()">✨ Consultar</button>
+        <div id="respuesta-consulta" style="margin-top:15px;padding:15px;background:rgba(255,255,255,0.1);border-radius:8px;display:none;"></div>
+        <button id="btn-otra" onclick="otraConsulta()" style="display:none;margin-top:10px;padding:10px 20px;background:#4a4a6a;color:white;border:none;border-radius:8px;cursor:pointer;">🔄 Otra Consulta</button>
+      </div>
       
       <button class="btn-share" onclick="shareResults()">
         📤 Compartir mi energía de hoy
@@ -109,14 +109,13 @@
     </main>
     
     <footer>
-      <p>🐝 Hecho por Colmena - 24/12/2025</p>
+      <p>🐝 Hecho por Colmena - 28/12/2025</p>
+      <p style="font-size:0.7rem;opacity:0.7;margin-top:5px;"><a href="#" onclick="alert('ASTRO4 usa tu fecha de nacimiento solo para calcular tu perfil astrológico. No almacenamos ni compartimos tus datos personales. Toda la información se guarda localmente en tu dispositivo.')" style="color:inherit;">Aviso de Privacidad</a></p>
     </footer>
-  </div>
-  
+  </div>  
   <script src="js/astro-calc.js"></script>
   <script src="js/actions-engine.js"></script>
   <script>
-    // Check if user has data
     const nombre = localStorage.getItem('astro3_nombre');
     const fechaStr = localStorage.getItem('astro3_fecha');
     
@@ -124,39 +123,38 @@
       window.location.href = 'index.html';
     }
     
-    // Display user name
     document.getElementById('user-name').textContent = nombre;
     
-    // Display today's date
     const today = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('today-date').textContent = today.toLocaleDateString('es-MX', options);
     
-    // Calculate all signs
     const birthDate = new Date(fechaStr);
     const western = getWesternSign(birthDate);
     const chinese = getChineseZodiac(birthDate.getFullYear());
     const vedic = getNakshatra(birthDate);
     const numerology = getNumerology(birthDate, nombre);
     
-    // Display signs
-    document.getElementById('western-sign').textContent = `${western.name} (${western.element})`;
-    document.getElementById('chinese-sign').textContent = `${chinese.animal} de ${chinese.element}`;
+    document.getElementById('western-sign').textContent = western.name + ' (' + western.element + ')';
+    document.getElementById('chinese-sign').textContent = chinese.animal + ' de ' + chinese.element;
     document.getElementById('vedic-sign').textContent = vedic.nakshatra;
-    document.getElementById('numerology').textContent = `${numerology.lifeNumber} - ${numerology.lifeMeaning.keyword}`;
+    document.getElementById('numerology').textContent = 'Vida ' + numerology.lifeNumber + ' - ' + numerology.lifeMeaning.keyword;
     
-    // Generate and display actions
     const result = generateActions(western, chinese, numerology, birthDate);
     document.getElementById('action-1').textContent = result.actions[0];
     document.getElementById('action-2').textContent = result.actions[1];
-    document.getElementById('action-3').textContent = result.actions[2];
-    document.getElementById('warning-text').textContent = result.warning;
+    document.getElementById('action-3').textContent = result.actions[2];    document.getElementById('warning-text').textContent = result.warning;
     document.getElementById('lucky-color').textContent = result.color;
-    document.getElementById('lucky-number').textContent = result.number;
+    document.getElementById('lucky-number').textContent = numerology.personalDay;
     document.getElementById('power-hour').textContent = result.hour;
     
-    // Share function
-
+    function otraConsulta() {
+      document.getElementById('pregunta').value = '';
+      document.getElementById('respuesta-consulta').style.display = 'none';
+      document.getElementById('btn-otra').style.display = 'none';
+      document.getElementById('btn-consultar').style.display = 'inline-block';
+    }
+    
     async function enviarConsulta() {
       const pregunta = document.getElementById('pregunta').value;
       if (!pregunta.trim()) {
@@ -164,7 +162,7 @@
         return;
       }
       
-      const btn = document.querySelector('.btn-premium');
+      const btn = document.getElementById('btn-consultar');
       btn.textContent = '🔮 Consultando...';
       btn.disabled = true;
       
@@ -177,19 +175,30 @@
         soulNumber: numerology.soulNumber,
         destinyNumber: numerology.destinyNumber,
         personalDay: numerology.personalDay
-      };
-      
+      };      
+      const promptText = 'Eres un guía espiritual sabio. El usuario tiene este perfil completo: ' +
+        'Signo Occidental: ' + perfil.western + ' (elemento que rige emociones y personalidad). ' +
+        'Signo Chino: ' + perfil.chinese + ' (elemento que rige ciclos y destino). ' +
+        'Nakshatra Védico: ' + perfil.vedic + ' (constelación lunar que rige el alma). ' +
+        'Número de Vida: ' + perfil.lifeNumber + ' (' + perfil.lifeMeaning + ') - su propósito de vida. ' +
+        'Número del Alma: ' + perfil.soulNumber + ' - sus deseos internos. ' +
+        'Número de Destino: ' + perfil.destinyNumber + ' - hacia dónde va. ' +
+        'Día Personal Hoy: ' + perfil.personalDay + ' - energía del día. ' +
+        'INTEGRA todos estos elementos en tu respuesta, explicando cómo se complementan. ' +
+        'Pregunta del usuario: ' + pregunta + '. ' +
+        'Responde como guía espiritual (NO astrólogo), en español, máximo 200 palabras, con consejos prácticos.';
+
       try {
         const response = await fetch('/api/consulta', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt: 'Eres un astrologo experto. Perfil del usuario: Signo ' + perfil.western + ', Chino ' + perfil.chinese + ', Vedico ' + perfil.vedic + ', Numero de Vida ' + perfil.lifeNumber + ' (' + perfil.lifeMeaning + '), Dia Personal ' + perfil.personalDay + '. Pregunta: ' + pregunta + '. Responde mistico pero practico, en español, max 150 palabras.'
-          })
+          body: JSON.stringify({ prompt: promptText })
         });
         const data = await response.json();
         document.getElementById('respuesta-consulta').style.display = 'block';
-        document.getElementById('respuesta-consulta').innerHTML = '<strong>🔮 Tu Respuesta:</strong><br><br>' + data.respuesta;
+        document.getElementById('respuesta-consulta').innerHTML = '<strong>🔮 Tu Guía dice:</strong><br><br>' + data.respuesta;
+        document.getElementById('btn-otra').style.display = 'inline-block';
+        btn.style.display = 'none';
       } catch (error) {
         document.getElementById('respuesta-consulta').style.display = 'block';
         document.getElementById('respuesta-consulta').innerHTML = '❌ Error al consultar. Intenta de nuevo.';
@@ -197,26 +206,24 @@
       
       btn.textContent = '✨ Consultar';
       btn.disabled = false;
-    }    function shareResults() {
-      const text = `🔮 Mi energía hoy según ASTRO4:
-
-☀️ ${western.name} (${western.element})
-🐉 ${chinese.animal} de ${chinese.element}
-🔢 Arcángel ${numerology.lifeNumber}
-
-✅ Mis acciones de hoy:
-1. ${result.actions[0]}
-2. ${result.actions[1]}
-3. ${result.actions[2]}
-
-🎨 Color: ${result.color} | 🔢 Número: ${result.number}
-
-Descubre tu guía cósmica: https://astro3-lovat.vercel.app`;
+    }
+    function shareResults() {
+      const text = '🔮 Mi energía hoy según ASTRO4:\n\n' +
+        '☀️ ' + western.name + ' (' + western.element + ')\n' +
+        '🐉 ' + chinese.animal + ' de ' + chinese.element + '\n' +
+        '🕉️ ' + vedic.nakshatra + '\n' +
+        '🔢 Número de Vida: ' + numerology.lifeNumber + ' (' + numerology.lifeMeaning.keyword + ')\n\n' +
+        '✅ Mis acciones de hoy:\n' +
+        '1. ' + result.actions[0] + '\n' +
+        '2. ' + result.actions[1] + '\n' +
+        '3. ' + result.actions[2] + '\n\n' +
+        '🎨 Color: ' + result.color + ' | 🔢 Día Personal: ' + numerology.personalDay + '\n\n' +
+        'Descubre tu guía cósmica: https://astro3-lovat.vercel.app';
 
       if (navigator.share) {
         navigator.share({ title: 'Mi energía ASTRO4', text: text });
       } else {
-        navigator.clipboard.writeText(text).then(() => {
+        navigator.clipboard.writeText(text).then(function() {
           alert('¡Copiado! Pégalo en WhatsApp o donde quieras.');
         });
       }
