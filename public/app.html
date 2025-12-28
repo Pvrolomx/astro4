@@ -99,8 +99,9 @@
       <div class="cta-premium">
         <h3>💎 Consulta Especial</h3>
         <p>¿Dudas sobre amor, carrera o dinero?</p>
-        <button class="btn-premium" onclick="alert('Próximamente')">Preguntar - Próximamente</button>
-      </div>
+        <textarea id="pregunta" placeholder="Escribe tu pregunta sobre amor, dinero, carrera..." rows="3" style="width:100%;padding:10px;border-radius:8px;margin:10px 0;background:#1a1a2e;color:white;border:1px solid #4a4a6a;"></textarea>
+        <button class="btn-premium" onclick="enviarConsulta()">✨ Consultar</button>
+        <div id="respuesta-consulta" style="margin-top:15px;padding:15px;background:rgba(255,255,255,0.1);border-radius:8px;display:none;"></div>      </div>
       
       <button class="btn-share" onclick="shareResults()">
         📤 Compartir mi energía de hoy
@@ -155,7 +156,48 @@
     document.getElementById('power-hour').textContent = result.hour;
     
     // Share function
-    function shareResults() {
+
+    async function enviarConsulta() {
+      const pregunta = document.getElementById('pregunta').value;
+      if (!pregunta.trim()) {
+        alert('Escribe una pregunta primero');
+        return;
+      }
+      
+      const btn = document.querySelector('.btn-premium');
+      btn.textContent = '🔮 Consultando...';
+      btn.disabled = true;
+      
+      const perfil = {
+        western: western.name + ' (' + western.element + ')',
+        chinese: chinese.animal + ' de ' + chinese.element,
+        vedic: vedic.nakshatra,
+        lifeNumber: numerology.lifeNumber,
+        lifeMeaning: numerology.lifeMeaning.keyword,
+        soulNumber: numerology.soulNumber,
+        destinyNumber: numerology.destinyNumber,
+        personalDay: numerology.personalDay
+      };
+      
+      try {
+        const response = await fetch('/api/consulta', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: 'Eres un astrologo experto. Perfil del usuario: Signo ' + perfil.western + ', Chino ' + perfil.chinese + ', Vedico ' + perfil.vedic + ', Numero de Vida ' + perfil.lifeNumber + ' (' + perfil.lifeMeaning + '), Dia Personal ' + perfil.personalDay + '. Pregunta: ' + pregunta + '. Responde mistico pero practico, en español, max 150 palabras.'
+          })
+        });
+        const data = await response.json();
+        document.getElementById('respuesta-consulta').style.display = 'block';
+        document.getElementById('respuesta-consulta').innerHTML = '<strong>🔮 Tu Respuesta:</strong><br><br>' + data.respuesta;
+      } catch (error) {
+        document.getElementById('respuesta-consulta').style.display = 'block';
+        document.getElementById('respuesta-consulta').innerHTML = '❌ Error al consultar. Intenta de nuevo.';
+      }
+      
+      btn.textContent = '✨ Consultar';
+      btn.disabled = false;
+    }    function shareResults() {
       const text = `🔮 Mi energía hoy según ASTRO4:
 
 ☀️ ${western.name} (${western.element})
