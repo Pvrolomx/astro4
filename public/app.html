@@ -116,9 +116,10 @@
   <script src="js/astro-calc.js"></script>
   <script src="js/actions-engine.js"></script>
   <script>
-    const nombre = localStorage.getItem('astro3_nombre');
-    const fechaStr = localStorage.getItem('astro3_fecha');
-    
+    // Leer de URL primero, si no de localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const nombre = urlParams.get('nombre') || localStorage.getItem('astro3_nombre');
+    const fechaStr = urlParams.get('fecha') || localStorage.getItem('astro3_fecha');    
     if (!nombre || !fechaStr) {
       window.location.href = 'index.html';
     }
