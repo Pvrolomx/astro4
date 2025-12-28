@@ -176,18 +176,13 @@
         destinyNumber: numerology.destinyNumber,
         personalDay: numerology.personalDay
       };      
-      const promptText = 'Eres un guia espiritual sabio. MUY IMPORTANTE: Usa SIEMPRE lenguaje neutro y en segunda persona - di TU en vez de el o ella. Nunca asumas genero. El consultante tiene este perfil: ' +
-        'Signo Occidental: ' + perfil.western + '. ' +
-        'Signo Chino: ' + perfil.chinese + '. ' +
-        'Nakshatra Vedico: ' + perfil.vedic + '. ' +
-        'Numero de Vida: ' + perfil.lifeNumber + ' que significa ' + perfil.lifeMeaning + '. ' +
-        'Numero del Alma: ' + perfil.soulNumber + '. ' +
-        'Numero de Destino: ' + perfil.destinyNumber + '. ' +
-        'Dia Personal Hoy: ' + perfil.personalDay + '. ' +
-        'INTEGRA los 4 sistemas en tu respuesta explicando como se complementan para esta persona. ' +
-        'Pregunta: ' + pregunta + '. ' +
-        'Responde en espanol, maximo 180 palabras, con consejos practicos. Termina siempre con una frase completa.';          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+      const promptText = 'Contexto astrologico del consultante (NO lo repitas en tu respuesta): ' +
+        perfil.western + ', ' + perfil.chinese + ', ' + perfil.vedic + ', Vida ' + perfil.lifeNumber + ', Dia ' + perfil.personalDay + '. ' +
+        'PREGUNTA: ' + pregunta + '. ' +
+        'INSTRUCCIONES: Responde DIRECTO a la pregunta. NO expliques su perfil - ya lo saben. ' +
+        'Da consejos ESPECIFICOS y ACCIONABLES para HOY. ' +
+        'Si preguntan SI o NO, responde claramente y explica por que. ' +
+        'Usa lenguaje neutro (tu). Maximo 120 palabras. Se como un mentor sabio, no como horoscopo de revista.';          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt: promptText })
         });
         const data = await response.json();
