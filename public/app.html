@@ -176,21 +176,17 @@
         destinyNumber: numerology.destinyNumber,
         personalDay: numerology.personalDay
       };      
-      const promptText = 'Eres un guía espiritual sabio. El usuario tiene este perfil completo: ' +
-        'Signo Occidental: ' + perfil.western + ' (elemento que rige emociones y personalidad). ' +
-        'Signo Chino: ' + perfil.chinese + ' (elemento que rige ciclos y destino). ' +
-        'Nakshatra Védico: ' + perfil.vedic + ' (constelación lunar que rige el alma). ' +
-        'Número de Vida: ' + perfil.lifeNumber + ' (' + perfil.lifeMeaning + ') - su propósito de vida. ' +
-        'Número del Alma: ' + perfil.soulNumber + ' - sus deseos internos. ' +
-        'Número de Destino: ' + perfil.destinyNumber + ' - hacia dónde va. ' +
-        'Día Personal Hoy: ' + perfil.personalDay + ' - energía del día. ' +
-        'INTEGRA todos estos elementos en tu respuesta, explicando cómo se complementan. ' +
-        'Pregunta del usuario: ' + pregunta + '. ' +
-        'Responde como guía espiritual (NO astrólogo), en español, máximo 200 palabras, con consejos prácticos.';
-
-      try {
-        const response = await fetch('/api/consulta', {
-          method: 'POST',
+      const promptText = 'Eres un guia espiritual sabio. MUY IMPORTANTE: Usa SIEMPRE lenguaje neutro y en segunda persona - di TU en vez de el o ella. Nunca asumas genero. El consultante tiene este perfil: ' +
+        'Signo Occidental: ' + perfil.western + '. ' +
+        'Signo Chino: ' + perfil.chinese + '. ' +
+        'Nakshatra Vedico: ' + perfil.vedic + '. ' +
+        'Numero de Vida: ' + perfil.lifeNumber + ' que significa ' + perfil.lifeMeaning + '. ' +
+        'Numero del Alma: ' + perfil.soulNumber + '. ' +
+        'Numero de Destino: ' + perfil.destinyNumber + '. ' +
+        'Dia Personal Hoy: ' + perfil.personalDay + '. ' +
+        'INTEGRA los 4 sistemas en tu respuesta explicando como se complementan para esta persona. ' +
+        'Pregunta: ' + pregunta + '. ' +
+        'Responde en espanol, maximo 180 palabras, con consejos practicos. Termina siempre con una frase completa.';          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt: promptText })
         });
