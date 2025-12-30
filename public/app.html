@@ -2,128 +2,270 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <title>ASTRO4 - Tu Energía de Hoy</title>
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a0a1a">
+  <meta name="theme-color" content="#c9a96e">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, #faf7f2 0%, #f5ede3 100%);
+      min-height: 100vh; color: #3d3527;
+    }
+    .container { max-width: 420px; margin: 0 auto; padding: 16px; }
+    
+    /* Header */
+    header { display: flex; align-items: center; justify-content: center; padding: 12px 0; position: relative; }
+    .back-btn { position: absolute; left: 0; color: #8b7355; text-decoration: none; font-size: 1.2rem; padding: 8px; }
+    header h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: #5c4d3c; letter-spacing: 2px; }
+    
+    /* Lang Toggle */
+    .lang-toggle { position: absolute; right: 0; display: flex; gap: 2px; background: rgba(255,255,255,0.8); border-radius: 16px; padding: 3px; }
+    .lang-btn { padding: 4px 10px; border: none; border-radius: 12px; font-size: 0.7rem; font-weight: 600; cursor: pointer; background: transparent; color: #8b7d6b; }
+    .lang-btn.active { background: #c9a96e; color: white; }
+    
+    /* Greeting */
+    .greeting { text-align: center; padding: 16px 0; }
+    .greeting h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #5c4d3c; }
+    .greeting .date { font-size: 0.85rem; color: #8b7d6b; margin-top: 4px; }
+    
+    /* Cards */
+    .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(93,77,60,0.08); }
+    .card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #5c4d3c; margin-bottom: 12px; }
+    
+    /* Energy Items */
+    .energy-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0ebe3; }
+    .energy-item:last-child { border-bottom: none; }
+    .energy-item .icon { font-size: 1.5rem; margin-right: 12px; }
+    .energy-item .label { font-size: 0.75rem; color: #a99d8d; }
+    .energy-item .value { font-size: 0.95rem; color: #5c4d3c; font-weight: 500; }
+    
+    /* Actions */
+    .action-item { display: flex; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #f0ebe3; }
+    .action-item:last-child { border-bottom: none; }
+    .action-number { width: 24px; height: 24px; background: linear-gradient(135deg, #c9a96e, #a68b5b); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; margin-right: 12px; flex-shrink: 0; }
+    .action-text { font-size: 0.9rem; color: #5c4d3c; }
+    
+    /* Warning */
+    .warning-card { background: linear-gradient(135deg, #fff5f5, #fff0f0); border: 1px solid #f5d5d5; }
+    .warning-content { display: flex; align-items: center; }
+    .warning-icon { font-size: 1.3rem; margin-right: 10px; }
+    .warning-text { font-size: 0.9rem; color: #8b5a5a; }
+    
+    /* Extras Grid */
+    .extras-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .extra-item { text-align: center; padding: 12px 8px; background: #faf7f2; border-radius: 12px; }
+    .extra-item .icon { font-size: 1.3rem; }
+    .extra-item .label { font-size: 0.65rem; color: #a99d8d; margin: 4px 0; }
+    .extra-item .value { font-size: 0.85rem; color: #5c4d3c; font-weight: 600; }
+    
+    /* Consult Section */
+    .consult-card { background: linear-gradient(135deg, #f9f5f0, #f5ede3); }
+    .consult-card textarea { width: 100%; padding: 12px; border: 1px solid #e5ddd3; border-radius: 12px; background: white; color: #3d3527; font-family: 'Nunito', sans-serif; font-size: 0.9rem; resize: none; }
+    .consult-card textarea:focus { outline: none; border-color: #c9a96e; }
+    .btn-consult { width: 100%; padding: 14px; background: linear-gradient(135deg, #c9a96e, #a68b5b); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 12px; }
+    .btn-consult:disabled { opacity: 0.7; }
+    .response-box { margin-top: 12px; padding: 16px; background: white; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; display: none; }
+    .btn-another { margin-top: 10px; padding: 10px 20px; background: #e5ddd3; color: #5c4d3c; border: none; border-radius: 10px; cursor: pointer; display: none; }
+    
+    /* Share Button */
+    .btn-share { width: 100%; padding: 14px; background: white; color: #8b7355; border: 2px solid #c9a96e; border-radius: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
+    
+    /* Footer */
+    footer { text-align: center; padding: 16px; color: #a99d8d; font-size: 0.8rem; }
+    footer a { color: #c9a96e; text-decoration: none; }
+  </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <a href="index.html" style="text-decoration:none;color:white;position:absolute;left:15px;top:15px;font-size:1.5rem;">← Inicio</a>
-      <h1>🔮 ASTRO4</h1>
+      <a href="index.html" class="back-btn">←</a>
+      <h1>✧ ASTRO4 ✧</h1>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+      </div>
     </header>
-    <main class="dashboard">
-      <div class="greeting">
-        <h2>Hola, <span id="user-name">...</span></h2>
-        <p class="date" id="today-date">...</p>
+    
+    <div class="greeting">
+      <h2><span data-i18n="hello">Hola</span>, <span id="user-name">...</span></h2>
+      <p class="date" id="today-date">...</p>
+    </div>
+    
+    <div class="card">
+      <h3 data-i18n="yourEnergy">☀️ Tu Energía Hoy</h3>
+      <div class="energy-item"><span class="icon">☀️</span><div><div class="label" data-i18n="western">Occidental</div><div class="value" id="western-sign">...</div></div></div>
+      <div class="energy-item"><span class="icon">🐉</span><div><div class="label" data-i18n="chinese">Chino</div><div class="value" id="chinese-sign">...</div></div></div>
+      <div class="energy-item"><span class="icon">🕉️</span><div><div class="label" data-i18n="vedic">Védico</div><div class="value" id="vedic-sign">...</div></div></div>
+      <div class="energy-item"><span class="icon">🔢</span><div><div class="label" data-i18n="numerology">Numerología</div><div class="value" id="numerology">...</div></div></div>
+    </div>
+    
+    <div class="card">
+      <h3 data-i18n="doToday">✅ Haz Esto Hoy</h3>
+      <div class="action-item"><span class="action-number">1</span><span class="action-text" id="action-1">...</span></div>
+      <div class="action-item"><span class="action-number">2</span><span class="action-text" id="action-2">...</span></div>
+      <div class="action-item"><span class="action-number">3</span><span class="action-text" id="action-3">...</span></div>
+    </div>
+    
+    <div class="card warning-card">
+      <h3 data-i18n="avoidToday">⚠️ Evita Hoy</h3>
+      <div class="warning-content"><span class="warning-icon">⚠️</span><span class="warning-text" id="warning-text">...</span></div>
+    </div>
+    
+    <div class="card">
+      <div class="extras-grid">
+        <div class="extra-item"><span class="icon">🎨</span><div class="label" data-i18n="color">Color</div><div class="value" id="lucky-color">...</div></div>
+        <div class="extra-item"><span class="icon">🔢</span><div class="label" data-i18n="number">Número</div><div class="value" id="lucky-number">...</div></div>
+        <div class="extra-item"><span class="icon">⏰</span><div class="label" data-i18n="powerHour">Hora de Poder</div><div class="value" id="power-hour">...</div></div>
       </div>
-      <section class="energy-section">
-        <h3 class="section-title">Tu Energía Hoy</h3>
-        <div class="energy-item"><span class="icon">☀️</span><div><div class="label">Occidental</div><div class="value" id="western-sign">...</div></div></div>
-        <div class="energy-item"><span class="icon">🐉</span><div><div class="label">Chino</div><div class="value" id="chinese-sign">...</div></div></div>
-        <div class="energy-item"><span class="icon">🕉️</span><div><div class="label">Védico</div><div class="value" id="vedic-sign">...</div></div></div>
-        <div class="energy-item"><span class="icon">🔢</span><div><div class="label">Numerología</div><div class="value" id="numerology">...</div></div></div>
-      </section>      <section class="actions-section">
-        <h3 class="section-title">✅ Haz Esto Hoy</h3>
-        <div class="action-item"><span class="action-number">1</span><span id="action-1">...</span></div>
-        <div class="action-item"><span class="action-number">2</span><span id="action-2">...</span></div>
-        <div class="action-item"><span class="action-number">3</span><span id="action-3">...</span></div>
-      </section>
-      <section class="warning-section">
-        <h3 class="section-title">⚠️ Evita Hoy</h3>
-        <div class="warning-content"><span class="warning-icon">⚠️</span><span id="warning-text">...</span></div>
-      </section>
-      <section class="extras-section">
-        <div class="extras-grid">
-          <div class="extra-item"><span class="icon">🎨</span><div class="label">Color</div><div class="value" id="lucky-color">...</div></div>
-          <div class="extra-item"><span class="icon">🔢</span><div class="label">Número</div><div class="value" id="lucky-number">...</div></div>
-          <div class="extra-item"><span class="icon">⏰</span><div class="label">Hora de Poder</div><div class="value" id="power-hour">...</div></div>
-        </div>
-      </section>
-      <div class="cta-premium">
-        <h3>💎 Consulta con Tu Guía</h3>
-        <p>¿Dudas sobre amor, carrera o dinero?</p>
-        <textarea id="pregunta" placeholder="Escribe tu pregunta..." rows="3" style="width:100%;padding:10px;border-radius:8px;margin:10px 0;background:#1a1a2e;color:white;border:1px solid #4a4a6a;"></textarea>
-        <button class="btn-premium" id="btn-consultar" onclick="enviarConsulta()">✨ Consultar</button>
-        <div id="respuesta-consulta" style="margin-top:15px;padding:15px;background:rgba(255,255,255,0.1);border-radius:8px;display:none;"></div>
-        <button id="btn-otra" onclick="otraConsulta()" style="display:none;margin-top:10px;padding:10px 20px;background:#4a4a6a;color:white;border:none;border-radius:8px;cursor:pointer;">🔄 Otra Consulta</button>
-      </div>
-      <button class="btn-share" onclick="shareResults()">📤 Compartir mi energía de hoy</button>
-    </main>
-    <footer><p>🐝 Hecho por Colmena - 28/12/2025</p><p style="font-size:0.7rem;opacity:0.7;"><a href="#" onclick="alert('ASTRO4 no almacena tus datos.')" style="color:inherit;">Privacidad</a></p></footer>
-  </div>  <script src="js/astro-calc.js"></script>
+    </div>
+    
+    <div class="card consult-card">
+      <h3 data-i18n="consultTitle">💎 Consulta con Tu Guía</h3>
+      <p style="font-size:0.85rem;color:#8b7d6b;margin-bottom:12px;" data-i18n="consultSub">¿Dudas sobre amor, carrera o dinero?</p>
+      <textarea id="pregunta" data-i18n-placeholder="consultPlaceholder" placeholder="Escribe tu pregunta..." rows="3"></textarea>
+      <button class="btn-consult" id="btn-consultar" onclick="enviarConsulta()" data-i18n="consultBtn">✨ Consultar</button>
+      <div class="response-box" id="respuesta-consulta"></div>
+      <button class="btn-another" id="btn-otra" onclick="otraConsulta()" data-i18n="anotherBtn">🔄 Otra Consulta</button>
+    </div>
+    
+    <button class="btn-share" onclick="shareResults()" data-i18n="shareBtn">📤 Compartir mi energía de hoy</button>
+    
+    <footer>
+      <p>🐝 <span data-i18n="madeWith">Hecho con ♥ por</span> <a href="#">Colmena (C6)</a></p>
+      <p><a href="#" onclick="showPrivacy()" data-i18n="privacy">Privacidad</a></p>
+    </footer>
+  </div>
+  
+  <script src="js/astro-calc.js"></script>
   <script src="js/actions-engine.js"></script>
   <script>
+    const i18n = {
+      es: {
+        hello: "Hola", yourEnergy: "☀️ Tu Energía Hoy",
+        western: "Occidental", chinese: "Chino", vedic: "Védico", numerology: "Numerología",
+        doToday: "✅ Haz Esto Hoy", avoidToday: "⚠️ Evita Hoy",
+        color: "Color", number: "Número", powerHour: "Hora de Poder",
+        consultTitle: "💎 Consulta con Tu Guía", consultSub: "¿Dudas sobre amor, carrera o dinero?",
+        consultPlaceholder: "Escribe tu pregunta...", consultBtn: "✨ Consultar",
+        consulting: "🔮 Consultando...", anotherBtn: "🔄 Otra Consulta",
+        shareBtn: "📤 Compartir mi energía de hoy", madeWith: "Hecho con ♥ por", privacy: "Privacidad",
+        privacyMsg: "ASTRO4 respeta tu privacidad. Tus datos se guardan solo en tu dispositivo.",
+        guideTitle: "🔮 Tu Guía:", errorMsg: "❌ Error. Intenta de nuevo.",
+        askFirst: "Escribe una pregunta primero", copied: "¡Copiado!",
+        life: "Vida", of: "de", personalDay: "Día Personal"
+      },
+      en: {
+        hello: "Hello", yourEnergy: "☀️ Your Energy Today",
+        western: "Western", chinese: "Chinese", vedic: "Vedic", numerology: "Numerology",
+        doToday: "✅ Do This Today", avoidToday: "⚠️ Avoid Today",
+        color: "Color", number: "Number", powerHour: "Power Hour",
+        consultTitle: "💎 Consult Your Guide", consultSub: "Questions about love, career or money?",
+        consultPlaceholder: "Write your question...", consultBtn: "✨ Consult",
+        consulting: "🔮 Consulting...", anotherBtn: "🔄 Another Question",
+        shareBtn: "📤 Share my energy today", madeWith: "Made with ♥ by", privacy: "Privacy",
+        privacyMsg: "ASTRO4 respects your privacy. Your data is stored only on your device.",
+        guideTitle: "🔮 Your Guide:", errorMsg: "❌ Error. Try again.",
+        askFirst: "Write a question first", copied: "Copied!",
+        life: "Life", of: "of", personalDay: "Personal Day"
+      }
+    };
+    
     var urlParams = new URLSearchParams(window.location.search);
     var nombre = urlParams.get('nombre');
     var fechaStr = urlParams.get('fecha');
+    var currentLang = urlParams.get('lang') || localStorage.getItem('astro4_lang') || 'es';
+    
     if (!nombre || !fechaStr) { window.location.href = 'index.html'; }
     
-    document.getElementById('user-name').textContent = nombre;
-    var today = new Date();
-    document.getElementById('today-date').textContent = today.toLocaleDateString('es-MX', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('astro4_lang', lang);
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang][key]) el.textContent = i18n[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (i18n[lang][key]) el.placeholder = i18n[lang][key];
+      });
+      updateDate();
+      updateSigns();
+    }
+    
+    function showPrivacy() { alert(i18n[currentLang].privacyMsg); }
     
     var birthDate = new Date(fechaStr);
-    var western = getWesternSign(birthDate);
-    var chinese = getChineseZodiac(birthDate.getFullYear());
-    var vedic = getNakshatra(birthDate);
-    var numerology = getNumerology(birthDate, nombre);
+    var western, chinese, vedic, numerology, result;
     
-    document.getElementById('western-sign').textContent = western.name + ' (' + western.element + ')';
-    document.getElementById('chinese-sign').textContent = chinese.animal + ' de ' + chinese.element;
-    document.getElementById('vedic-sign').textContent = vedic.nakshatra;
-    document.getElementById('numerology').textContent = 'Vida ' + numerology.lifeNumber + ' - ' + numerology.lifeMeaning.keyword;
+    function updateDate() {
+      var today = new Date();
+      var locale = currentLang === 'es' ? 'es-MX' : 'en-US';
+      document.getElementById('today-date').textContent = today.toLocaleDateString(locale, {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    }
     
-    var result = generateActions(western, chinese, numerology, birthDate);
-    document.getElementById('action-1').textContent = result.actions[0];
-    document.getElementById('action-2').textContent = result.actions[1];
-    document.getElementById('action-3').textContent = result.actions[2];
-    document.getElementById('warning-text').textContent = result.warning;
-    document.getElementById('lucky-color').textContent = result.color;
-    document.getElementById('lucky-number').textContent = numerology.personalDay;
-    document.getElementById('power-hour').textContent = result.hour;    
+    function updateSigns() {
+      western = getWesternSign(birthDate);
+      chinese = getChineseZodiac(birthDate.getFullYear());
+      vedic = getNakshatra(birthDate);
+      numerology = getNumerology(birthDate, nombre);
+      result = generateActions(western, chinese, numerology, birthDate);
+      
+      var t = i18n[currentLang];
+      document.getElementById('western-sign').textContent = western.name + ' (' + western.element + ')';
+      document.getElementById('chinese-sign').textContent = chinese.animal + ' ' + t.of + ' ' + chinese.element;
+      document.getElementById('vedic-sign').textContent = vedic.nakshatra;
+      document.getElementById('numerology').textContent = t.life + ' ' + numerology.lifeNumber + ' - ' + numerology.lifeMeaning.keyword;
+      
+      document.getElementById('action-1').textContent = result.actions[0];
+      document.getElementById('action-2').textContent = result.actions[1];
+      document.getElementById('action-3').textContent = result.actions[2];
+      document.getElementById('warning-text').textContent = result.warning;
+      document.getElementById('lucky-color').textContent = result.color;
+      document.getElementById('lucky-number').textContent = numerology.personalDay;
+      document.getElementById('power-hour').textContent = result.hour;
+    }
+    
+    document.getElementById('user-name').textContent = nombre;
+    setLang(currentLang);
+    
     function otraConsulta() {
       document.getElementById('pregunta').value = '';
       document.getElementById('respuesta-consulta').style.display = 'none';
       document.getElementById('btn-otra').style.display = 'none';
-      document.getElementById('btn-consultar').style.display = 'inline-block';
+      document.getElementById('btn-consultar').style.display = 'block';
     }
     
     async function enviarConsulta() {
       var pregunta = document.getElementById('pregunta').value;
-      if (!pregunta.trim()) { alert('Escribe una pregunta primero'); return; }
+      var t = i18n[currentLang];
+      if (!pregunta.trim()) { alert(t.askFirst); return; }
       
       var btn = document.getElementById('btn-consultar');
-      btn.textContent = '🔮 Consultando...';
+      btn.textContent = t.consulting;
       btn.disabled = true;
       
       var perfil = {
         western: western.name + ' (' + western.element + ')',
-        chinese: chinese.animal + ' de ' + chinese.element,
+        chinese: chinese.animal + ' ' + t.of + ' ' + chinese.element,
         vedic: vedic.nakshatra,
         lifeNumber: numerology.lifeNumber,
         lifeMeaning: numerology.lifeMeaning.keyword,
         personalDay: numerology.personalDay
       };
       
-      var promptText = 'ERES UN GUIA ESPIRITUAL SABIO que domina 4 tradiciones ancestrales. ' +
-        'PERFIL COMPLETO DEL CONSULTANTE: ' +
-        '1) OCCIDENTAL (' + perfil.western + '): Este signo revela su personalidad externa y emociones. ' +
-        '2) CHINO (' + perfil.chinese + '): Este animal y elemento rigen sus ciclos de vida y destino. ' +
-        '3) VEDICO (' + perfil.vedic + '): Esta constelacion lunar gobierna su alma y proposito espiritual. ' +
-        '4) NUMEROLOGIA (Vida ' + perfil.lifeNumber + ' - ' + perfil.lifeMeaning + ', Dia Personal ' + perfil.personalDay + '): Estos numeros definen su mision de vida y la energia de HOY. ' +
-        'PREGUNTA DEL CONSULTANTE: ' + pregunta + '. ' +
-        'INSTRUCCIONES ESTRICTAS: ' +
-        '1. Responde DIRECTAMENTE a la pregunta - si preguntan SI o NO, responde claramente primero. ' +
-        '2. INTEGRA al menos 2 de los 4 sistemas en tu respuesta, explicando COMO se relacionan con la pregunta. ' +
-        '3. Da UN consejo CONCRETO y ACCIONABLE para HOY. ' +
-        '4. Usa lenguaje en segunda persona (tu, ti). ' +
-        '5. NO repitas la explicacion del perfil. ' +
-        '6. Maximo 150 palabras. ' +
-        '7. Habla como un mentor sabio y cercano, no como horoscopo de revista. ' +
-        'EJEMPLO DE BUENA RESPUESTA: Si preguntan sobre dinero y son Escorpio con Numero 11, di algo como: Tu intensidad de Escorpio combinada con tu Numero Maestro 11 te da intuicion financiera poderosa. HOY, con energia ' + perfil.personalDay + ', es buen momento para [accion concreta]. Confia en tu instinto pero verifica los numeros.';      
+      var promptLang = currentLang === 'es' ? 
+        'Responde en ESPAÑOL. ' : 'Respond in ENGLISH. ';
+      
+      var promptText = promptLang + 'ERES UN GUIA ESPIRITUAL SABIO que domina 4 tradiciones ancestrales. ' +
+        'PERFIL: OCCIDENTAL(' + perfil.western + '), CHINO(' + perfil.chinese + '), VEDICO(' + perfil.vedic + '), NUMEROLOGIA(Vida ' + perfil.lifeNumber + '-' + perfil.lifeMeaning + ', Dia ' + perfil.personalDay + '). ' +
+        'PREGUNTA: ' + pregunta + '. ' +
+        'INSTRUCCIONES: 1.Responde DIRECTO. 2.INTEGRA 2+ sistemas. 3.Da UN consejo CONCRETO para HOY. 4.Max 150 palabras. 5.Habla como mentor sabio.';
+      
       try {
         var response = await fetch('/api/consulta', {
           method: 'POST',
@@ -132,22 +274,26 @@
         });
         var data = await response.json();
         document.getElementById('respuesta-consulta').style.display = 'block';
-        document.getElementById('respuesta-consulta').innerHTML = '<strong>🔮 Tu Guía:</strong><br><br>' + data.respuesta;
-        document.getElementById('btn-otra').style.display = 'inline-block';
+        document.getElementById('respuesta-consulta').innerHTML = '<strong>' + t.guideTitle + '</strong><br><br>' + data.respuesta;
+        document.getElementById('btn-otra').style.display = 'block';
         btn.style.display = 'none';
       } catch (error) {
         document.getElementById('respuesta-consulta').style.display = 'block';
-        document.getElementById('respuesta-consulta').innerHTML = '❌ Error. Intenta de nuevo.';
+        document.getElementById('respuesta-consulta').innerHTML = t.errorMsg;
       }
-      btn.textContent = '✨ Consultar';
+      btn.textContent = t.consultBtn;
       btn.disabled = false;
-    }    
+    }
+    
     function shareResults() {
-      var text = '🔮 Mi energía ASTRO4:\n☀️ ' + western.name + '\n🐉 ' + chinese.animal + '\n🕉️ ' + vedic.nakshatra + '\n🔢 Vida ' + numerology.lifeNumber + '\n\n✅ Hoy:\n1. ' + result.actions[0] + '\n2. ' + result.actions[1] + '\n3. ' + result.actions[2] + '\n\nDescubre: https://astro3-lovat.vercel.app';
+      var t = i18n[currentLang];
+      var text = currentLang === 'es' ?
+        '🔮 Mi energía ASTRO4:\n☀️ ' + western.name + '\n🐉 ' + chinese.animal + '\n🕉️ ' + vedic.nakshatra + '\n🔢 Vida ' + numerology.lifeNumber + '\n\nDescubre: https://astro3-lovat.vercel.app' :
+        '🔮 My ASTRO4 energy:\n☀️ ' + western.name + '\n🐉 ' + chinese.animal + '\n🕉️ ' + vedic.nakshatra + '\n🔢 Life ' + numerology.lifeNumber + '\n\nDiscover: https://astro3-lovat.vercel.app';
       if (navigator.share) {
         navigator.share({ title: 'ASTRO4', text: text });
       } else {
-        navigator.clipboard.writeText(text).then(function() { alert('¡Copiado!'); });
+        navigator.clipboard.writeText(text).then(function() { alert(t.copied); });
       }
     }
   </script>
