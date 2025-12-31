@@ -209,11 +209,11 @@
     }
     
     function updateSigns() {
-      western = getWesternSign(birthDate);
-      chinese = getChineseZodiac(birthDate.getFullYear());
+      western = getWesternSign(birthDate, currentLang);
+      chinese = getChineseZodiac(birthDate.getFullYear(), currentLang);
       vedic = getNakshatra(birthDate);
-      numerology = getNumerology(birthDate, nombre);
-      result = generateActions(western, chinese, numerology, birthDate);
+      numerology = getNumerology(birthDate, nombre, currentLang);
+      result = generateActions(western, chinese, numerology, birthDate, currentLang);
       
       var t = i18n[currentLang];
       document.getElementById('western-sign').textContent = western.name + ' (' + western.element + ')';
