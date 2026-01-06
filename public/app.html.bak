@@ -217,9 +217,9 @@
       
       var t = i18n[currentLang];
       document.getElementById('western-sign').textContent = western.name + ' (' + western.element + ')';
-      document.getElementById('chinese-sign').textContent = chinese.animal + ' ' + chinese.element + ' ' + chinese.yinYang;
+      document.getElementById('chinese-sign').textContent = chinese.animal + ' ' + t.of + ' ' + chinese.element;
       document.getElementById('vedic-sign').textContent = vedic.nakshatra;
-      document.getElementById('numerology').textContent = numerology.lifeNumber + ' (' + numerology.lifeMeaning.keyword + ')';
+      document.getElementById('numerology').textContent = t.life + ' ' + numerology.lifeNumber + ' - ' + numerology.lifeMeaning.keyword;
       
       document.getElementById('action-1').textContent = result.actions[0];
       document.getElementById('action-2').textContent = result.actions[1];
@@ -251,7 +251,7 @@
       
       var perfil = {
         western: western.name + ' (' + western.element + ')',
-        chinese: chinese.animal + ' ' + chinese.element + ' ' + chinese.yinYang,
+        chinese: chinese.animal + ' ' + t.of + ' ' + chinese.element,
         vedic: vedic.nakshatra,
         lifeNumber: numerology.lifeNumber,
         lifeMeaning: numerology.lifeMeaning.keyword,
