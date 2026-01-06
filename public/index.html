@@ -149,12 +149,14 @@
           <div class="result-value" id="resultValue"></div>
           <div class="result-sub" id="resultSub"></div>
           <div class="result-insight" id="resultInsight"></div>
+          <div class="result-desc" id="resultDesc" style="font-size:0.85rem;color:#6b5b4f;margin-top:10px;line-height:1.4;font-style:italic;"></div>
         </div>
         <button class="btn-secondary" onclick="resetModal()" id="btnTryAnother">← Volver</button>
       </div>
     </div>
   </div>
   <script src="js/astro-calc.js"></script>
+  <script src="js/sign-descriptions.js"></script>
   <script src="js/mini-insights.js"></script>
   <script>
     const traditions = {
@@ -224,10 +226,12 @@
         insightKey = num.lifeNumber;
       }
       const insight = getMiniInsight(currentModal, insightKey, currentLang, birthDate);
+      const desc = typeof getSignDescription === 'function' ? getSignDescription(currentModal, insightKey, currentLang) : '';
       document.getElementById('resultLabel').textContent = label;
       document.getElementById('resultValue').textContent = value;
       document.getElementById('resultSub').textContent = sub;
       document.getElementById('resultInsight').textContent = insight ? '✨ ' + insight : '';
+      document.getElementById('resultDesc').textContent = desc || '';
       document.getElementById('modalFormSection').classList.add('hidden');
       document.getElementById('modalResultSection').classList.remove('hidden');
     }
