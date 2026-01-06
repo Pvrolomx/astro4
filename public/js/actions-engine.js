@@ -193,7 +193,7 @@ const colors = {
   en: ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet", "White", "Gold", "Pink", "Turquoise"]
 };
 
-const hours = ["6-8 AM", "8-10 AM", "10-12 PM", "12-2 PM", "2-4 PM", "4-6 PM", "6-8 PM", "8-10 PM"];
+const hours = ["5-7 AM", "7-9 AM", "9-11 AM", "11AM-1PM", "1-3 PM", "3-5 PM", "5-7 PM", "7-9 PM", "9-11 PM", "11PM-1AM", "1-3 AM", "3-5 AM"];
 
 function generateActions(western, chinese, numerology, birthDate, lang) {
   lang = lang || 'es';
@@ -252,14 +252,20 @@ function generateActions(western, chinese, numerology, birthDate, lang) {
   const elemWarnings = warningsByElement[lang][elemKey] || warningsByElement[lang][Object.keys(warningsByElement[lang])[0]];
   // Incluir nombre en seed vía soulNumber
   const nameSeed = numerology && numerology.soulNumber ? numerology.soulNumber * 31 : 0;
+  // Incluir elemento chino en seed con mejor dispersión
+  const chineseElemMap = {'Madera': 13, 'Wood': 13, 'Fuego': 29, 'Fire': 29, 'Tierra': 43, 'Earth': 43, 'Metal': 61, 'Agua': 79, 'Water': 79};
+  const chineseSeed = (chineseElemMap[chinese.element] || 0) * 53;
+  // Agregar día del año para más variación
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const daySeed = dayOfYear * 7;
   const warningIdx = Math.floor(seededRandom(uniqueSeed + nameSeed, today.getDate() * 50) * elemWarnings.length);
-  const colorIdx = Math.floor(seededRandom(uniqueSeed + nameSeed, 200 + today.getDate()) * colors[lang].length);
+  const colorIdx = Math.floor(seededRandom(uniqueSeed + nameSeed + chineseSeed + daySeed, 200) * colors[lang].length);
   
   return {
     actions: actions,
     warning: elemWarnings[warningIdx],
     color: colors[lang][colorIdx],
-    number: Math.floor(seededRandom(uniqueSeed + nameSeed, 300 + today.getDate()) * 9) + 1,
-    hour: hours[Math.floor(seededRandom(uniqueSeed + nameSeed, 400 + today.getDate()) * hours.length)]
+    number: Math.floor(seededRandom(uniqueSeed + nameSeed + chineseSeed + daySeed, 300) * 12) + 1,
+    hour: hours[Math.floor(seededRandom(uniqueSeed + nameSeed + chineseSeed + daySeed, 400) * hours.length)]
   };
 }
