@@ -278,7 +278,7 @@
         'Occidental(' + perfil.western + '), Chino(' + perfil.chinese + '), Védico(Nakshatra ' + perfil.vedic + '), ' +
         'Numerología(Vida ' + perfil.lifeNumber + '=' + perfil.lifeMeaning + ', Día ' + perfil.personalDay + '=' + dayMeaning + '). ' +
         'PREGUNTA: "' + pregunta + '". ' +
-        'INSTRUCCIONES: 1.Dirígete a ' + nombreUsuario + ' por su nombre. 2.Máximo 3 oraciones. 3.Integra 2 tradiciones. 4.Da un consejo concreto para hoy. 5.Tono cálido como abuelo sabio.' :
+        'INSTRUCCIONES: 1.Dirígete a ' + nombreUsuario + ' por su nombre. 2.Máximo 3 oraciones. 3.Integra 2 tradiciones. 4.Da un consejo concreto para hoy. 5.Tono cálido como abuelo sabio. 6.USA LENGUAJE NEUTRO, no asumas género (evita él/ella, usa 'tú').' :
         'Respond in ENGLISH to ' + nombreUsuario + '. ' +
         'DATE: ' + fechaHoy + '. ' +
         'You are a wise and warm spiritual guide. ' +
@@ -286,7 +286,7 @@
         'Western(' + perfil.western + '), Chinese(' + perfil.chinese + '), Vedic(Nakshatra ' + perfil.vedic + '), ' +
         'Numerology(Life ' + perfil.lifeNumber + '=' + perfil.lifeMeaning + ', Day ' + perfil.personalDay + '=' + dayMeaning + '). ' +
         'QUESTION: "' + pregunta + '". ' +
-        'INSTRUCTIONS: 1.Address ' + nombreUsuario + ' by name. 2.Maximum 3 sentences. 3.Integrate 2 traditions. 4.Give one concrete tip for today. 5.Warm tone like a wise grandparent.';
+        'INSTRUCTIONS: 1.Address ' + nombreUsuario + ' by name. 2.Maximum 3 sentences. 3.Integrate 2 traditions. 4.Give one concrete tip for today. 5.Warm tone like a wise grandparent. 6.USE NEUTRAL LANGUAGE, don\'t assume gender (avoid he/she, use \'you\').';
       
       try {
         var response = await fetch('/api/consulta', {
