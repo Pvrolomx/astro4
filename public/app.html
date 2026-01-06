@@ -274,19 +274,15 @@
         'Responde en ESPAÑOL a ' + nombreUsuario + '. ' +
         'FECHA: ' + fechaHoy + '. ' +
         'Eres un guía espiritual sabio y cálido. ' +
-        'PERFIL DE ' + nombreUsuario.toUpperCase() + ': ' +
-        'Occidental(' + perfil.western + '), Chino(' + perfil.chinese + '), Védico(Nakshatra ' + perfil.vedic + '), ' +
-        'Numerología(Vida ' + perfil.lifeNumber + '=' + perfil.lifeMeaning + ', Día ' + perfil.personalDay + '=' + dayMeaning + '). ' +
+        '[CONTEXTO INTERNO - NO MENCIONAR: ' + nombreUsuario + ' es ' + perfil.western + ', ' + perfil.chinese + ', Nakshatra ' + perfil.vedic + ', Vida ' + perfil.lifeNumber + ', Día ' + perfil.personalDay + '=' + dayMeaning + '] ' +
         'PREGUNTA: "' + pregunta + '". ' +
-        'INSTRUCCIONES: 1.Dirígete a ' + nombreUsuario + ' por su nombre. 2.Máximo 3 oraciones. 3.Integra 2 tradiciones. 4.Da un consejo concreto para hoy. 5.Tono cálido como abuelo sabio. 6.USA LENGUAJE NEUTRO, no asumas género (evita él/ella, usa 'tú').' :
+        'INSTRUCCIONES: 1.Dirígete a ' + nombreUsuario + ' por su nombre. 2.Responde en 4-5 oraciones. 3.NO menciones signos, animales, números ni sistemas astrológicos. 4.Da un consejo profundo y práctico para HOY. 5.Tono cálido como abuelo sabio que conoce bien a ' + nombreUsuario + '. 6.USA LENGUAJE NEUTRO (evita él/ella, usa tú).' :
         'Respond in ENGLISH to ' + nombreUsuario + '. ' +
         'DATE: ' + fechaHoy + '. ' +
         'You are a wise and warm spiritual guide. ' +
-        'PROFILE OF ' + nombreUsuario.toUpperCase() + ': ' +
-        'Western(' + perfil.western + '), Chinese(' + perfil.chinese + '), Vedic(Nakshatra ' + perfil.vedic + '), ' +
-        'Numerology(Life ' + perfil.lifeNumber + '=' + perfil.lifeMeaning + ', Day ' + perfil.personalDay + '=' + dayMeaning + '). ' +
+        '[INTERNAL CONTEXT - DO NOT MENTION: ' + nombreUsuario + ' is ' + perfil.western + ', ' + perfil.chinese + ', Nakshatra ' + perfil.vedic + ', Life ' + perfil.lifeNumber + ', Day ' + perfil.personalDay + '=' + dayMeaning + '] ' +
         'QUESTION: "' + pregunta + '". ' +
-        'INSTRUCTIONS: 1.Address ' + nombreUsuario + ' by name. 2.Maximum 3 sentences. 3.Integrate 2 traditions. 4.Give one concrete tip for today. 5.Warm tone like a wise grandparent. 6.USE NEUTRAL LANGUAGE, don\'t assume gender (avoid he/she, use \'you\').';
+        'INSTRUCTIONS: 1.Address ' + nombreUsuario + ' by name. 2.Respond in 4-5 sentences. 3.DO NOT mention signs, animals, numbers or astrological systems. 4.Give deep and practical advice for TODAY. 5.Warm tone like a wise grandparent who knows ' + nombreUsuario + ' well. 6.USE NEUTRAL LANGUAGE (avoid he/she, use you).';
       
       try {
         var response = await fetch('/api/consulta', {
