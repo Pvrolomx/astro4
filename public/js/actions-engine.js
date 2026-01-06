@@ -253,13 +253,13 @@ function generateActions(western, chinese, numerology, birthDate, lang) {
   // Incluir nombre en seed vía soulNumber
   const nameSeed = numerology && numerology.soulNumber ? numerology.soulNumber * 31 : 0;
   const warningIdx = Math.floor(seededRandom(uniqueSeed + nameSeed, today.getDate() * 50) * elemWarnings.length);
-  const colorIdx = Math.floor(seededRandom(uniqueSeed, 200 + today.getDate()) * colors[lang].length);
+  const colorIdx = Math.floor(seededRandom(uniqueSeed + nameSeed, 200 + today.getDate()) * colors[lang].length);
   
   return {
     actions: actions,
     warning: elemWarnings[warningIdx],
     color: colors[lang][colorIdx],
-    number: Math.floor(seededRandom(uniqueSeed, 300 + today.getDate()) * 9) + 1,
-    hour: hours[Math.floor(seededRandom(uniqueSeed, 400 + today.getDate()) * hours.length)]
+    number: Math.floor(seededRandom(uniqueSeed + nameSeed, 300 + today.getDate()) * 9) + 1,
+    hour: hours[Math.floor(seededRandom(uniqueSeed + nameSeed, 400 + today.getDate()) * hours.length)]
   };
 }
