@@ -125,67 +125,31 @@ const actionTemplates = {
   }
 };
 
-const warningsByElement = {
-  es: {
-    Fuego: [
-      "Decisiones impulsivas sin pensar",
-      "Actuar con impaciencia extrema",
-      "Conflictos por querer tener la razón",
-      "Asumir riesgos innecesarios",
-      "Empezar proyectos sin terminar otros"
-    ],
-    Tierra: [
-      "Resistirte al cambio necesario",
-      "Obsesionarte con detalles menores",
-      "Gastar en cosas que no necesitas",
-      "Ser demasiado crítico contigo mismo",
-      "Postergar decisiones importantes"
-    ],
-    Aire: [
-      "Dispersarte en muchas direcciones",
-      "Prometer más de lo que puedes cumplir",
-      "Hablar sin escuchar primero",
-      "Compararte con otros en redes",
-      "Evitar compromisos emocionales"
-    ],
-    Agua: [
-      "Dejarte llevar por emociones intensas",
-      "Absorber los problemas de otros",
-      "Tomar decisiones desde el miedo",
-      "Aislarte cuando necesitas apoyo",
-      "Ignorar tu intuición por dudas"
-    ]
-  },
-  en: {
-    Fire: [
-      "Impulsive decisions without thinking",
-      "Acting with extreme impatience",
-      "Conflicts from wanting to be right",
-      "Taking unnecessary risks",
-      "Starting projects without finishing others"
-    ],
-    Earth: [
-      "Resisting necessary change",
-      "Obsessing over minor details",
-      "Spending on things you don't need",
-      "Being too critical of yourself",
-      "Postponing important decisions"
-    ],
-    Air: [
-      "Scattering in many directions",
-      "Promising more than you can deliver",
-      "Talking without listening first",
-      "Comparing yourself to others online",
-      "Avoiding emotional commitments"
-    ],
-    Water: [
-      "Being swept away by intense emotions",
-      "Absorbing other people's problems",
-      "Making decisions from fear",
-      "Isolating when you need support",
-      "Ignoring your intuition due to doubt"
-    ]
-  }
+const warnings = {
+  es: [
+    "Decisiones impulsivas con dinero",
+    "Discusiones innecesarias",
+    "Compromisos que no puedes cumplir",
+    "Exceso de cafeína o estimulantes",
+    "Compararte con otros en redes sociales",
+    "Postergar lo importante por lo urgente",
+    "Sobrecargarte de tareas",
+    "Ignorar señales de tu cuerpo",
+    "Hablar sin pensar primero",
+    "Dejar que otros decidan por ti"
+  ],
+  en: [
+    "Impulsive money decisions",
+    "Unnecessary arguments",
+    "Commitments you can't keep",
+    "Excess caffeine or stimulants",
+    "Comparing yourself to others on social media",
+    "Postponing important things for urgent ones",
+    "Overloading yourself with tasks",
+    "Ignoring signals from your body",
+    "Speaking without thinking first",
+    "Letting others decide for you"
+  ]
 };
 
 const colors = {
@@ -238,24 +202,12 @@ function generateActions(western, chinese, numerology, birthDate, lang) {
     return pool[idx];
   });
   
-  // Mapeo de elementos para warnings
-  const elementMap = {
-    'Fuego': 'Fuego', 'Fire': 'Fire',
-    'Tierra': 'Tierra', 'Earth': 'Earth', 
-    'Aire': 'Aire', 'Air': 'Air',
-    'Agua': 'Agua', 'Water': 'Water'
-  };
-  const elemKey = lang === 'es' ? western.element : 
-    (western.element === 'Fuego' ? 'Fire' : 
-     western.element === 'Tierra' ? 'Earth' : 
-     western.element === 'Aire' ? 'Air' : 'Water');
-  const elemWarnings = warningsByElement[lang][elemKey] || warningsByElement[lang][Object.keys(warningsByElement[lang])[0]];
-  const warningIdx = Math.floor(seededRandom(uniqueSeed, today.getDate() * 50) * elemWarnings.length);
+  const warningIdx = Math.floor(seededRandom(uniqueSeed, today.getDate() * 50) * warnings[lang].length);
   const colorIdx = Math.floor(seededRandom(uniqueSeed, 200 + today.getDate()) * colors[lang].length);
   
   return {
     actions: actions,
-    warning: elemWarnings[warningIdx],
+    warning: warnings[lang][warningIdx],
     color: colors[lang][colorIdx],
     number: Math.floor(seededRandom(uniqueSeed, 300 + today.getDate()) * 9) + 1,
     hour: hours[Math.floor(seededRandom(uniqueSeed, 400 + today.getDate()) * hours.length)]
