@@ -258,35 +258,13 @@
         personalDay: numerology.personalDay
       };
       
-      var nombreUsuario = localStorage.getItem('astro4_nombre') || '';
-      var hoy = new Date();
-      var fechaHoy = currentLang === 'es' ? 
-        hoy.toLocaleDateString('es-ES', {weekday: 'long', day: 'numeric', month: 'long'}) :
-        hoy.toLocaleDateString('en-US', {weekday: 'long', month: 'long', day: 'numeric'});
+      var promptLang = currentLang === 'es' ? 
+        'Responde en ESPAÑOL. ' : 'Respond in ENGLISH. ';
       
-      var dayMeanings = {
-        es: {1:'inicio', 2:'cooperación', 3:'expresión', 4:'estructura', 5:'cambio', 6:'armonía', 7:'reflexión', 8:'poder', 9:'cierre'},
-        en: {1:'new beginnings', 2:'cooperation', 3:'expression', 4:'structure', 5:'change', 6:'harmony', 7:'reflection', 8:'power', 9:'completion'}
-      };
-      var dayMeaning = dayMeanings[currentLang][perfil.personalDay] || '';
-      
-      var promptText = currentLang === 'es' ? 
-        'Responde en ESPAÑOL a ' + nombreUsuario + '. ' +
-        'FECHA: ' + fechaHoy + '. ' +
-        'Eres un guía espiritual sabio y cálido. ' +
-        'PERFIL DE ' + nombreUsuario.toUpperCase() + ': ' +
-        'Occidental(' + perfil.western + '), Chino(' + perfil.chinese + '), Védico(Nakshatra ' + perfil.vedic + '), ' +
-        'Numerología(Vida ' + perfil.lifeNumber + '=' + perfil.lifeMeaning + ', Día ' + perfil.personalDay + '=' + dayMeaning + '). ' +
-        'PREGUNTA: "' + pregunta + '". ' +
-        'INSTRUCCIONES: 1.Dirígete a ' + nombreUsuario + ' por su nombre. 2.Máximo 3 oraciones. 3.Integra 2 tradiciones. 4.Da un consejo concreto para hoy. 5.Tono cálido como abuelo sabio.' :
-        'Respond in ENGLISH to ' + nombreUsuario + '. ' +
-        'DATE: ' + fechaHoy + '. ' +
-        'You are a wise and warm spiritual guide. ' +
-        'PROFILE OF ' + nombreUsuario.toUpperCase() + ': ' +
-        'Western(' + perfil.western + '), Chinese(' + perfil.chinese + '), Vedic(Nakshatra ' + perfil.vedic + '), ' +
-        'Numerology(Life ' + perfil.lifeNumber + '=' + perfil.lifeMeaning + ', Day ' + perfil.personalDay + '=' + dayMeaning + '). ' +
-        'QUESTION: "' + pregunta + '". ' +
-        'INSTRUCTIONS: 1.Address ' + nombreUsuario + ' by name. 2.Maximum 3 sentences. 3.Integrate 2 traditions. 4.Give one concrete tip for today. 5.Warm tone like a wise grandparent.';
+      var promptText = promptLang + 'ERES UN GUIA ESPIRITUAL SABIO que domina 4 tradiciones ancestrales. ' +
+        'PERFIL: OCCIDENTAL(' + perfil.western + '), CHINO(' + perfil.chinese + '), VEDICO(' + perfil.vedic + '), NUMEROLOGIA(Vida ' + perfil.lifeNumber + '-' + perfil.lifeMeaning + ', Dia ' + perfil.personalDay + '). ' +
+        'PREGUNTA: ' + pregunta + '. ' +
+        'INSTRUCCIONES: 1.Responde DIRECTO. 2.INTEGRA 2+ sistemas. 3.Da UN consejo CONCRETO para HOY. 4.Max 150 palabras. 5.Habla como mentor sabio.';
       
       try {
         var response = await fetch('/api/consulta', {
