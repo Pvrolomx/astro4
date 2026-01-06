@@ -250,7 +250,9 @@ function generateActions(western, chinese, numerology, birthDate, lang) {
      western.element === 'Tierra' ? 'Earth' : 
      western.element === 'Aire' ? 'Air' : 'Water');
   const elemWarnings = warningsByElement[lang][elemKey] || warningsByElement[lang][Object.keys(warningsByElement[lang])[0]];
-  const warningIdx = Math.floor(seededRandom(uniqueSeed, today.getDate() * 50) * elemWarnings.length);
+  // Incluir nombre en seed vía soulNumber
+  const nameSeed = numerology && numerology.soulNumber ? numerology.soulNumber * 31 : 0;
+  const warningIdx = Math.floor(seededRandom(uniqueSeed + nameSeed, today.getDate() * 50) * elemWarnings.length);
   const colorIdx = Math.floor(seededRandom(uniqueSeed, 200 + today.getDate()) * colors[lang].length);
   
   return {
