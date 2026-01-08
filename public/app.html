@@ -237,13 +237,55 @@
       document.getElementById('pregunta').value = '';
       document.getElementById('respuesta-consulta').style.display = 'none';
       document.getElementById('btn-otra').style.display = 'none';
-      document.getElementById('btn-consultar').style.display = 'block';
+      var btn = document.getElementById('btn-consultar');
+      btn.style.display = 'block';
+      var t = i18n[currentLang];
+      startRateLimitTimer(btn, t);
+    }
+    
+    // Rate limiting - 60 segundos entre consultas
+    var RATE_LIMIT_SECONDS = 60;
+    var rateLimitInterval = null;
+    
+    function checkRateLimit() {
+      var lastTime = localStorage.getItem('astro4_lastConsult');
+      if (!lastTime) return 0;
+      var elapsed = Math.floor((Date.now() - parseInt(lastTime)) / 1000);
+      return Math.max(0, RATE_LIMIT_SECONDS - elapsed);
+    }
+    
+    function startRateLimitTimer(btn, t) {
+      var remaining = checkRateLimit();
+      if (remaining <= 0) {
+        btn.textContent = t.consultBtn;
+        btn.disabled = false;
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = (currentLang === 'es' ? 'Espera ' : 'Wait ') + remaining + 's...';
+      rateLimitInterval = setInterval(function() {
+        remaining = checkRateLimit();
+        if (remaining <= 0) {
+          clearInterval(rateLimitInterval);
+          btn.textContent = t.consultBtn;
+          btn.disabled = false;
+        } else {
+          btn.textContent = (currentLang === 'es' ? 'Espera ' : 'Wait ') + remaining + 's...';
+        }
+      }, 1000);
     }
     
     async function enviarConsulta() {
       var pregunta = document.getElementById('pregunta').value;
       var t = i18n[currentLang];
       if (!pregunta.trim()) { alert(t.askFirst); return; }
+      
+      // Check rate limit
+      var waitTime = checkRateLimit();
+      if (waitTime > 0) {
+        alert((currentLang === 'es' ? 'Espera ' : 'Wait ') + waitTime + (currentLang === 'es' ? ' segundos antes de consultar de nuevo' : ' seconds before consulting again'));
+        return;
+      }
       
       var btn = document.getElementById('btn-consultar');
       btn.textContent = t.consulting;
@@ -295,6 +337,8 @@
         document.getElementById('respuesta-consulta').innerHTML = '<strong>' + t.guideTitle + '</strong><br><br>' + data.respuesta;
         document.getElementById('btn-otra').style.display = 'block';
         btn.style.display = 'none';
+        // Guardar timestamp para rate limiting
+        localStorage.setItem('astro4_lastConsult', Date.now().toString());
       } catch (error) {
         document.getElementById('respuesta-consulta').style.display = 'block';
         document.getElementById('respuesta-consulta').innerHTML = t.errorMsg;
