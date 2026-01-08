@@ -464,10 +464,21 @@
     
     var urlParams = new URLSearchParams(window.location.search);
     var nombre = urlParams.get('nombre');
+    // Guardar en localStorage para persistencia (Tarea 2.1)
+    if (nombre) localStorage.setItem('astro4_name', nombre);
     var fechaStr = urlParams.get('fecha');
     var currentLang = urlParams.get('lang') || localStorage.getItem('astro4_lang') || 'es';
     
     if (!nombre || !fechaStr) { window.location.href = 'index.html'; }
+    // Guardar fecha en localStorage (Tarea 2.1)
+    if (fechaStr) {
+      var parts = fechaStr.split('-');
+      if (parts.length === 3) {
+        localStorage.setItem('astro4_birthdate', JSON.stringify({
+          dia: parts[2], mes: parts[1], anio: parts[0]
+        }));
+      }
+    }
     
     function setLang(lang) {
       currentLang = lang;
