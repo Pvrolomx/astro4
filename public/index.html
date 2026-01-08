@@ -267,6 +267,50 @@
       });
     }
 
+  
+    // ===== PERSISTENCIA USUARIO (Tarea 2.1) =====
+    function saveUserData() {
+      const nombre = document.getElementById('nombre').value;
+      const dia = document.getElementById('dia').value;
+      const mes = document.getElementById('mes').value;
+      const anio = document.getElementById('anio').value;
+      
+      if (nombre) localStorage.setItem('astro4_name', nombre);
+      if (dia && mes && anio) {
+        localStorage.setItem('astro4_birthdate', JSON.stringify({dia, mes, anio}));
+      }
+    }
+    
+    function loadUserData() {
+      // Cargar nombre
+      const savedName = localStorage.getItem('astro4_name');
+      if (savedName) {
+        document.getElementById('nombre').value = savedName;
+      }
+      
+      // Cargar fecha
+      const savedBirth = localStorage.getItem('astro4_birthdate');
+      if (savedBirth) {
+        try {
+          const birth = JSON.parse(savedBirth);
+          if (birth.dia) document.getElementById('dia').value = birth.dia;
+          if (birth.mes) document.getElementById('mes').value = birth.mes;
+          if (birth.anio) document.getElementById('anio').value = birth.anio;
+        } catch(e) {}
+      }
+    }
+    
+    // Guardar al cambiar campos
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserData();
+      
+      // Event listeners para guardar
+      document.getElementById('nombre').addEventListener('change', saveUserData);
+      document.getElementById('dia').addEventListener('change', saveUserData);
+      document.getElementById('mes').addEventListener('change', saveUserData);
+      document.getElementById('anio').addEventListener('change', saveUserData);
+    });
+
   </script>
 </body>
 </html>

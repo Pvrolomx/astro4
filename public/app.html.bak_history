@@ -68,38 +68,10 @@
     .btn-consult { width: 100%; padding: 14px; background: linear-gradient(135deg, #c9a96e, #a68b5b); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 12px; }
     .btn-consult:disabled { opacity: 0.7; }
     .response-box { margin-top: 12px; padding: 16px; background: white; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; display: none; }
-    
-    /* History Modal */
-    .history-btn { width: 100%; padding: 12px; background: #f5ede3; color: #5c4d3c; border: 1px solid #e5ddd3; border-radius: 12px; font-size: 0.9rem; cursor: pointer; margin-bottom: 10px; }
-    .history-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
-    .history-modal.active { display: flex; }
-    .history-content { background: white; border-radius: 20px; padding: 20px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; }
-    .history-item { padding: 12px; border-bottom: 1px solid #f0ebe3; }
-    .history-item:last-child { border-bottom: none; }
-    .history-date { font-size: 0.75rem; color: #a99d8d; }
-    .history-question { font-weight: 500; color: #5c4d3c; margin: 4px 0; }
-    .history-answer { font-size: 0.85rem; color: #666; }
-    .history-close { background: #c9a96e; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-top: 12px; }
-    .history-empty { text-align: center; color: #a99d8d; padding: 20px; }
-
     .btn-another { margin-top: 10px; padding: 10px 20px; background: #e5ddd3; color: #5c4d3c; border: none; border-radius: 10px; cursor: pointer; display: none; }
     
     /* Share Button */
     .btn-share { width: 100%; padding: 14px; background: white; color: #8b7355; border: 2px solid #c9a96e; border-radius: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
-    
-    /* Share Modal */
-    .share-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-    .share-modal.active { display: flex; }
-    .share-modal-content { background: white; border-radius: 20px; padding: 24px; max-width: 320px; width: 90%; text-align: center; }
-    .share-modal h3 { font-family: 'Cormorant Garamond', serif; color: #5c4d3c; margin-bottom: 20px; }
-    .share-options { display: flex; flex-direction: column; gap: 12px; }
-    .share-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
-    .share-btn:active { transform: scale(0.97); }
-    .share-btn.whatsapp { background: #25D366; color: white; }
-    .share-btn.twitter { background: #1DA1F2; color: white; }
-    .share-btn.native { background: linear-gradient(135deg, #c9a96e, #a68b5b); color: white; }
-    .share-btn.copy { background: #f0ebe3; color: #5c4d3c; }
-    .share-close { margin-top: 16px; padding: 10px 24px; background: transparent; border: 1px solid #e5ddd3; border-radius: 10px; color: #8b7d6b; cursor: pointer; }
     
     /* Footer */
     footer { text-align: center; padding: 16px; color: #a99d8d; font-size: 0.8rem; }
@@ -159,275 +131,16 @@
       <button class="btn-another" id="btn-otra" onclick="otraConsulta()" data-i18n="anotherBtn">🔄 Otra Consulta</button>
     </div>
     
-    
-    <button class="history-btn" onclick="showHistory()" data-i18n="historyBtn">📜 Ver Historial de Consultas</button>
-    
-    <div class="history-modal" id="historyModal">
-      <div class="history-content">
-        <h3 style="font-family: 'Cormorant Garamond', serif; color: #5c4d3c; margin-bottom: 12px;" data-i18n="historyTitle">📜 Historial de Consultas</h3>
-        <div id="historyList"></div>
-        <button class="history-close" onclick="closeHistory()" data-i18n="closeBtn">Cerrar</button>
-      </div>
-    </div>
-
     <button class="btn-share" onclick="shareResults()" data-i18n="shareBtn">📤 Compartir mi energía de hoy</button>
     
-    <!-- Share Modal -->
-  <div class="share-modal" id="shareModal">
-    <div class="share-modal-content">
-      <h3 data-i18n="shareTitle">Compartir mi energía</h3>
-      <div class="share-options">
-        <button class="share-btn native" id="shareNative" onclick="shareNative()" style="display:none;">
-          <span>📤</span> <span data-i18n="shareNativeBtn">Compartir</span>
-        </button>
-        <button class="share-btn whatsapp" onclick="shareWhatsApp()">
-          <span>💬</span> <span>WhatsApp</span>
-        </button>
-        <button class="share-btn twitter" onclick="shareTwitter()">
-          <span>🐦</span> <span>Twitter / X</span>
-        </button>
-        <button class="share-btn copy" onclick="shareCopy()">
-          <span>📋</span> <span data-i18n="copyBtn">Copiar texto</span>
-        </button>
-      </div>
-      <button class="share-close" onclick="closeShareModal()" data-i18n="closeBtn">Cerrar</button>
-    </div>
-  </div>
-  
-  <footer>
+    <footer>
       <p>🐝 <span data-i18n="madeWith">Hecho con ♥ por</span> <a href="#">Colmena (C6)</a></p>
       <p><a href="#" onclick="showPrivacy()" data-i18n="privacy">Privacidad</a></p>
     </footer>
   </div>
   
-  <script src="js/astro-calc.js">
-    // === IndexedDB para Historial de Consultas ===
-    const DB_NAME = 'astro4_history';
-    const DB_VERSION = 1;
-    const STORE_NAME = 'consultas';
-    const MAX_HISTORY = 20;
-    
-    function openHistoryDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onerror = () => reject(request.error);
-        request.onsuccess = () => resolve(request.result);
-        request.onupgradeneeded = (e) => {
-          const db = e.target.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-          }
-        };
-      });
-    }
-    
-    async function saveConsulta(pregunta, respuesta) {
-      try {
-        const db = await openHistoryDB();
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        
-        // Agregar nueva consulta
-        store.add({
-          fecha: new Date().toISOString(),
-          pregunta: pregunta,
-          respuesta: respuesta
-        });
-        
-        // Limitar a MAX_HISTORY
-        const countReq = store.count();
-        countReq.onsuccess = () => {
-          if (countReq.result > MAX_HISTORY) {
-            const cursor = store.openCursor();
-            cursor.onsuccess = (e) => {
-              if (e.target.result) {
-                e.target.result.delete();
-              }
-            };
-          }
-        };
-        
-        await tx.complete;
-        db.close();
-      } catch (err) {
-        console.log('Error guardando consulta:', err);
-      }
-    }
-    
-    async function getHistorial() {
-      try {
-        const db = await openHistoryDB();
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        
-        return new Promise((resolve) => {
-          const items = [];
-          const cursor = store.openCursor(null, 'prev');
-          cursor.onsuccess = (e) => {
-            const c = e.target.result;
-            if (c) {
-              items.push(c.value);
-              c.continue();
-            } else {
-              db.close();
-              resolve(items);
-            }
-          };
-          cursor.onerror = () => resolve([]);
-        });
-      } catch (err) {
-        return [];
-      }
-    }
-    
-    async function showHistory() {
-      const t = translations[currentLang];
-      const items = await getHistorial();
-      const list = document.getElementById('historyList');
-      
-      if (items.length === 0) {
-        list.innerHTML = '<div class="history-empty">' + t.noHistory + '</div>';
-      } else {
-        list.innerHTML = items.map(item => {
-          const fecha = new Date(item.fecha).toLocaleDateString(currentLang === 'es' ? 'es-MX' : 'en-US', { 
-            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
-          });
-          return '<div class="history-item">' +
-            '<div class="history-date">' + fecha + '</div>' +
-            '<div class="history-question">' + item.pregunta + '</div>' +
-            '<div class="history-answer">' + item.respuesta.substring(0, 150) + '...</div>' +
-          '</div>';
-        }).join('');
-      }
-      
-      document.getElementById('historyModal').classList.add('active');
-    }
-    
-    function closeHistory() {
-      document.getElementById('historyModal').classList.remove('active');
-    }
-    
-    // Cerrar modal al hacer clic fuera
-    document.getElementById('historyModal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'historyModal') closeHistory();
-    });
-    
-
-  </script>
-  <script src="js/actions-engine.js">
-    // === IndexedDB para Historial de Consultas ===
-    const DB_NAME = 'astro4_history';
-    const DB_VERSION = 1;
-    const STORE_NAME = 'consultas';
-    const MAX_HISTORY = 20;
-    
-    function openHistoryDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onerror = () => reject(request.error);
-        request.onsuccess = () => resolve(request.result);
-        request.onupgradeneeded = (e) => {
-          const db = e.target.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-          }
-        };
-      });
-    }
-    
-    async function saveConsulta(pregunta, respuesta) {
-      try {
-        const db = await openHistoryDB();
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        
-        // Agregar nueva consulta
-        store.add({
-          fecha: new Date().toISOString(),
-          pregunta: pregunta,
-          respuesta: respuesta
-        });
-        
-        // Limitar a MAX_HISTORY
-        const countReq = store.count();
-        countReq.onsuccess = () => {
-          if (countReq.result > MAX_HISTORY) {
-            const cursor = store.openCursor();
-            cursor.onsuccess = (e) => {
-              if (e.target.result) {
-                e.target.result.delete();
-              }
-            };
-          }
-        };
-        
-        await tx.complete;
-        db.close();
-      } catch (err) {
-        console.log('Error guardando consulta:', err);
-      }
-    }
-    
-    async function getHistorial() {
-      try {
-        const db = await openHistoryDB();
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        
-        return new Promise((resolve) => {
-          const items = [];
-          const cursor = store.openCursor(null, 'prev');
-          cursor.onsuccess = (e) => {
-            const c = e.target.result;
-            if (c) {
-              items.push(c.value);
-              c.continue();
-            } else {
-              db.close();
-              resolve(items);
-            }
-          };
-          cursor.onerror = () => resolve([]);
-        });
-      } catch (err) {
-        return [];
-      }
-    }
-    
-    async function showHistory() {
-      const t = translations[currentLang];
-      const items = await getHistorial();
-      const list = document.getElementById('historyList');
-      
-      if (items.length === 0) {
-        list.innerHTML = '<div class="history-empty">' + t.noHistory + '</div>';
-      } else {
-        list.innerHTML = items.map(item => {
-          const fecha = new Date(item.fecha).toLocaleDateString(currentLang === 'es' ? 'es-MX' : 'en-US', { 
-            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
-          });
-          return '<div class="history-item">' +
-            '<div class="history-date">' + fecha + '</div>' +
-            '<div class="history-question">' + item.pregunta + '</div>' +
-            '<div class="history-answer">' + item.respuesta.substring(0, 150) + '...</div>' +
-          '</div>';
-        }).join('');
-      }
-      
-      document.getElementById('historyModal').classList.add('active');
-    }
-    
-    function closeHistory() {
-      document.getElementById('historyModal').classList.remove('active');
-    }
-    
-    // Cerrar modal al hacer clic fuera
-    document.getElementById('historyModal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'historyModal') closeHistory();
-    });
-    
-
-  </script>
+  <script src="js/astro-calc.js"></script>
+  <script src="js/actions-engine.js"></script>
   <script>
     const i18n = {
       es: {
@@ -439,7 +152,6 @@
         consultPlaceholder: "Escribe tu pregunta...", consultBtn: "✨ Consultar",
         consulting: "🔮 Consultando...", anotherBtn: "🔄 Otra Consulta",
         shareBtn: "📤 Compartir mi energía de hoy", madeWith: "Hecho con ♥ por", privacy: "Privacidad",
-        shareTitle: "Compartir mi energía", shareNativeBtn: "Compartir", copyBtn: "Copiar texto", closeBtn: "Cerrar", copied: "¡Copiado!",
         privacyMsg: "ASTRO4 respeta tu privacidad. Tus datos se guardan solo en tu dispositivo.",
         guideTitle: "🔮 Tu Guía:", errorMsg: "❌ Error. Intenta de nuevo.",
         askFirst: "Escribe una pregunta primero", copied: "¡Copiado!",
@@ -454,7 +166,6 @@
         consultPlaceholder: "Write your question...", consultBtn: "✨ Consult",
         consulting: "🔮 Consulting...", anotherBtn: "🔄 Another Question",
         shareBtn: "📤 Share my energy today", madeWith: "Made with ♥ by", privacy: "Privacy",
-        shareTitle: "Share my energy", shareNativeBtn: "Share", copyBtn: "Copy text", closeBtn: "Close", copied: "Copied!",
         privacyMsg: "ASTRO4 respects your privacy. Your data is stored only on your device.",
         guideTitle: "🔮 Your Guide:", errorMsg: "❌ Error. Try again.",
         askFirst: "Write a question first", copied: "Copied!",
@@ -628,8 +339,6 @@
         btn.style.display = 'none';
         // Guardar timestamp para rate limiting
         localStorage.setItem('astro4_lastConsult', Date.now().toString());
-        // Guardar en historial IndexedDB
-        saveConsulta(pregunta, data.respuesta);
       } catch (error) {
         document.getElementById('respuesta-consulta').style.display = 'block';
         document.getElementById('respuesta-consulta').innerHTML = t.errorMsg;
@@ -638,47 +347,16 @@
       btn.disabled = false;
     }
     
-    function getShareText() {
-      return currentLang === 'es' ?
-        '🔮 Mi energía ASTRO4:\n☀️ ' + western.name + ' (' + western.element + ')\n🐉 ' + chinese.animal + ' ' + chinese.element + '\n🕉️ Nakshatra: ' + vedic.nakshatra + '\n🔢 Número de Vida: ' + numerology.lifeNumber + '\n\n✨ Descubre la tuya: https://astro3-lovat.vercel.app' :
-        '🔮 My ASTRO4 energy:\n☀️ ' + western.name + ' (' + western.element + ')\n🐉 ' + chinese.animal + ' ' + chinese.element + '\n🕉️ Nakshatra: ' + vedic.nakshatra + '\n🔢 Life Number: ' + numerology.lifeNumber + '\n\n✨ Discover yours: https://astro3-lovat.vercel.app';
-    }
-    
     function shareResults() {
-      document.getElementById('shareModal').classList.add('active');
-      if (navigator.share) {
-        document.getElementById('shareNative').style.display = 'flex';
-      }
-    }
-    
-    function closeShareModal() {
-      document.getElementById('shareModal').classList.remove('active');
-    }
-    
-    function shareNative() {
-      var text = getShareText();
-      navigator.share({ title: 'ASTRO4', text: text }).then(closeShareModal);
-    }
-    
-    function shareWhatsApp() {
-      var text = encodeURIComponent(getShareText());
-      window.open('https://wa.me/?text=' + text, '_blank');
-      closeShareModal();
-    }
-    
-    function shareTwitter() {
-      var text = encodeURIComponent(getShareText().substring(0, 280));
-      window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
-      closeShareModal();
-    }
-    
-    function shareCopy() {
       var t = i18n[currentLang];
-      var text = getShareText();
-      navigator.clipboard.writeText(text).then(function() {
-        alert(t.copied);
-        closeShareModal();
-      });
+      var text = currentLang === 'es' ?
+        '🔮 Mi energía ASTRO4:\n☀️ ' + western.name + '\n🐉 ' + chinese.animal + '\n🕉️ ' + vedic.nakshatra + '\n🔢 Vida ' + numerology.lifeNumber + '\n\nDescubre: https://astro3-lovat.vercel.app' :
+        '🔮 My ASTRO4 energy:\n☀️ ' + western.name + '\n🐉 ' + chinese.animal + '\n🕉️ ' + vedic.nakshatra + '\n🔢 Life ' + numerology.lifeNumber + '\n\nDiscover: https://astro3-lovat.vercel.app';
+      if (navigator.share) {
+        navigator.share({ title: 'ASTRO4', text: text });
+      } else {
+        navigator.clipboard.writeText(text).then(function() { alert(t.copied); });
+      }
     }
   
     // Register Service Worker
@@ -689,119 +367,6 @@
           .catch(err => console.log('[SW] Error:', err));
       });
     }
-
-  
-    // === IndexedDB para Historial de Consultas ===
-    const DB_NAME = 'astro4_history';
-    const DB_VERSION = 1;
-    const STORE_NAME = 'consultas';
-    const MAX_HISTORY = 20;
-    
-    function openHistoryDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onerror = () => reject(request.error);
-        request.onsuccess = () => resolve(request.result);
-        request.onupgradeneeded = (e) => {
-          const db = e.target.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-          }
-        };
-      });
-    }
-    
-    async function saveConsulta(pregunta, respuesta) {
-      try {
-        const db = await openHistoryDB();
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        
-        // Agregar nueva consulta
-        store.add({
-          fecha: new Date().toISOString(),
-          pregunta: pregunta,
-          respuesta: respuesta
-        });
-        
-        // Limitar a MAX_HISTORY
-        const countReq = store.count();
-        countReq.onsuccess = () => {
-          if (countReq.result > MAX_HISTORY) {
-            const cursor = store.openCursor();
-            cursor.onsuccess = (e) => {
-              if (e.target.result) {
-                e.target.result.delete();
-              }
-            };
-          }
-        };
-        
-        await tx.complete;
-        db.close();
-      } catch (err) {
-        console.log('Error guardando consulta:', err);
-      }
-    }
-    
-    async function getHistorial() {
-      try {
-        const db = await openHistoryDB();
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        
-        return new Promise((resolve) => {
-          const items = [];
-          const cursor = store.openCursor(null, 'prev');
-          cursor.onsuccess = (e) => {
-            const c = e.target.result;
-            if (c) {
-              items.push(c.value);
-              c.continue();
-            } else {
-              db.close();
-              resolve(items);
-            }
-          };
-          cursor.onerror = () => resolve([]);
-        });
-      } catch (err) {
-        return [];
-      }
-    }
-    
-    async function showHistory() {
-      const t = translations[currentLang];
-      const items = await getHistorial();
-      const list = document.getElementById('historyList');
-      
-      if (items.length === 0) {
-        list.innerHTML = '<div class="history-empty">' + t.noHistory + '</div>';
-      } else {
-        list.innerHTML = items.map(item => {
-          const fecha = new Date(item.fecha).toLocaleDateString(currentLang === 'es' ? 'es-MX' : 'en-US', { 
-            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
-          });
-          return '<div class="history-item">' +
-            '<div class="history-date">' + fecha + '</div>' +
-            '<div class="history-question">' + item.pregunta + '</div>' +
-            '<div class="history-answer">' + item.respuesta.substring(0, 150) + '...</div>' +
-          '</div>';
-        }).join('');
-      }
-      
-      document.getElementById('historyModal').classList.add('active');
-    }
-    
-    function closeHistory() {
-      document.getElementById('historyModal').classList.remove('active');
-    }
-    
-    // Cerrar modal al hacer clic fuera
-    document.getElementById('historyModal')?.addEventListener('click', (e) => {
-      if (e.target.id === 'historyModal') closeHistory();
-    });
-    
 
   </script>
 </body>
