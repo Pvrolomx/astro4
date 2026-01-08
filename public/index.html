@@ -257,6 +257,16 @@
     function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((result) => { if (result.outcome === 'accepted') { document.getElementById('installBanner').style.display = 'none'; } deferredPrompt = null; }); } else { alert(currentLang === 'es' ? 'Para instalar:\n1. Toca el menú ⋮\n2. Selecciona "Añadir a pantalla de inicio"' : 'To install:\n1. Tap menu ⋮\n2. Select "Add to Home Screen"'); } }
     if (window.matchMedia('(display-mode: standalone)').matches) { document.getElementById('installBanner').style.display = 'none'; }
     document.getElementById('onboarding-form').addEventListener('submit', function(e) { e.preventDefault(); var nombre = document.getElementById('nombre').value; var dia = document.getElementById('dia').value; var mes = document.getElementById('mes').value; var anio = document.getElementById('anio').value; if(mes.length === 1) mes = '0' + mes; if(dia.length === 1) dia = '0' + dia; var fecha = anio + '-' + mes + '-' + dia; window.location.href = 'app.html?nombre=' + encodeURIComponent(nombre) + '&fecha=' + fecha + '&lang=' + currentLang; });
+  
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('[SW] Registered'))
+          .catch(err => console.log('[SW] Error:', err));
+      });
+    }
+
   </script>
 </body>
 </html>
