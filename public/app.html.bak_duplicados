@@ -304,8 +304,297 @@
       <p><a href="#" onclick="showPrivacy()" data-i18n="privacy">Privacidad</a></p>
     </footer>
   </div>
+  
+  <script src="js/astro-calc.js">
+    // === IndexedDB para Historial de Consultas ===
+    const DB_NAME = 'astro4_history';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'consultas';
+    const MAX_HISTORY = 20;
+    
+    function openHistoryDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => resolve(request.result);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+          }
+        };
+      });
+    }
+    
+    async function saveConsulta(pregunta, respuesta) {
+      try {
+        const db = await openHistoryDB();
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        
+        // Agregar nueva consulta
+        store.add({
+          fecha: new Date().toISOString(),
+          pregunta: pregunta,
+          respuesta: respuesta
+        });
+        
+        // Limitar a MAX_HISTORY
+        const countReq = store.count();
+        countReq.onsuccess = () => {
+          if (countReq.result > MAX_HISTORY) {
+            const cursor = store.openCursor();
+            cursor.onsuccess = (e) => {
+              if (e.target.result) {
+                e.target.result.delete();
+              }
+            };
+          }
+        };
+        
+        await tx.complete;
+        db.close();
+      } catch (err) {
+        console.log('Error guardando consulta:', err);
+      }
+    }
+    
+    async function getHistorial() {
+      try {
+        const db = await openHistoryDB();
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        
+        return new Promise((resolve) => {
+          const items = [];
+          const cursor = store.openCursor(null, 'prev');
+          cursor.onsuccess = (e) => {
+            const c = e.target.result;
+            if (c) {
+              items.push(c.value);
+              c.continue();
+            } else {
+              db.close();
+              resolve(items);
+            }
+          };
+          cursor.onerror = () => resolve([]);
+        });
+      } catch (err) {
+        return [];
+      }
+    }
+    
+    async function showHistory() {
+      const t = translations[currentLang];
+      const items = await getHistorial();
+      const list = document.getElementById('historyList');
+      
+      if (items.length === 0) {
+        list.innerHTML = '<div class="history-empty">' + t.noHistory + '</div>';
+      } else {
+        list.innerHTML = items.map(item => {
+          const fecha = new Date(item.fecha).toLocaleDateString(currentLang === 'es' ? 'es-MX' : 'en-US', { 
+            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
+          });
+          return '<div class="history-item">' +
+            '<div class="history-date">' + fecha + '</div>' +
+            '<div class="history-question">' + item.pregunta + '</div>' +
+            '<div class="history-answer">' + item.respuesta.substring(0, 150) + '...</div>' +
+          '</div>';
+        }).join('');
+      }
+      
+      document.getElementById('historyModal').classList.add('active');
+    }
+    
+    function closeHistory() {
+      document.getElementById('historyModal').classList.remove('active');
+    }
+    
+    // Cerrar modal al hacer clic fuera
+    document.getElementById('historyModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'historyModal') closeHistory();
+    });
+    
 
-  <script src="js/astro-calc.js"></script>
+
+    // === Tema Oscuro ===
+    function initTheme() {
+      var saved = localStorage.getItem('astro4_theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeBtn').textContent = '☀️';
+        document.getElementById('theme-color').content = '#1a1a2e';
+      }
+    }
+    
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var btn = document.getElementById('themeBtn');
+      var meta = document.getElementById('theme-color');
+      if (current === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('astro4_theme', 'light');
+        btn.textContent = '🌙';
+        meta.content = '#c9a96e';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('astro4_theme', 'dark');
+        btn.textContent = '☀️';
+        meta.content = '#1a1a2e';
+      }
+    }
+    
+    // Inicializar tema al cargar
+    initTheme();
+    
+  </script>
+  <script src="js/actions-engine.js">
+    // === IndexedDB para Historial de Consultas ===
+    const DB_NAME = 'astro4_history';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'consultas';
+    const MAX_HISTORY = 20;
+    
+    function openHistoryDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => resolve(request.result);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+          }
+        };
+      });
+    }
+    
+    async function saveConsulta(pregunta, respuesta) {
+      try {
+        const db = await openHistoryDB();
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        
+        // Agregar nueva consulta
+        store.add({
+          fecha: new Date().toISOString(),
+          pregunta: pregunta,
+          respuesta: respuesta
+        });
+        
+        // Limitar a MAX_HISTORY
+        const countReq = store.count();
+        countReq.onsuccess = () => {
+          if (countReq.result > MAX_HISTORY) {
+            const cursor = store.openCursor();
+            cursor.onsuccess = (e) => {
+              if (e.target.result) {
+                e.target.result.delete();
+              }
+            };
+          }
+        };
+        
+        await tx.complete;
+        db.close();
+      } catch (err) {
+        console.log('Error guardando consulta:', err);
+      }
+    }
+    
+    async function getHistorial() {
+      try {
+        const db = await openHistoryDB();
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        
+        return new Promise((resolve) => {
+          const items = [];
+          const cursor = store.openCursor(null, 'prev');
+          cursor.onsuccess = (e) => {
+            const c = e.target.result;
+            if (c) {
+              items.push(c.value);
+              c.continue();
+            } else {
+              db.close();
+              resolve(items);
+            }
+          };
+          cursor.onerror = () => resolve([]);
+        });
+      } catch (err) {
+        return [];
+      }
+    }
+    
+    async function showHistory() {
+      const t = translations[currentLang];
+      const items = await getHistorial();
+      const list = document.getElementById('historyList');
+      
+      if (items.length === 0) {
+        list.innerHTML = '<div class="history-empty">' + t.noHistory + '</div>';
+      } else {
+        list.innerHTML = items.map(item => {
+          const fecha = new Date(item.fecha).toLocaleDateString(currentLang === 'es' ? 'es-MX' : 'en-US', { 
+            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
+          });
+          return '<div class="history-item">' +
+            '<div class="history-date">' + fecha + '</div>' +
+            '<div class="history-question">' + item.pregunta + '</div>' +
+            '<div class="history-answer">' + item.respuesta.substring(0, 150) + '...</div>' +
+          '</div>';
+        }).join('');
+      }
+      
+      document.getElementById('historyModal').classList.add('active');
+    }
+    
+    function closeHistory() {
+      document.getElementById('historyModal').classList.remove('active');
+    }
+    
+    // Cerrar modal al hacer clic fuera
+    document.getElementById('historyModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'historyModal') closeHistory();
+    });
+    
+
+
+    // === Tema Oscuro ===
+    function initTheme() {
+      var saved = localStorage.getItem('astro4_theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeBtn').textContent = '☀️';
+        document.getElementById('theme-color').content = '#1a1a2e';
+      }
+    }
+    
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var btn = document.getElementById('themeBtn');
+      var meta = document.getElementById('theme-color');
+      if (current === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('astro4_theme', 'light');
+        btn.textContent = '🌙';
+        meta.content = '#c9a96e';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('astro4_theme', 'dark');
+        btn.textContent = '☀️';
+        meta.content = '#1a1a2e';
+      }
+    }
+    
+    // Inicializar tema al cargar
+    initTheme();
+    
+  </script>
   <script>
     const i18n = {
       es: {
