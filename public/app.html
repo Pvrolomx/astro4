@@ -388,6 +388,7 @@
     if (nombre) localStorage.setItem('astro4_name', nombre);
     var fechaStr = urlParams.get('fecha');
     var horaStr = urlParams.get('hora') || '12:00';
+    var tzOffset = parseFloat(urlParams.get('tz')) || (-new Date().getTimezoneOffset()/60);
     var currentLang = urlParams.get('lang') || localStorage.getItem('astro4_lang') || 'es';
     
     if (!nombre || !fechaStr) { window.location.href = 'index.html'; }
@@ -396,7 +397,7 @@
       var parts = fechaStr.split('-');
       if (parts.length === 3) {
         localStorage.setItem('astro4_birthdate', JSON.stringify({
-          dia: parts[2], mes: parts[1], anio: parts[0], hora: horaStr
+          dia: parts[2], mes: parts[1], anio: parts[0], hora: horaStr, tz: tzOffset
         }));
       }
     }
@@ -420,7 +421,12 @@
     
     function showPrivacy() { alert(i18n[currentLang].privacyMsg); }
     
-    var birthDate = new Date(fechaStr + 'T' + horaStr + ':00');
+    // Create birthDate in UTC based on local time and timezone offset
+    var [birthYear, birthMonth, birthDay] = fechaStr.split('-').map(Number);
+    var [birthHour, birthMin] = horaStr.split(':').map(Number);
+    // Convert local birth time to UTC: subtract the birth timezone offset
+    var birthDateUTC = new Date(Date.UTC(birthYear, birthMonth - 1, birthDay, birthHour - tzOffset, birthMin, 0));
+    var birthDate = birthDateUTC;
     var western, chinese, vedic, numerology, result;
     
     function updateDate() {

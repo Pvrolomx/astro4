@@ -32,6 +32,8 @@
     .date-row { display: flex; gap: 8px; }
     .time-row { display: flex; gap: 8px; margin-top: 8px; }
     .time-row input { flex: 1; }
+    .tz-row { margin-top: 8px; }
+    .tz-row select { width: 100%; padding: 10px; border: 1px solid #e5ddd3; border-radius: 8px; font-size: 14px; background: #faf7f2; }
     .time-hint { font-size: 0.75rem; color: #a99d8d; margin-top: 4px; }
     .date-row select { flex: 1; }
     .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #c9a96e 0%, #a68b5b 100%); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(166, 139, 91, 0.3); transition: transform 0.2s; }
@@ -106,6 +108,34 @@
           </div>
           <div class="time-row">
             <input type="time" id="hora" value="12:00">
+          </div>
+          <div class="tz-row">
+            <select id="timezone">
+              <option value="auto" data-i18n="tzAuto">Detectar automaticamente</option>
+              <option value="-12">UTC-12 (Baker Island)</option>
+              <option value="-11">UTC-11 (Samoa)</option>
+              <option value="-10">UTC-10 (Hawaii)</option>
+              <option value="-9">UTC-9 (Alaska)</option>
+              <option value="-8">UTC-8 (Los Angeles)</option>
+              <option value="-7">UTC-7 (Denver)</option>
+              <option value="-6">UTC-6 (Mexico City)</option>
+              <option value="-5">UTC-5 (New York)</option>
+              <option value="-4">UTC-4 (Santiago)</option>
+              <option value="-3">UTC-3 (Buenos Aires)</option>
+              <option value="0">UTC+0 (London)</option>
+              <option value="1">UTC+1 (Paris, Madrid)</option>
+              <option value="2">UTC+2 (Cairo)</option>
+              <option value="3">UTC+3 (Moscow)</option>
+              <option value="4">UTC+4 (Dubai)</option>
+              <option value="5">UTC+5 (Karachi)</option>
+              <option value="5.5">UTC+5:30 (India)</option>
+              <option value="6">UTC+6 (Dhaka)</option>
+              <option value="7">UTC+7 (Bangkok)</option>
+              <option value="8">UTC+8 (Beijing, Singapore)</option>
+              <option value="9">UTC+9 (Tokyo)</option>
+              <option value="10">UTC+10 (Sydney)</option>
+              <option value="12">UTC+12 (Auckland)</option>
+            </select>
           </div>
           <div class="time-hint" data-i18n="timeHint">Hora aproximada - opcional para mayor precision</div>
         </div>
@@ -186,9 +216,13 @@
     let currentModal = null;
     const i18n = {
       es: {
-        timeHint: "Hora aproximada - opcional para mayor precisión", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver" },
+        timeHint: "Hora aproximada - opcional para mayor precisión",
+        tzAuto: "Detectar automáticamente",
+        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver" },
       en: {
-        timeHint: "Approximate time - optional for better accuracy", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back" }
+        timeHint: "Approximate time - optional for better accuracy",
+        tzAuto: "Detect automatically",
+        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back" }
     };
     let currentLang = localStorage.getItem('astro4_lang') || 'es';
     function openModal(type) {
@@ -276,7 +310,7 @@
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
     function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((result) => { if (result.outcome === 'accepted') { document.getElementById('installBanner').style.display = 'none'; } deferredPrompt = null; }); } else { alert(currentLang === 'es' ? 'Para instalar:\n1. Toca el menú ⋮\n2. Selecciona "Añadir a pantalla de inicio"' : 'To install:\n1. Tap menu ⋮\n2. Select "Add to Home Screen"'); } }
     if (window.matchMedia('(display-mode: standalone)').matches) { document.getElementById('installBanner').style.display = 'none'; }
-    document.getElementById('onboarding-form').addEventListener('submit', function(e) { e.preventDefault(); var nombre = document.getElementById('nombre').value; var dia = document.getElementById('dia').value; var mes = document.getElementById('mes').value; var anio = document.getElementById('anio').value; if(mes.length === 1) mes = '0' + mes; if(dia.length === 1) dia = '0' + dia; var fecha = anio + '-' + mes + '-' + dia; var hora = document.getElementById('hora').value || '12:00'; window.location.href = 'app.html?nombre=' + encodeURIComponent(nombre) + '&fecha=' + fecha + '&hora=' + hora + '&lang=' + currentLang; });
+    document.getElementById('onboarding-form').addEventListener('submit', function(e) { e.preventDefault(); var nombre = document.getElementById('nombre').value; var dia = document.getElementById('dia').value; var mes = document.getElementById('mes').value; var anio = document.getElementById('anio').value; if(mes.length === 1) mes = '0' + mes; if(dia.length === 1) dia = '0' + dia; var fecha = anio + '-' + mes + '-' + dia; var hora = document.getElementById('hora').value || '12:00'; var tz = document.getElementById('timezone').value; if(tz === 'auto') tz = (-new Date().getTimezoneOffset()/60).toString(); window.location.href = 'app.html?nombre=' + encodeURIComponent(nombre) + '&fecha=' + fecha + '&hora=' + hora + '&tz=' + tz + '&lang=' + currentLang; });
   
     // Register Service Worker
     if ('serviceWorker' in navigator) {
@@ -298,7 +332,9 @@
       if (nombre) localStorage.setItem('astro4_name', nombre);
       if (dia && mes && anio) {
         var hora = document.getElementById('hora').value || '12:00';
-        localStorage.setItem('astro4_birthdate', JSON.stringify({dia, mes, anio, hora}));
+        var tz = document.getElementById('timezone').value;
+        if(tz === 'auto') tz = (-new Date().getTimezoneOffset()/60).toString();
+        localStorage.setItem('astro4_birthdate', JSON.stringify({dia, mes, anio, hora, tz}));
       }
     }
     
