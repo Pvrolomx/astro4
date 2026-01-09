@@ -7,7 +7,7 @@
 
 const STRIPE_CONFIG = {
   // Publishable key (pk_test para pruebas, pk_live para producción)
-  publishableKey: 'pk_test_REEMPLAZAR_CON_TU_KEY',
+  publishableKey: 'pk_test_51SceBWPG43KliMIN8CCrVbsxoryl7hhPAJNs2r4JEk2HZ1tdUsbwGGW5T8ppvjevNoPMja4r3Tdl9mNGC2lkyF6V00TjFTKofG',
   
   // Price IDs de los productos (crear en Stripe Dashboard)
   prices: {
