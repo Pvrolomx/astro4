@@ -137,6 +137,26 @@
     /* Theme Toggle */
     .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 100; display: flex; align-items: center; justify-content: center; }
 
+    /* Compatibility Section */
+    .compat-card { background: linear-gradient(135deg, #f9f5f0, #f5ede3); }
+    .compat-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #5c4d3c; margin-bottom: 12px; }
+    .compat-form { margin-bottom: 16px; }
+    .compat-form label { display: block; font-size: 0.85rem; color: #5c4d3c; margin-bottom: 6px; font-weight: 500; }
+    .compat-form input { width: 100%; padding: 12px; border: 1px solid #e5ddd3; border-radius: 12px; font-size: 16px; background: white; }
+    .btn-compat { width: 100%; padding: 14px; background: linear-gradient(135deg, #e91e63, #c2185b); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 12px; }
+    .compat-results { display: none; margin-top: 16px; }
+    .compat-score { text-align: center; margin-bottom: 16px; }
+    .compat-score .big-number { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: #e91e63; font-weight: 600; }
+    .compat-score .label { font-size: 0.85rem; color: #8b7d6b; }
+    .compat-detail { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0ebe3; }
+    .compat-detail:last-child { border-bottom: none; }
+    .compat-detail .icon { font-size: 1.3rem; margin-right: 12px; }
+    .compat-detail .info { flex: 1; }
+    .compat-detail .tradition { font-size: 0.75rem; color: #a99d8d; }
+    .compat-detail .match { font-size: 0.9rem; color: #5c4d3c; font-weight: 500; }
+    .compat-bar { height: 6px; background: #e5ddd3; border-radius: 3px; margin-top: 4px; overflow: hidden; }
+    .compat-bar-fill { height: 100%; background: linear-gradient(90deg, #e91e63, #c2185b); border-radius: 3px; transition: width 0.5s ease; }
+    
     footer { text-align: center; padding: 16px; color: #a99d8d; font-size: 0.8rem; }
     footer a { color: #c9a96e; text-decoration: none; }
   </style>
@@ -194,6 +214,55 @@
       <button class="btn-another" id="btn-otra" onclick="otraConsulta()" data-i18n="anotherBtn">🔄 Otra Consulta</button>
     </div>
     
+    
+    <!-- Compatibility Section -->
+    <div class="card compat-card">
+      <h3 data-i18n="compatTitle">💕 Compatibilidad de Pareja</h3>
+      <p style="font-size:0.85rem;color:#8b7d6b;margin-bottom:12px;" data-i18n="compatSub">Descubre tu conexión cósmica</p>
+      <div class="compat-form">
+        <label data-i18n="partnerBirth">Fecha de nacimiento de tu pareja</label>
+        <input type="date" id="partnerDate" />
+      </div>
+      <button class="btn-compat" onclick="calcCompatibility()" data-i18n="compatBtn">💕 Calcular Compatibilidad</button>
+      <div class="compat-results" id="compatResults">
+        <div class="compat-score">
+          <div class="big-number" id="compatTotal">--</div>
+          <div class="label" data-i18n="compatLabel">Compatibilidad Total</div>
+        </div>
+        <div class="compat-detail">
+          <span class="icon">☀️</span>
+          <div class="info">
+            <div class="tradition" data-i18n="western">Occidental</div>
+            <div class="match" id="compatWestern">--</div>
+            <div class="compat-bar"><div class="compat-bar-fill" id="barWestern" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="compat-detail">
+          <span class="icon">🐉</span>
+          <div class="info">
+            <div class="tradition" data-i18n="chinese">Chino</div>
+            <div class="match" id="compatChinese">--</div>
+            <div class="compat-bar"><div class="compat-bar-fill" id="barChinese" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="compat-detail">
+          <span class="icon">🕉️</span>
+          <div class="info">
+            <div class="tradition" data-i18n="vedic">Védico</div>
+            <div class="match" id="compatVedic">--</div>
+            <div class="compat-bar"><div class="compat-bar-fill" id="barVedic" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="compat-detail">
+          <span class="icon">🔢</span>
+          <div class="info">
+            <div class="tradition" data-i18n="numerology">Numerología</div>
+            <div class="match" id="compatNumero">--</div>
+            <div class="compat-bar"><div class="compat-bar-fill" id="barNumero" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <button class="notif-btn" id="notifBtn" onclick="toggleNotifications()" data-i18n="notifBtn">🔔 Activar Recordatorio Diario</button>
     <button class="history-btn" onclick="showHistory()" data-i18n="historyBtn">📜 Ver Historial de Consultas</button>
@@ -538,6 +607,7 @@
         consulting: "🔮 Consultando...", anotherBtn: "🔄 Otra Consulta",
         shareBtn: "📤 Compartir mi energía de hoy", madeWith: "Hecho con ♥ por", privacy: "Privacidad",
         shareTitle: "Compartir mi energía", shareNativeBtn: "Compartir", copyBtn: "Copiar texto", closeBtn: "Cerrar", copied: "¡Copiado!",
+        compatTitle: "💕 Compatibilidad de Pareja", compatSub: "Descubre tu conexión cósmica", partnerBirth: "Fecha de nacimiento de tu pareja", compatBtn: "💕 Calcular Compatibilidad", compatLabel: "Compatibilidad Total", compatHigh: "Excelente", compatMed: "Buena", compatLow: "Desafiante", selectDate: "Selecciona una fecha",
         privacyMsg: "ASTRO4 respeta tu privacidad. Tus datos se guardan solo en tu dispositivo.",
         guideTitle: "🔮 Tu Guía:", errorMsg: "❌ Error. Intenta de nuevo.",
         askFirst: "Escribe una pregunta primero", copied: "¡Copiado!",
@@ -553,6 +623,7 @@
         consulting: "🔮 Consulting...", anotherBtn: "🔄 Another Question",
         shareBtn: "📤 Share my energy today", madeWith: "Made with ♥ by", privacy: "Privacy",
         shareTitle: "Share my energy", shareNativeBtn: "Share", copyBtn: "Copy text", closeBtn: "Close", copied: "Copied!",
+        compatTitle: "💕 Partner Compatibility", compatSub: "Discover your cosmic connection", partnerBirth: "Your partner's birth date", compatBtn: "💕 Calculate Compatibility", compatLabel: "Total Compatibility", compatHigh: "Excellent", compatMed: "Good", compatLow: "Challenging", selectDate: "Select a date",
         privacyMsg: "ASTRO4 respects your privacy. Your data is stored only on your device.",
         guideTitle: "🔮 Your Guide:", errorMsg: "❌ Error. Try again.",
         askFirst: "Write a question first", copied: "Copied!",
@@ -790,6 +861,130 @@
       });
     }
   
+
+    // === COMPATIBILIDAD DE SIGNOS ===
+    
+    // Matriz de compatibilidad occidental (elementos)
+    var westernCompat = {
+      'Fuego-Fuego': 85, 'Fuego-Tierra': 50, 'Fuego-Aire': 90, 'Fuego-Agua': 40,
+      'Tierra-Fuego': 50, 'Tierra-Tierra': 80, 'Tierra-Aire': 55, 'Tierra-Agua': 85,
+      'Aire-Fuego': 90, 'Aire-Tierra': 55, 'Aire-Aire': 75, 'Aire-Agua': 60,
+      'Agua-Fuego': 40, 'Agua-Tierra': 85, 'Agua-Aire': 60, 'Agua-Agua': 80,
+      'Fire-Fire': 85, 'Fire-Earth': 50, 'Fire-Air': 90, 'Fire-Water': 40,
+      'Earth-Fire': 50, 'Earth-Earth': 80, 'Earth-Air': 55, 'Earth-Water': 85,
+      'Air-Fire': 90, 'Air-Earth': 55, 'Air-Air': 75, 'Air-Water': 60,
+      'Water-Fire': 40, 'Water-Earth': 85, 'Water-Air': 60, 'Water-Water': 80
+    };
+    
+    // Compatibilidad china (triángulos de afinidad)
+    var chineseTriangles = {
+      'Rata': ['Dragón', 'Mono'], 'Buey': ['Serpiente', 'Gallo'], 'Tigre': ['Caballo', 'Perro'],
+      'Conejo': ['Cabra', 'Cerdo'], 'Dragón': ['Rata', 'Mono'], 'Serpiente': ['Buey', 'Gallo'],
+      'Caballo': ['Tigre', 'Perro'], 'Cabra': ['Conejo', 'Cerdo'], 'Mono': ['Rata', 'Dragón'],
+      'Gallo': ['Buey', 'Serpiente'], 'Perro': ['Tigre', 'Caballo'], 'Cerdo': ['Conejo', 'Cabra'],
+      'Rat': ['Dragon', 'Monkey'], 'Ox': ['Snake', 'Rooster'], 'Tiger': ['Horse', 'Dog'],
+      'Rabbit': ['Goat', 'Pig'], 'Dragon': ['Rat', 'Monkey'], 'Snake': ['Ox', 'Rooster'],
+      'Horse': ['Tiger', 'Dog'], 'Goat': ['Rabbit', 'Pig'], 'Monkey': ['Rat', 'Dragon'],
+      'Rooster': ['Ox', 'Snake'], 'Dog': ['Tiger', 'Horse'], 'Pig': ['Rabbit', 'Goat']
+    };
+    
+    // Compatibilidad numerológica
+    var numeroCompat = {
+      '1-1': 70, '1-2': 60, '1-3': 85, '1-4': 55, '1-5': 80, '1-6': 65, '1-7': 50, '1-8': 75, '1-9': 90,
+      '2-2': 75, '2-3': 70, '2-4': 80, '2-5': 55, '2-6': 90, '2-7': 65, '2-8': 85, '2-9': 60,
+      '3-3': 80, '3-4': 50, '3-5': 90, '3-6': 85, '3-7': 55, '3-8': 60, '3-9': 85,
+      '4-4': 70, '4-5': 45, '4-6': 75, '4-7': 80, '4-8': 90, '4-9': 55,
+      '5-5': 75, '5-6': 60, '5-7': 85, '5-8': 65, '5-9': 80,
+      '6-6': 85, '6-7': 50, '6-8': 70, '6-9': 90,
+      '7-7': 80, '7-8': 55, '7-9': 75,
+      '8-8': 85, '8-9': 70,
+      '9-9': 90
+    };
+    
+    function getNumeroCompat(n1, n2) {
+      var key1 = n1 + '-' + n2;
+      var key2 = n2 + '-' + n1;
+      return numeroCompat[key1] || numeroCompat[key2] || 65;
+    }
+    
+    function calcCompatibility() {
+      var t = i18n[currentLang];
+      var partnerDateStr = document.getElementById('partnerDate').value;
+      if (!partnerDateStr) {
+        alert(t.selectDate);
+        return;
+      }
+      
+      var partnerDate = new Date(partnerDateStr + 'T12:00:00');
+      var partnerWestern = getWesternSign(partnerDate, currentLang);
+      var partnerChinese = getChineseZodiac(partnerDate.getFullYear(), currentLang);
+      var partnerVedic = getNakshatra(partnerDate);
+      var partnerNumero = getNumerology(partnerDate, '', currentLang);
+      
+      // Compatibilidad Occidental (por elemento)
+      var elemKey = western.element + '-' + partnerWestern.element;
+      var westScore = westernCompat[elemKey] || 60;
+      
+      // Compatibilidad China (triángulos de afinidad)
+      var chineseScore = 60;
+      var myTriangle = chineseTriangles[chinese.animal] || [];
+      if (chinese.animal === partnerChinese.animal) {
+        chineseScore = 75;
+      } else if (myTriangle.includes(partnerChinese.animal)) {
+        chineseScore = 95;
+      } else {
+        // Elementos compatibles
+        var chineseElemCompat = {
+          'Madera': ['Agua', 'Fuego'], 'Fuego': ['Madera', 'Tierra'], 'Tierra': ['Fuego', 'Metal'],
+          'Metal': ['Tierra', 'Agua'], 'Agua': ['Metal', 'Madera'],
+          'Wood': ['Water', 'Fire'], 'Fire': ['Wood', 'Earth'], 'Earth': ['Fire', 'Metal'],
+          'Metal': ['Earth', 'Water'], 'Water': ['Metal', 'Wood']
+        };
+        var myChineseCompat = chineseElemCompat[chinese.element] || [];
+        if (myChineseCompat.includes(partnerChinese.element)) {
+          chineseScore = 80;
+        }
+      }
+      
+      // Compatibilidad Védica (Nakshatra - simplificado por grupo)
+      var nakshatraGroups = {
+        'Ashwini': 1, 'Bharani': 2, 'Krittika': 3, 'Rohini': 1, 'Mrigashira': 2,
+        'Ardra': 3, 'Punarvasu': 1, 'Pushya': 2, 'Ashlesha': 3, 'Magha': 1,
+        'Purva Phalguni': 2, 'Uttara Phalguni': 3, 'Hasta': 1, 'Chitra': 2, 'Swati': 3,
+        'Vishakha': 1, 'Anuradha': 2, 'Jyeshtha': 3, 'Mula': 1, 'Purva Ashadha': 2,
+        'Uttara Ashadha': 3, 'Shravana': 1, 'Dhanishta': 2, 'Shatabhisha': 3,
+        'Purva Bhadrapada': 1, 'Uttara Bhadrapada': 2, 'Revati': 3
+      };
+      var myGroup = nakshatraGroups[vedic.nakshatra] || 1;
+      var partnerGroup = nakshatraGroups[partnerVedic.nakshatra] || 1;
+      var vedicScore = myGroup === partnerGroup ? 90 : (Math.abs(myGroup - partnerGroup) === 1 ? 75 : 60);
+      
+      // Compatibilidad Numerológica
+      var numeroScore = getNumeroCompat(numerology.lifeNumber, partnerNumero.lifeNumber);
+      
+      // Total ponderado
+      var totalScore = Math.round((westScore * 0.25) + (chineseScore * 0.25) + (vedicScore * 0.25) + (numeroScore * 0.25));
+      
+      // Mostrar resultados
+      document.getElementById('compatResults').style.display = 'block';
+      document.getElementById('compatTotal').textContent = totalScore + '%';
+      
+      var westLabel = western.name + ' + ' + partnerWestern.name + ' = ' + westScore + '%';
+      var chineseLabel = chinese.animal + ' + ' + partnerChinese.animal + ' = ' + chineseScore + '%';
+      var vedicLabel = vedic.nakshatra + ' + ' + partnerVedic.nakshatra + ' = ' + vedicScore + '%';
+      var numeroLabel = numerology.lifeNumber + ' + ' + partnerNumero.lifeNumber + ' = ' + numeroScore + '%';
+      
+      document.getElementById('compatWestern').textContent = westLabel;
+      document.getElementById('compatChinese').textContent = chineseLabel;
+      document.getElementById('compatVedic').textContent = vedicLabel;
+      document.getElementById('compatNumero').textContent = numeroLabel;
+      
+      document.getElementById('barWestern').style.width = westScore + '%';
+      document.getElementById('barChinese').style.width = chineseScore + '%';
+      document.getElementById('barVedic').style.width = vedicScore + '%';
+      document.getElementById('barNumero').style.width = numeroScore + '%';
+    }
+    
     // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
