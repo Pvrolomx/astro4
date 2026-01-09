@@ -60,6 +60,17 @@
     .result-box .result-insight { margin-top: 14px; padding: 12px; background: white; border-radius: 12px; font-size: 0.9rem; color: #5c4d3c; font-style: italic; line-height: 1.4; }
     .hidden { display: none; }
   </style>
+
+  <!-- Analytics: Plausible (privacy-friendly, no cookies) -->
+  <script defer data-domain="astro3-lovat.vercel.app" src="https://plausible.io/js/script.js"></script>
+  <script>
+    // Custom events helper
+    window.trackEvent = function(name, props) {
+      if (window.plausible) {
+        window.plausible(name, {props: props});
+      }
+    };
+  </script>
 </head>
 <body>
   <div class="container">

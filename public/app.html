@@ -9,6 +9,15 @@
   <meta name="theme-color" content="#c9a96e" id="theme-color">
   <!-- Analytics -->
   <script defer data-domain="astro3-lovat.vercel.app" src="https://plausible.io/js/script.js"></script>
+  <script>
+    // Analytics custom events helper
+    window.trackEvent = function(name, props) {
+      if (window.plausible) {
+        window.plausible(name, {props: props});
+      }
+    };
+  </script>
+
 
   <style>
     
@@ -93,6 +102,19 @@
     .btn-consult { width: 100%; padding: 14px; background: linear-gradient(135deg, #c9a96e, #a68b5b); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 12px; }
     .btn-consult:disabled { opacity: 0.7; }
     .response-box { margin-top: 12px; padding: 16px; background: white; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; display: none; }
+    
+    /* Feedback Thumbs */
+    .feedback-container { display: none; margin-top: 12px; text-align: center; }
+    .feedback-container.active { display: block; }
+    .feedback-label { font-size: 0.8rem; color: #8b7d6b; margin-bottom: 8px; }
+    .feedback-btns { display: flex; justify-content: center; gap: 16px; }
+    .feedback-btn { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #e5ddd3; background: white; font-size: 1.5rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .feedback-btn:hover { transform: scale(1.1); }
+    .feedback-btn.thumbs-up:hover, .feedback-btn.thumbs-up.selected { border-color: #4CAF50; background: #E8F5E9; }
+    .feedback-btn.thumbs-down:hover, .feedback-btn.thumbs-down.selected { border-color: #f44336; background: #FFEBEE; }
+    .feedback-btn.selected { transform: scale(1.15); }
+    .feedback-thanks { display: none; font-size: 0.85rem; color: #4CAF50; margin-top: 8px; }
+    .feedback-thanks.active { display: block; }
     
     /* History Modal */
     
@@ -214,6 +236,16 @@
       <button class="btn-consult" id="btn-consultar" onclick="enviarConsulta()" data-i18n="consultBtn">✨ Consultar</button>
       <div class="response-box" id="respuesta-consulta"></div>
       <button class="btn-another" id="btn-otra" onclick="otraConsulta()" data-i18n="anotherBtn">🔄 Otra Consulta</button>
+      
+      <!-- Feedback Section -->
+      <div class="feedback-container" id="feedbackContainer">
+        <div class="feedback-label" data-i18n="feedbackLabel">¿Te fue útil esta respuesta?</div>
+        <div class="feedback-btns">
+          <button class="feedback-btn thumbs-up" onclick="sendFeedback('up')" title="Útil">👍</button>
+          <button class="feedback-btn thumbs-down" onclick="sendFeedback('down')" title="No útil">👎</button>
+        </div>
+        <div class="feedback-thanks" id="feedbackThanks" data-i18n="feedbackThanks">¡Gracias por tu feedback!</div>
+      </div>
     </div>
     
     
@@ -323,6 +355,7 @@
         consulting: "🔮 Consultando...", anotherBtn: "🔄 Otra Consulta",
         shareBtn: "📤 Compartir mi energía de hoy", madeWith: "Hecho con ♥ por", privacy: "Privacidad",
         shareTitle: "Compartir mi energía", shareNativeBtn: "Compartir", copyBtn: "Copiar texto", closeBtn: "Cerrar", copied: "¡Copiado!",
+        feedbackLabel: "¿Te fue útil esta respuesta?", feedbackThanks: "¡Gracias por tu feedback!",
         compatTitle: "💕 Compatibilidad de Pareja", compatSub: "Descubre tu conexión cósmica", partnerBirth: "Fecha de nacimiento de tu pareja", compatBtn: "💕 Calcular Compatibilidad", compatLabel: "Compatibilidad Total", compatHigh: "Excelente", compatMed: "Buena", compatLow: "Desafiante", selectDate: "Selecciona una fecha",
         privacyMsg: "ASTRO4 respeta tu privacidad. Tus datos se guardan solo en tu dispositivo.",
         guideTitle: "🔮 Tu Guía:", errorMsg: "❌ Error. Intenta de nuevo.",
@@ -339,6 +372,7 @@
         consulting: "🔮 Consulting...", anotherBtn: "🔄 Another Question",
         shareBtn: "📤 Share my energy today", madeWith: "Made with ♥ by", privacy: "Privacy",
         shareTitle: "Share my energy", shareNativeBtn: "Share", copyBtn: "Copy text", closeBtn: "Close", copied: "Copied!",
+        feedbackLabel: "Was this response helpful?", feedbackThanks: "Thanks for your feedback!",
         compatTitle: "💕 Partner Compatibility", compatSub: "Discover your cosmic connection", partnerBirth: "Your partner's birth date", compatBtn: "💕 Calculate Compatibility", compatLabel: "Total Compatibility", compatHigh: "Excellent", compatMed: "Good", compatLow: "Challenging", selectDate: "Select a date",
         privacyMsg: "ASTRO4 respects your privacy. Your data is stored only on your device.",
         guideTitle: "🔮 Your Guide:", errorMsg: "❌ Error. Try again.",
@@ -422,6 +456,7 @@
       document.getElementById('pregunta').value = '';
       document.getElementById('respuesta-consulta').style.display = 'none';
       document.getElementById('btn-otra').style.display = 'none';
+      document.getElementById('feedbackContainer').classList.remove('active');
       var btn = document.getElementById('btn-consultar');
       btn.style.display = 'block';
       var t = i18n[currentLang];
@@ -518,12 +553,17 @@
           body: JSON.stringify({ prompt: promptText })
         });
         var data = await response.json();
+        currentConsultaId = Date.now();
         document.getElementById('respuesta-consulta').style.display = 'block';
         document.getElementById('respuesta-consulta').innerHTML = '<strong>' + t.guideTitle + '</strong><br><br>' + data.respuesta;
         document.getElementById('btn-otra').style.display = 'block';
+        document.getElementById('feedbackContainer').classList.add('active');
+        document.getElementById('feedbackThanks').classList.remove('active');
+        document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
         btn.style.display = 'none';
         // Guardar timestamp para rate limiting
         localStorage.setItem('astro4_lastConsult', Date.now().toString());
+        if (window.trackEvent) trackEvent('Consulta Claude', {idioma: currentLang});
         // Guardar en historial IndexedDB
         saveConsulta(pregunta, data.respuesta);
       } catch (error) {
@@ -558,12 +598,14 @@
     
     function shareWhatsApp() {
       var text = encodeURIComponent(getShareText());
+      if (window.trackEvent) trackEvent('Compartir', {red: 'WhatsApp'});
       window.open('https://wa.me/?text=' + text, '_blank');
       closeShareModal();
     }
     
     function shareTwitter() {
       var text = encodeURIComponent(getShareText().substring(0, 280));
+      if (window.trackEvent) trackEvent('Compartir', {red: 'Twitter'});
       window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
       closeShareModal();
     }
@@ -578,6 +620,47 @@
     }
   
 
+
+    // === FEEDBACK THUMBS UP/DOWN ===
+    
+    var currentConsultaId = null;
+    
+    function sendFeedback(type) {
+      // Guardar feedback en localStorage
+      var feedbackData = JSON.parse(localStorage.getItem('astro4_feedback') || '[]');
+      var feedback = {
+        id: Date.now(),
+        consultaId: currentConsultaId,
+        type: type,
+        timestamp: new Date().toISOString()
+      };
+      feedbackData.push(feedback);
+      
+      // Mantener solo últimos 50 feedbacks
+      if (feedbackData.length > 50) {
+        feedbackData = feedbackData.slice(-50);
+      }
+      localStorage.setItem('astro4_feedback', JSON.stringify(feedbackData));
+      
+      // UI feedback
+      document.querySelectorAll('.feedback-btn').forEach(function(btn) {
+        btn.classList.remove('selected');
+      });
+      
+      var selectedBtn = type === 'up' ? 
+        document.querySelector('.feedback-btn.thumbs-up') : 
+        document.querySelector('.feedback-btn.thumbs-down');
+      selectedBtn.classList.add('selected');
+      
+      // Mostrar agradecimiento
+      document.getElementById('feedbackThanks').classList.add('active');
+      
+      // Log para analytics (si Plausible está disponible)
+      if (window.plausible) {
+        window.plausible('Feedback', { props: { type: type } });
+      }
+    }
+    
     // === COMPATIBILIDAD DE SIGNOS ===
     
     // Matriz de compatibilidad occidental (elementos)
