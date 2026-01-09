@@ -12,386 +12,60 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <style>
-    :root {
-      --bg-primary: #0d0d1a;
-      --bg-secondary: #1a1a2e;
-      --bg-card: rgba(255,255,255,0.08);
-      --text-primary: #ffffff;
-      --text-secondary: #a0a0c0;
-      --accent: #ffd700;
-      --accent-dark: #b8860b;
-      --border: rgba(255,255,255,0.15);
-      --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-gold: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
-      --gradient-cosmic: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      --glow-purple: 0 0 20px rgba(102, 126, 234, 0.5);
-      --glow-gold: 0 0 20px rgba(255, 215, 0, 0.5);
-    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--gradient-cosmic);
-      min-height: 100vh;
-      color: var(--text-primary);
-      position: relative;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
-                        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
-                        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
-                        radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.2), transparent),
-                        radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.3), transparent);
-      background-size: 200px 200px;
-      animation: twinkle 4s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-    .container {
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 20px;
-      position: relative;
-      z-index: 1;
-    }
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 8px;
-      background: var(--gradient-purple);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .subtitle {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-    }
-    .install-banner {
-      background: var(--gradient-purple);
-      color: white;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: var(--glow-purple);
-    }
-    .install-banner button {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-      padding: 6px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      backdrop-filter: blur(4px);
-    }
-    .card {
-      background: var(--bg-card);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .form-group {
-      margin-bottom: 16px;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text-primary);
-    }
-    input[type="text"],
-    input[type="date"],
-    input[type="time"],
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 1rem;
-      background: rgba(255,255,255,0.05);
-      color: var(--text-primary);
-      transition: all 0.3s;
-    }
-    input:focus, select:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: var(--glow-purple);
-    }
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      background: var(--gradient-purple);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: var(--glow-purple);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(102, 126, 234, 0.7);
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin: 20px 0;
-    }
-    .feature {
-      background: var(--bg-card);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      transition: all 0.3s;
-    }
-    .feature:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--glow-purple);
-    }
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-    .feature-title {
-      font-weight: 600;
-      color: var(--text-primary);
-      font-size: 0.9rem;
-    }
-    .feature-desc {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-top: 4px;
-    }
-    .lang-toggle { 
-      display: flex; 
-      gap: 4px; 
-      background: rgba(26, 26, 46, 0.9); 
-      backdrop-filter: blur(15px); 
-      border-radius: 20px; 
-      padding: 5px; 
-      border: 1px solid rgba(157, 78, 221, 0.3);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 20px rgba(157, 78, 221, 0.1);
-      margin-bottom: 12px;
-    }
-    .lang-btn { 
-      padding: 8px 16px; 
-      border: none; 
-      border-radius: 15px; 
-      font-size: 0.85rem; 
-      font-weight: 600; 
-      cursor: pointer; 
-      background: transparent; 
-      color: rgba(255,255,255,0.5); 
-      transition: all 0.3s ease;
-    }
-    .lang-btn:hover { 
-      color: rgba(255,255,255,0.8);
-      background: rgba(255,255,255,0.05);
-    }
-    .lang-btn.active { 
-      background: linear-gradient(135deg, #9d4edd 0%, #7c3aed 100%); 
-      color: white;
-      box-shadow: 0 2px 10px rgba(157, 78, 221, 0.4);
-    }
-    footer {
-      text-align: center;
-      padding: 24px 20px;
-      color: #c8c8e0;
-      font-size: 0.85rem;
-    }
-    footer p {
-      margin: 6px 0;
-    }
-    footer a {
-      color: #67e8f9;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s;
-      text-shadow: 0 0 8px rgba(103, 232, 249, 0.5);
-    }
-    footer a:hover {
-      text-shadow: 0 0 15px rgba(103, 232, 249, 0.8);
-      color: #fff;
-    }
-    .history-section {
-      margin-top: 20px;
-    }
-    .history-item {
-      background: var(--bg-card);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .history-item:hover {
-      background: rgba(255,255,255,0.12);
-      transform: translateX(4px);
-    }
-    .disclaimer {
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-top: 16px;
-      padding: 12px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 8px;
-    }
-
-    .traditions-title {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin: 20px 0 12px 0;
-    }
-    .traditions-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .tradition-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 8px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .tradition-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--glow-purple);
-      border-color: #667eea;
-    }
-    .tradition-card img {
-      width: 48px;
-      height: 48px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 8px;
-      border: 2px solid var(--border);
-    }
-    .tradition-card h3 {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-    }
-    .tradition-card span {
-      font-size: 0.65rem;
-      color: var(--text-secondary);
-    }
-
-    /* Modal - oculto por defecto */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 24px;
-      max-width: 400px;
-      width: 100%;
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-    .modal-close {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(255,255,255,0.1);
-      border: none;
-      color: var(--text-secondary);
-      font-size: 1.5rem;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .modal-close:hover {
-      background: rgba(255,255,255,0.2);
-      color: var(--text-primary);
-    }
-    .modal h3 {
-      text-align: center;
-      margin: 12px 0;
-      color: var(--text-primary);
-    }
-    .modal p {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-    }
-    .modal .btn-back {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 12px;
-      width: 100%;
-      transition: all 0.3s;
-    }
-    .modal .btn-back:hover {
-      border-color: #667eea;
-      color: var(--text-primary);
-    }
-    .hidden {
-      display: none !important;
-    }
-    .modal-icon {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      display: block;
-      margin: 0 auto;
-    }
+    body { font-family: 'Nunito', sans-serif; background: linear-gradient(180deg, #faf7f2 0%, #f5ede3 100%); min-height: 100vh; color: #3d3527; }
+    .container { max-width: 420px; margin: 0 auto; padding: 16px; position: relative; }
+    .lang-toggle { position: absolute; top: 75px; right: 16px; display: flex; gap: 4px; background: rgba(255,255,255,0.8); border-radius: 20px; padding: 4px; z-index: 10; }
+    .lang-btn { padding: 6px 12px; border: none; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; background: transparent; color: #8b7d6b; transition: all 0.2s; }
+    .lang-btn.active { background: #c9a96e; color: white; }
+    .install-banner { background: linear-gradient(135deg, #c9a96e 0%, #8b7355 100%); color: white; padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3); }
+    .install-banner p { font-size: 14px; }
+    .install-banner button { background: white; color: #8b7355; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; }
+    header { text-align: center; padding: 16px 0 24px; position: relative; }
+    header h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 500; color: #5c4d3c; letter-spacing: 3px; }
+    header .subtitle { font-size: 0.85rem; color: #8b7d6b; margin-top: 4px; letter-spacing: 2px; }
+    .main-card { background: white; border-radius: 24px; padding: 24px 20px; box-shadow: 0 8px 30px rgba(93, 77, 60, 0.1); margin-bottom: 20px; }
+    .main-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: #5c4d3c; margin-bottom: 6px; }
+    .main-card p { color: #8b7d6b; font-size: 0.9rem; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.85rem; color: #5c4d3c; margin-bottom: 6px; font-weight: 500; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 1px solid #e5ddd3; border-radius: 12px; font-size: 16px; background: #faf7f2; color: #3d3527; font-family: 'Nunito', sans-serif; }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: #c9a96e; box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1); }
+    .date-row { display: flex; gap: 8px; }
+    .time-row { display: flex; gap: 8px; margin-top: 8px; }
+    .time-row input { flex: 1; }
+    .tz-row { margin-top: 8px; }
+    .tz-row select { width: 100%; padding: 10px; border: 1px solid #e5ddd3; border-radius: 8px; font-size: 14px; background: #faf7f2; }
+    .time-hint { font-size: 0.75rem; color: #a99d8d; margin-top: 4px; }
+    .date-row select { flex: 1; }
+    .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #c9a96e 0%, #a68b5b 100%); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(166, 139, 91, 0.3); transition: transform 0.2s; }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-secondary { width: 100%; padding: 12px; background: transparent; color: #8b7d6b; border: 1px solid #e5ddd3; border-radius: 12px; font-size: 0.9rem; font-weight: 500; cursor: pointer; margin-top: 10px; }
+    .traditions-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #5c4d3c; text-align: center; margin-bottom: 12px; }
+    .traditions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+    .tradition-card { background: white; border-radius: 20px; padding: 16px 12px; text-align: center; box-shadow: 0 4px 20px rgba(93, 77, 60, 0.08); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .tradition-card:active { transform: scale(0.97); }
+    .tradition-card:hover { box-shadow: 0 6px 25px rgba(93, 77, 60, 0.15); }
+    .tradition-card img { width: 70px; height: 70px; border-radius: 14px; margin-bottom: 10px; object-fit: cover; }
+    .tradition-card h3 { font-size: 0.9rem; color: #5c4d3c; font-weight: 600; margin-bottom: 2px; }
+    .tradition-card span { font-size: 0.7rem; color: #a99d8d; }
+    footer { text-align: center; padding: 16px; color: #a99d8d; font-size: 0.8rem; }
+    footer a { color: #c9a96e; text-decoration: none; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; border-radius: 24px; padding: 24px; max-width: 360px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; }
+    .modal-close { position: absolute; top: 12px; right: 16px; font-size: 1.5rem; color: #a99d8d; cursor: pointer; border: none; background: none; }
+    .modal-icon { width: 80px; height: 80px; margin: 0 auto 16px; display: block; border-radius: 16px; }
+    .modal h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #5c4d3c; text-align: center; margin-bottom: 12px; }
+    .modal p { color: #8b7d6b; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; text-align: center; }
+    .modal .form-group { margin-bottom: 12px; }
+    .modal .date-row select { font-size: 14px; padding: 10px 8px; }
+    .result-box { background: linear-gradient(135deg, #faf7f2 0%, #f5ede3 100%); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 16px; }
+    .result-box .result-label { font-size: 0.8rem; color: #a99d8d; margin-bottom: 4px; }
+    .result-box .result-value { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #5c4d3c; font-weight: 600; }
+    .result-box .result-sub { font-size: 0.85rem; color: #8b7d6b; margin-top: 4px; }
+    .result-box .result-insight { margin-top: 14px; padding: 12px; background: white; border-radius: 12px; font-size: 0.9rem; color: #5c4d3c; font-style: italic; line-height: 1.4; }
+    .hidden { display: none; }
   </style>
 
   <!-- Analytics: Plausible (privacy-friendly, no cookies) -->
