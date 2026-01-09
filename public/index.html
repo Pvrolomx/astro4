@@ -184,13 +184,22 @@
     }
     .footer {
       text-align: center;
-      padding: 20px;
+      padding: 24px 20px;
       color: var(--text-secondary);
       font-size: 0.85rem;
     }
+    .footer p {
+      margin: 6px 0;
+    }
     .footer a {
-      color: #667eea;
+      color: var(--accent);
       text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .footer a:hover {
+      text-shadow: 0 0 10px var(--glow-gold);
+      color: #fff;
     }
     .history-section {
       margin-top: 20px;
