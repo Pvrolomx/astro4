@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#c9a96e" id="theme-color">
   <!-- Analytics -->
   <script defer data-domain="astro3-lovat.vercel.app" src="https://plausible.io/js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
   <script>
     // Analytics custom events helper
     window.trackEvent = function(name, props) {
@@ -386,6 +387,7 @@
     // Guardar en localStorage para persistencia (Tarea 2.1)
     if (nombre) localStorage.setItem('astro4_name', nombre);
     var fechaStr = urlParams.get('fecha');
+    var horaStr = urlParams.get('hora') || '12:00';
     var currentLang = urlParams.get('lang') || localStorage.getItem('astro4_lang') || 'es';
     
     if (!nombre || !fechaStr) { window.location.href = 'index.html'; }
@@ -394,7 +396,7 @@
       var parts = fechaStr.split('-');
       if (parts.length === 3) {
         localStorage.setItem('astro4_birthdate', JSON.stringify({
-          dia: parts[2], mes: parts[1], anio: parts[0]
+          dia: parts[2], mes: parts[1], anio: parts[0], hora: horaStr
         }));
       }
     }
@@ -418,7 +420,7 @@
     
     function showPrivacy() { alert(i18n[currentLang].privacyMsg); }
     
-    var birthDate = new Date(fechaStr);
+    var birthDate = new Date(fechaStr + 'T' + horaStr + ':00');
     var western, chinese, vedic, numerology, result;
     
     function updateDate() {

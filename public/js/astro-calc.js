@@ -102,37 +102,50 @@ function getNakshatra(birthDate, birthHour) {
     { name: "Revati", deity: "Pushan", quality: "nurturing, journeys" }
   ];
   
-  // Constantes astronómicas
-  const SIDEREAL_MONTH = 27.321661; // días
-  const MOON_DAILY = 360 / SIDEREAL_MONTH; // ~13.176°/día
   const NAKSHATRA_SPAN = 360 / 27; // 13.333°
   
-  // Referencia: Luna Llena 21 enero 2000 4:40 UTC = Magha (121°)
-  const REF_DATE = new Date(Date.UTC(2000, 0, 21, 4, 40, 0));
-  const REF_MOON_LONG = 121;
-  
-  // Calcular fecha/hora de nacimiento
+  // Preparar fecha/hora de nacimiento
   let dt = new Date(birthDate);
-  if (birthHour !== undefined && birthHour !== null && !isNaN(birthHour)) {
-    dt.setHours(Math.floor(birthHour), Math.round((birthHour % 1) * 60), 0, 0);
+  const hasTime = birthHour !== undefined && birthHour !== null && !isNaN(birthHour);
+  
+  let moonLong;
+  let precision;
+  
+  // Intentar usar astronomy-engine si esta disponible
+  if (typeof Astronomy !== 'undefined') {
+    try {
+      // Crear objeto Date con hora UTC
+      const astroDate = Astronomy.MakeTime(dt);
+      
+      // Obtener longitud ecliptica de la Luna (tropical)
+      const moonEcl = Astronomy.EclipticGeoMoon(astroDate);
+      const tropicalLong = moonEcl.elon; // Longitud ecliptica tropical
+      
+      // Ayanamsa Lahiri para 2025 (~24.17°)
+      // Formula: 23.85 + (year - 2000) * 0.0139
+      const year = dt.getFullYear();
+      const ayanamsa = 23.85 + (year - 2000) * 0.0139;
+      
+      // Convertir a longitud sideral
+      moonLong = (tropicalLong - ayanamsa + 360) % 360;
+      precision = hasTime ? "alta (astronomy-engine)" : "buena (astronomy-engine)";
+      
+    } catch (e) {
+      console.warn('Astronomy-engine error, using fallback:', e);
+      moonLong = calculateMoonLongFallback(dt);
+      precision = hasTime ? "±0.5 nakshatra" : "±1 nakshatra";
+    }
   } else {
-    dt.setHours(12, 0, 0, 0); // Mediodía como default
+    // Fallback: calculo basico
+    moonLong = calculateMoonLongFallback(dt);
+    precision = hasTime ? "±0.5 nakshatra" : "±1 nakshatra";
   }
   
-  // Días desde referencia
-  const daysDiff = (dt.getTime() - REF_DATE.getTime()) / (24 * 60 * 60 * 1000);
-  
-  // Longitud lunar (0-360°)
-  let moonLong = (REF_MOON_LONG + (daysDiff * MOON_DAILY)) % 360;
-  if (moonLong < 0) moonLong += 360;
-  
-  // Índice de Nakshatra (0-26)
+  // Indice de Nakshatra (0-26)
   const idx = Math.floor(moonLong / NAKSHATRA_SPAN) % 27;
   
   // Pada (cuarto, 1-4)
   const pada = Math.floor((moonLong % NAKSHATRA_SPAN) / (NAKSHATRA_SPAN / 4)) + 1;
-  
-  const hasTime = birthHour !== undefined && birthHour !== null && !isNaN(birthHour);
   
   return { 
     nakshatra: nakshatras[idx].name,
@@ -140,8 +153,21 @@ function getNakshatra(birthDate, birthHour) {
     quality: nakshatras[idx].quality,
     pada: pada,
     moonLongitude: Math.round(moonLong * 10) / 10,
-    precision: hasTime ? "±0.5 nakshatra" : "±1 nakshatra"
+    precision: precision
   };
+}
+
+// Funcion fallback para calcular longitud lunar
+function calculateMoonLongFallback(dt) {
+  const SIDEREAL_MONTH = 27.321661;
+  const MOON_DAILY = 360 / SIDEREAL_MONTH;
+  const REF_DATE = new Date(Date.UTC(2000, 0, 21, 4, 40, 0));
+  const REF_MOON_LONG = 121;
+  
+  const daysDiff = (dt.getTime() - REF_DATE.getTime()) / (24 * 60 * 60 * 1000);
+  let moonLong = (REF_MOON_LONG + (daysDiff * MOON_DAILY)) % 360;
+  if (moonLong < 0) moonLong += 360;
+  return moonLong;
 }
 
 // Numerología con i18n
