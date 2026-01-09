@@ -129,14 +129,14 @@ const ASTRO4_COPY = {
         compatibility: {
             title: "Compatibilidad Cósmica",
             teaser: "Descubre cómo tu energía se combina con la de alguien especial",
-            cta: "Desbloquear por $0.99",
+            cta: "Desbloquear por $29 MXN",
             blur_text: "Tu compatibilidad con {nombre} es..."
         },
         
         deep_analysis: {
             title: "Análisis Profundo",
             teaser: "Tu perfil completo con predicciones personalizadas",
-            cta: "Desbloquear por $1.99",
+            cta: "Desbloquear por $29 MXN",
             features: [
                 "Análisis detallado de cada tradición",
                 "Predicciones para los próximos 30 días",
@@ -148,7 +148,7 @@ const ASTRO4_COPY = {
         subscription: {
             title: "Identidad Premium",
             teaser: "Acceso ilimitado a todo el contenido",
-            cta: "Solo $4.99/mes",
+            cta: "Solo $49 MXN/mes",
             features: [
                 "Todo el análisis profundo",
                 "Compatibilidades ilimitadas",
