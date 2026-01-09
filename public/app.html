@@ -950,7 +950,7 @@
     // === Tema Oscuro ===
     function initTheme() {
       var saved = localStorage.getItem('astro4_theme');
-      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      if (saved === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById('themeBtn').textContent = '☀️';
         document.getElementById('theme-color').content = '#1a1a2e';
