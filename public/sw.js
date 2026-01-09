@@ -1,7 +1,7 @@
 // ASTRO4 Service Worker
 // Cache-first strategy for offline support
 
-const CACHE_NAME = 'astro4-v1767996434';
+const CACHE_NAME = 'astro4-v1768006000';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
