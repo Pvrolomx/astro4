@@ -216,6 +216,59 @@
       background: rgba(255,255,255,0.03);
       border-radius: 8px;
     }
+
+    .traditions-title {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin: 20px 0 12px 0;
+    }
+    .traditions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tradition-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .tradition-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--glow-purple);
+      border-color: #667eea;
+    }
+    .tradition-card img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 8px;
+      border: 2px solid var(--border);
+    }
+    .tradition-card h3 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .tradition-card span {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+    }
+    .modal-icon {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+    }
   </style>
 
   <!-- Analytics: Plausible (privacy-friendly, no cookies) -->
