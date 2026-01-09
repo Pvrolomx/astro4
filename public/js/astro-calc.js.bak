@@ -69,79 +69,21 @@ function getChineseZodiac(birthYear, lang) {
   return { animal: data.animals[idx], element: data.elements[elemIdx], yinYang: yinYang };
 }
 
-// Nakshatra (Védico) - Cálculo basado en ciclo sideral lunar
-// Precisión: ±1 nakshatra sin hora, ±0.5 con hora aproximada
-function getNakshatra(birthDate, birthHour) {
+// Nakshatra (Védico) - nombres universales en sánscrito
+function getNakshatra(birthDate) {
   const nakshatras = [
-    { name: "Ashwini", deity: "Ashwini Kumaras", quality: "swift, healing" },
-    { name: "Bharani", deity: "Yama", quality: "restraint, transformation" },
-    { name: "Krittika", deity: "Agni", quality: "sharp, purifying" },
-    { name: "Rohini", deity: "Brahma", quality: "growth, creativity" },
-    { name: "Mrigashira", deity: "Soma", quality: "seeking, curious" },
-    { name: "Ardra", deity: "Rudra", quality: "storm, transformation" },
-    { name: "Punarvasu", deity: "Aditi", quality: "renewal, return" },
-    { name: "Pushya", deity: "Brihaspati", quality: "nourishing, prosperous" },
-    { name: "Ashlesha", deity: "Nagas", quality: "mystical, intense" },
-    { name: "Magha", deity: "Pitris", quality: "royal, ancestral" },
-    { name: "Purva Phalguni", deity: "Bhaga", quality: "pleasure, creativity" },
-    { name: "Uttara Phalguni", deity: "Aryaman", quality: "friendship, contracts" },
-    { name: "Hasta", deity: "Savitar", quality: "skill, craftsmanship" },
-    { name: "Chitra", deity: "Tvashtar", quality: "brilliant, artistic" },
-    { name: "Swati", deity: "Vayu", quality: "independent, flexible" },
-    { name: "Vishakha", deity: "Indra-Agni", quality: "determined, goal-oriented" },
-    { name: "Anuradha", deity: "Mitra", quality: "devotion, friendship" },
-    { name: "Jyeshtha", deity: "Indra", quality: "protective, senior" },
-    { name: "Mula", deity: "Nirriti", quality: "foundational, investigative" },
-    { name: "Purva Ashadha", deity: "Apas", quality: "invincible, purifying" },
-    { name: "Uttara Ashadha", deity: "Vishvadevas", quality: "universal, victorious" },
-    { name: "Shravana", deity: "Vishnu", quality: "learning, listening" },
-    { name: "Dhanishta", deity: "Vasus", quality: "wealth, musical" },
-    { name: "Shatabhisha", deity: "Varuna", quality: "healing, secretive" },
-    { name: "Purva Bhadrapada", deity: "Aja Ekapada", quality: "fiery, transformative" },
-    { name: "Uttara Bhadrapada", deity: "Ahir Budhnya", quality: "deep, spiritual" },
-    { name: "Revati", deity: "Pushan", quality: "nurturing, journeys" }
+    "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira",
+    "Ardra", "Punarvasu", "Pushya", "Ashlesha", "Magha",
+    "Purva Phalguni", "Uttara Phalguni", "Hasta", "Chitra", "Swati",
+    "Vishakha", "Anuradha", "Jyeshtha", "Mula", "Purva Ashadha",
+    "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha",
+    "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"
   ];
-  
-  // Constantes astronómicas
-  const SIDEREAL_MONTH = 27.321661; // días
-  const MOON_DAILY = 360 / SIDEREAL_MONTH; // ~13.176°/día
-  const NAKSHATRA_SPAN = 360 / 27; // 13.333°
-  
-  // Referencia: Luna Llena 21 enero 2000 4:40 UTC = Magha (121°)
-  const REF_DATE = new Date(Date.UTC(2000, 0, 21, 4, 40, 0));
-  const REF_MOON_LONG = 121;
-  
-  // Calcular fecha/hora de nacimiento
-  let dt = new Date(birthDate);
-  if (birthHour !== undefined && birthHour !== null && !isNaN(birthHour)) {
-    dt.setHours(Math.floor(birthHour), Math.round((birthHour % 1) * 60), 0, 0);
-  } else {
-    dt.setHours(12, 0, 0, 0); // Mediodía como default
-  }
-  
-  // Días desde referencia
-  const daysDiff = (dt.getTime() - REF_DATE.getTime()) / (24 * 60 * 60 * 1000);
-  
-  // Longitud lunar (0-360°)
-  let moonLong = (REF_MOON_LONG + (daysDiff * MOON_DAILY)) % 360;
-  if (moonLong < 0) moonLong += 360;
-  
-  // Índice de Nakshatra (0-26)
-  const idx = Math.floor(moonLong / NAKSHATRA_SPAN) % 27;
-  
-  // Pada (cuarto, 1-4)
-  const pada = Math.floor((moonLong % NAKSHATRA_SPAN) / (NAKSHATRA_SPAN / 4)) + 1;
-  
-  const hasTime = birthHour !== undefined && birthHour !== null && !isNaN(birthHour);
-  
-  return { 
-    nakshatra: nakshatras[idx].name,
-    deity: nakshatras[idx].deity,
-    quality: nakshatras[idx].quality,
-    pada: pada,
-    moonLongitude: Math.round(moonLong * 10) / 10,
-    precision: hasTime ? "±0.5 nakshatra" : "±1 nakshatra"
-  };
+  const start = new Date(birthDate.getFullYear(), 0, 0);
+  const diff = birthDate - start;
+  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const idx = Math.floor((dayOfYear / 365) * 27) % 27;
+  return { nakshatra: nakshatras[idx] };
 }
 
 // Numerología con i18n
