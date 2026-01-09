@@ -161,6 +161,19 @@
     
     /* Theme Toggle */
     .theme-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 100; display: flex; align-items: center; justify-content: center; }
+    .mode-toggle { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; align-items: center; gap: 4px; z-index: 100; }
+    .mode-toggle-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--accent); cursor: pointer; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .mode-toggle-btn:hover { transform: scale(1.1); }
+    .mode-toggle-btn.active { background: var(--accent); color: white; }
+    .mode-toggle-label { font-size: 0.6rem; color: var(--text-secondary); text-align: center; max-width: 60px; }
+    .pro-badge { background: linear-gradient(135deg, #c9a96e, #8b7355); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; }
+    .disclaimer-banner { background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card)); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; margin: 16px 0; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+    .disclaimer-banner strong { color: var(--accent-dark); }
+    .disclaimer-banner .sources { font-style: italic; margin-top: 8px; font-size: 0.7rem; }
+    .interpretation-modern { display: block; }
+    .interpretation-traditional { display: none; }
+    body.mode-traditional .interpretation-modern { display: none; }
+    body.mode-traditional .interpretation-traditional { display: block; }
 
     /* Compatibility Section */
     .compat-card { background: linear-gradient(135deg, #f9f5f0, #f5ede3); }
@@ -337,6 +350,11 @@
     </div>
   </div>
   
+  <div class="disclaimer-banner" id="disclaimerBanner">
+    <strong data-i18n="disclaimerTitle">Aviso importante</strong><br>
+    <span data-i18n="disclaimerText">ASTRO4 usa interpretaciones de tradiciones ancestrales: Jyotish védico (Brihat Parashara Hora Shastra), astrología occidental clásica, y numerología tradicional. Esta herramienta es de carácter educativo e interpretativo. No sustituye la consulta con un astrólogo profesional.</span>
+    <div class="sources" data-i18n="disclaimerSources">Fuentes: textos clásicos védicos, tradición helenística, numerología caldea y pitagórica.</div>
+  </div>
   <footer>
       <p>🐝 <span data-i18n="madeWith">Hecho con ♥ por</span> <a href="#">Colmena (C6)</a></p>
       <p><a href="#" onclick="showPrivacy()" data-i18n="privacy">Privacidad</a></p>
@@ -925,6 +943,38 @@
       }
     }
     
+    // Mode toggle (Traditional vs Complete)
+    var currentMode = localStorage.getItem('astro4_mode') || 'complete';
+    if (currentMode === 'traditional') {
+      document.body.classList.add('mode-traditional');
+      document.getElementById('modeBtn').classList.add('active');
+      document.getElementById('modeBtn').textContent = '📜';
+      document.getElementById('modeLabel').setAttribute('data-i18n', 'modeTraditional');
+    }
+    
+    function toggleMode() {
+      var isTraditional = document.body.classList.toggle('mode-traditional');
+      var modeBtn = document.getElementById('modeBtn');
+      var modeLabel = document.getElementById('modeLabel');
+      
+      if (isTraditional) {
+        localStorage.setItem('astro4_mode', 'traditional');
+        modeBtn.classList.add('active');
+        modeBtn.textContent = '📜';
+        modeLabel.setAttribute('data-i18n', 'modeTraditional');
+        modeLabel.textContent = i18n[currentLang].modeTraditional;
+        trackEvent('mode_change', {mode: 'traditional'});
+      } else {
+        localStorage.setItem('astro4_mode', 'complete');
+        modeBtn.classList.remove('active');
+        modeBtn.textContent = '📚';
+        modeLabel.setAttribute('data-i18n', 'modeComplete');
+        modeLabel.textContent = i18n[currentLang].modeComplete;
+        trackEvent('mode_change', {mode: 'complete'});
+      }
+      applyI18n();
+    }
+
     function toggleTheme() {
       var current = document.documentElement.getAttribute('data-theme');
       var btn = document.getElementById('themeBtn');
@@ -984,6 +1034,10 @@
 
   </script>
 
+  <div class="mode-toggle">
+    <button class="mode-toggle-btn" onclick="toggleMode()" id="modeBtn" title="Cambiar modo">📚</button>
+    <span class="mode-toggle-label" id="modeLabel" data-i18n="modeComplete">Completo</span>
+  </div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Cambiar tema">🌙</button>
   
 </body>
