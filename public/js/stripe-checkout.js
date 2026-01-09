@@ -11,7 +11,7 @@ const STRIPE_CONFIG = {
   
   // Price IDs de los productos (crear en Stripe Dashboard)
   prices: {
-    pack10: 'price_REEMPLAZAR_PACK10',      // $29 MXN one-time
+    pack10: 'price_1SnkMjPG43KliMINX3cKTTms',      // $29 MXN one-time
     premiumMonthly: 'price_REEMPLAZAR_PREMIUM' // $49 MXN/month
   },
   
