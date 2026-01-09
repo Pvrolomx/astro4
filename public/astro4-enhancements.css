@@ -1,0 +1,391 @@
+/* astro4-enhancements.css - Mejoras visuales sutiles */
+/* C11 RAYO - Dar vida sin exagerar */
+
+/* ═══════════════════════════════════════════════════════
+   FONDO ANIMADO SUTIL
+   ═══════════════════════════════════════════════════════ */
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(78, 205, 196, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  animation: bgPulse 15s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   HEADER CON MÁS PRESENCIA
+   ═══════════════════════════════════════════════════════ */
+
+header h1 {
+  text-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.1); }
+}
+
+.tagline {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CARDS CON PROFUNDIDAD
+   ═══════════════════════════════════════════════════════ */
+
+.card {
+  border: 1px solid rgba(157, 78, 221, 0.15);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(157, 78, 221, 0.05) inset;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.card:hover {
+  border-color: rgba(157, 78, 221, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(157, 78, 221, 0.1) inset;
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════
+   INPUTS CON GLOW
+   ═══════════════════════════════════════════════════════ */
+
+.form-group input {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-group input:focus {
+  box-shadow: 
+    0 0 0 3px rgba(157, 78, 221, 0.2),
+    0 4px 20px rgba(157, 78, 221, 0.15);
+  transform: scale(1.01);
+}
+
+.form-group input::placeholder {
+  color: rgba(156, 163, 175, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOTÓN PRINCIPAL MEJORADO
+   ═══════════════════════════════════════════════════════ */
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(157, 78, 221, 0.3),
+    0 0 30px rgba(157, 78, 221, 0.1);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 6px 25px rgba(157, 78, 221, 0.4),
+    0 0 50px rgba(157, 78, 221, 0.2);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TRADICIONES CON ICONOS ANIMADOS
+   ═══════════════════════════════════════════════════════ */
+
+.tradition-icon {
+  display: inline-block;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.tradition-icon.western { animation-delay: 0s; }
+.tradition-icon.chinese { animation-delay: 0.5s; }
+.tradition-icon.vedic { animation-delay: 1s; }
+.tradition-icon.numerology { animation-delay: 1.5s; }
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECCIONES DE RESULTADOS
+   ═══════════════════════════════════════════════════════ */
+
+.result-section {
+  opacity: 0;
+  animation: resultFadeIn 0.5s ease-out forwards;
+}
+
+.result-section:nth-child(1) { animation-delay: 0.1s; }
+.result-section:nth-child(2) { animation-delay: 0.2s; }
+.result-section:nth-child(3) { animation-delay: 0.3s; }
+.result-section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes resultFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Bordes coloridos por tradición */
+.result-western {
+  border-left: 3px solid #ffd700;
+}
+
+.result-chinese {
+  border-left: 3px solid #e94560;
+}
+
+.result-vedic {
+  border-left: 3px solid #4ecdc4;
+}
+
+.result-numerology {
+  border-left: 3px solid #a855f7;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACCIONES DEL DÍA
+   ═══════════════════════════════════════════════════════ */
+
+.action-item {
+  background: rgba(34, 197, 94, 0.1);
+  border-left: 3px solid #22c55e;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.3s ease;
+}
+
+.action-item:hover {
+  background: rgba(34, 197, 94, 0.15);
+  transform: translateX(5px);
+}
+
+.warning-item {
+  background: rgba(245, 158, 11, 0.1);
+  border-left: 3px solid #f59e0b;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   POWER ELEMENTS (Color, Número, Hora)
+   ═══════════════════════════════════════════════════════ */
+
+.power-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.power-item {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.power-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(157, 78, 221, 0.3);
+  transform: scale(1.05);
+}
+
+.power-item .icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.power-item .label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.power-item .value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  margin-top: 5px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ESTRELLAS DECORATIVAS (opcional, sutil)
+   ═══════════════════════════════════════════════════════ */
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   LOADING STATES
+   ═══════════════════════════════════════════════════════ */
+
+.loading {
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(157, 78, 221, 0.1),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .power-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card:hover {
+    transform: none;
+  }
+  
+  .btn-primary:hover {
+    transform: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SMOOTH SCROLLING
+   ═══════════════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SELECTION STYLING
+   ═══════════════════════════════════════════════════════ */
+
+::selection {
+  background: rgba(157, 78, 221, 0.3);
+  color: white;
+}
