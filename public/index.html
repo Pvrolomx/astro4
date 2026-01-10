@@ -304,7 +304,7 @@
         value = sign.name; sub = (currentLang === 'es' ? 'Elemento: ' : 'Element: ') + sign.element;
         insightKey = sign.name;
       } else if (currentModal === 'chinese') {
-        const chinese = getChineseZodiac(parseInt(anio), currentLang);
+        const chinese = getChineseZodiac(birthDate, currentLang);
         value = chinese.animal; sub = chinese.element + ' · ' + chinese.yinYang;
         insightKey = chinese.animal;
       } else if (currentModal === 'vedic') {

@@ -469,7 +469,7 @@
     
     function updateSigns() {
       western = getWesternSign(birthDate, currentLang);
-      chinese = getChineseZodiac(birthDate.getFullYear(), currentLang);
+      chinese = getChineseZodiac(birthDate, currentLang);
       vedic = getNakshatra(birthDate);
       numerology = getNumerology(birthDate, nombre, currentLang);
       result = generateActions(western, chinese, numerology, birthDate, currentLang);
@@ -756,7 +756,7 @@
       
       var partnerDate = new Date(partnerDateStr + 'T12:00:00');
       var partnerWestern = getWesternSign(partnerDate, currentLang);
-      var partnerChinese = getChineseZodiac(partnerDate.getFullYear(), currentLang);
+      var partnerChinese = getChineseZodiac(partnerDate, currentLang);
       var partnerVedic = getNakshatra(partnerDate);
       var partnerNumero = getNumerology(partnerDate, '', currentLang);
       
