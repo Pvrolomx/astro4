@@ -66,6 +66,27 @@
     .result-box .result-sub { font-size: 0.85rem; color: #8b7d6b; margin-top: 4px; }
     .result-box .result-insight { margin-top: 14px; padding: 12px; background: white; border-radius: 12px; font-size: 0.9rem; color: #5c4d3c; font-style: italic; line-height: 1.4; }
     .hidden { display: none; }
+
+    /* Modal Expandido Styles */
+    .result-box { background: #faf7f2; border-radius: 16px; padding: 20px; margin-bottom: 16px; border: 1px solid #e5ddd3; }
+    .result-label { font-size: 0.8rem; color: #a99d8d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .result-value { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: #5c4d3c; font-weight: 600; margin-bottom: 4px; }
+    .result-sub { font-size: 0.9rem; color: #8b7d6b; margin-bottom: 12px; }
+    .result-divider { height: 1px; background: #e5ddd3; margin: 16px 0; }
+    .result-section-title { font-size: 0.75rem; color: #a99d8d; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; text-align: center; }
+    .result-personality { font-size: 0.95rem; color: #5c4d3c; line-height: 1.6; text-align: center; margin-bottom: 16px; }
+    .result-today { background: linear-gradient(135deg, #fdf8f0 0%, #f5efe5 100%); border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+    .result-today-title { font-size: 0.75rem; color: #c9a96e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .result-today-text { font-size: 0.9rem; color: #6b5b4f; line-height: 1.5; font-style: italic; }
+    .btn-profundizar { width: 100%; padding: 14px; background: linear-gradient(135deg, #c9a96e 0%, #b8955c 100%); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(201, 169, 110, 0.3); transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-profundizar:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201, 169, 110, 0.4); }
+    .btn-profundizar:active { transform: scale(0.98); }
+    .btn-profundizar:disabled { background: #d4c9b8; cursor: not-allowed; transform: none; box-shadow: none; }
+    .profundizar-result { background: #fff; border: 1px solid #e5ddd3; border-radius: 12px; padding: 16px; margin-top: 12px; display: none; }
+    .profundizar-result.active { display: block; }
+    .profundizar-text { font-size: 0.9rem; color: #5c4d3c; line-height: 1.7; }
+    .profundizar-loading { text-align: center; color: #a99d8d; font-size: 0.9rem; }
+
   </style>
 
   <!-- Analytics: Plausible (privacy-friendly, no cookies) -->
@@ -198,8 +219,22 @@
           <div class="result-label" id="resultLabel"></div>
           <div class="result-value" id="resultValue"></div>
           <div class="result-sub" id="resultSub"></div>
-          <div class="result-insight" id="resultInsight"></div>
-          <div class="result-desc" id="resultDesc" style="font-size:0.85rem;color:#6b5b4f;margin-top:10px;line-height:1.4;font-style:italic;"></div>
+          
+          <div class="result-divider"></div>
+          
+          <div class="result-section-title" id="personalityTitle">Tu Personalidad</div>
+          <div class="result-personality" id="resultPersonality"></div>
+          
+          <div class="result-today">
+            <div class="result-today-title" id="todayTitle">✨ Hoy Para Ti</div>
+            <div class="result-today-text" id="resultInsight"></div>
+          </div>
+          
+          <button class="btn-profundizar" id="btnProfundizar" onclick="profundizarTradicion()">✨ Profundizar con IA</button>
+          <div class="profundizar-result" id="profundizarResult">
+            <div class="profundizar-loading" id="profundizarLoading">Consultando tu guía cósmica...</div>
+            <div class="profundizar-text" id="profundizarText"></div>
+          </div>
         </div>
         <button class="btn-secondary" onclick="resetModal()" id="btnTryAnother">← Volver</button>
       </div>
@@ -220,11 +255,11 @@
       es: {
         timeHint: "Hora aproximada - opcional para mayor precisión",
         tzAuto: "Detectar automáticamente",
-        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver" },
+        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver", personalityTitle: "Tu Personalidad", todayTitle: "✨ Hoy Para Ti", profundizarBtn: "✨ Profundizar con IA", profundizarLoading: "Consultando tu guía cósmica..." },
       en: {
         timeHint: "Approximate time - optional for better accuracy",
         tzAuto: "Detect automatically",
-        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back" }
+        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back", personalityTitle: "Your Personality", todayTitle: "✨ Today For You", profundizarBtn: "✨ Deepen with AI", profundizarLoading: "Consulting your cosmic guide..." }
     };
     let currentLang = localStorage.getItem('astro4_lang') || 'es';
     function openModal(type) {
@@ -287,10 +322,54 @@
       document.getElementById('resultValue').textContent = value;
       document.getElementById('resultSub').textContent = sub;
       document.getElementById('resultInsight').textContent = insight ? '✨ ' + insight : '';
-      document.getElementById('resultDesc').textContent = desc || '';
+      document.getElementById('resultPersonality').textContent = desc || '';
+      currentResult = { tradition: currentModal, sign: insightKey, nombre: nombre, birthDate: birthDate };
+      document.getElementById('profundizarResult').classList.remove('active');
       document.getElementById('modalFormSection').classList.add('hidden');
       document.getElementById('modalResultSection').classList.remove('hidden');
     }
+
+    // Store current result for profundizar
+    var currentResult = { tradition: '', sign: '', nombre: '', birthDate: null };
+    
+    async function profundizarTradicion() {
+      const btn = document.getElementById('btnProfundizar');
+      const resultDiv = document.getElementById('profundizarResult');
+      const loadingDiv = document.getElementById('profundizarLoading');
+      const textDiv = document.getElementById('profundizarText');
+      
+      btn.disabled = true;
+      btn.textContent = currentLang === 'es' ? 'Consultando...' : 'Consulting...';
+      resultDiv.classList.add('active');
+      loadingDiv.style.display = 'block';
+      textDiv.style.display = 'none';
+      
+      try {
+        const response = await fetch('/api/profundizar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tradition: currentResult.tradition,
+            sign: currentResult.sign,
+            nombre: currentResult.nombre,
+            lang: currentLang
+          })
+        });
+        
+        const data = await response.json();
+        loadingDiv.style.display = 'none';
+        textDiv.style.display = 'block';
+        textDiv.textContent = data.respuesta || (currentLang === 'es' ? 'No se pudo obtener la lectura.' : 'Could not get the reading.');
+      } catch (error) {
+        loadingDiv.style.display = 'none';
+        textDiv.style.display = 'block';
+        textDiv.textContent = currentLang === 'es' ? 'Error de conexión. Intenta de nuevo.' : 'Connection error. Try again.';
+      }
+      
+      btn.disabled = false;
+      btn.textContent = currentLang === 'es' ? '✨ Profundizar con IA' : '✨ Deepen with AI';
+    }
+
     function setLang(lang) {
       currentLang = lang; localStorage.setItem('astro4_lang', lang); document.documentElement.lang = lang;
       document.getElementById('btn-es').classList.toggle('active', lang === 'es');
