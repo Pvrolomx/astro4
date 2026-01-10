@@ -339,6 +339,83 @@
       border-color: var(--border);
     }
 
+    
+    /* === DARK MODE FIX: Selectores correctos === */
+    [data-theme="dark"] .card {
+      background: rgba(20, 20, 30, 0.85) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 1px solid var(--border) !important;
+    }
+    
+    [data-theme="dark"] .warning-card {
+      background: rgba(50, 25, 30, 0.9) !important;
+      border: 1px solid rgba(139, 69, 69, 0.4) !important;
+    }
+    
+    [data-theme="dark"] .consult-card {
+      background: rgba(20, 20, 35, 0.9) !important;
+    }
+    
+    [data-theme="dark"] .consult-card textarea {
+      background: rgba(30, 30, 45, 0.9) !important;
+      border-color: var(--border) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    [data-theme="dark"] .compat-card {
+      background: rgba(25, 20, 35, 0.9) !important;
+    }
+    
+    [data-theme="dark"] .compat-card input[type="date"] {
+      background: rgba(30, 30, 45, 0.9) !important;
+      border-color: var(--border) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    [data-theme="dark"] .card h3 {
+      color: var(--text-title) !important;
+    }
+    
+    [data-theme="dark"] .card p {
+      color: var(--text-secondary) !important;
+    }
+    
+    [data-theme="dark"] .card .label {
+      color: var(--text-muted) !important;
+    }
+    
+    [data-theme="dark"] .card .value {
+      color: var(--text-primary) !important;
+    }
+    
+    [data-theme="dark"] .extra-item {
+      background: rgba(25, 25, 40, 0.8) !important;
+    }
+    
+    [data-theme="dark"] .response-box {
+      background: rgba(25, 25, 40, 0.9) !important;
+      border-color: var(--border) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    [data-theme="dark"] .feedback-btn {
+      background: rgba(30, 30, 45, 0.9) !important;
+      border-color: var(--border) !important;
+    }
+    
+    [data-theme="dark"] .compat-results {
+      background: rgba(25, 25, 40, 0.8) !important;
+    }
+    
+    [data-theme="dark"] .compat-bar {
+      background: rgba(40, 40, 60, 0.8) !important;
+    }
+    
+    [data-theme="dark"] .warning-content {
+      color: #ffb4a9 !important;
+    }
+
     </style>
   <link rel="stylesheet" href="astro4-enhancements.css">
 </head>
