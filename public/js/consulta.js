@@ -11,7 +11,7 @@ async function hacerConsulta(pregunta, perfil) {
 
 El usuario pregunta: ${pregunta}
 
-IMPORTANTE: Usa lenguaje gender neutro. NO uses "Querido/a", "amigo/a" ni similares. Comienza directamente con "Hola" o ve directo al punto.
+REGLA OBLIGATORIA: Ve directo al grano. NO uses saludos como "Hola", "Querido/a", "Estimado/a", "Amigo/a" ni similares. Comienza directamente con la respuesta o el consejo.
 
 Responde de forma mística pero práctica, en español, máximo 150 palabras. 
 Da consejos concretos basados en su perfil astrológico y numerológico.`;

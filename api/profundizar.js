@@ -29,8 +29,8 @@ export default async function handler(req, res) {
 
   // Gender neutral instruction
   const genderNote = lang === 'es' 
-    ? `Usa lenguaje neutro. Dirígete a ${nombre} en segunda persona sin asumir género.`
-    : `Use gender-neutral language. Address ${nombre} in second person without assuming gender.`;
+    ? `Ve directo al grano SIN saludos (no Hola, Querido, Estimado, Amigo). Dirígete a ${nombre} en segunda persona sin asumir género.`
+    : `Go straight to the point WITHOUT greetings (no Hello, Dear, Friend). Address ${nombre} in second person without assuming gender.`;
 
   // Prompts by tradition
   const prompts = {
