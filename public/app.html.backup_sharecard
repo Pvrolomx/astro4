@@ -226,20 +226,6 @@
     
     /* Share Button */
     .btn-share { width: 100%; padding: 14px; background: white; color: #8b7355; border: 2px solid #c9a96e; border-radius: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
-    .btn-share-card { width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); }
-    .btn-share-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
-    #shareCardContainer { position: fixed; left: -9999px; top: 0; }
-    #shareCard { width: 350px; height: 500px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 24px; padding: 30px; font-family: 'Nunito', sans-serif; color: white; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
-    #shareCard .card-header { text-align: center; }
-    #shareCard .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    #shareCard .card-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; }
-    #shareCard .card-signs { width: 100%; }
-    #shareCard .card-sign { display: flex; align-items: center; padding: 12px 16px; margin: 8px 0; background: rgba(255,255,255,0.1); border-radius: 12px; backdrop-filter: blur(5px); }
-    #shareCard .card-sign-icon { font-size: 1.5rem; margin-right: 12px; }
-    #shareCard .card-sign-text { font-size: 1rem; }
-    #shareCard .card-footer { text-align: center; margin-top: 20px; }
-    #shareCard .card-url { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
-    #shareCard .card-cta { font-size: 0.9rem; color: #ffd700; margin-top: 8px; }
     
     /* Share Modal */
     .share-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
@@ -446,28 +432,8 @@
 
     </style>
   <link rel="stylesheet" href="astro4-enhancements.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-  <!-- Share Card Container (oculto, para generar imagen) -->
-  <div id="shareCardContainer">
-    <div id="shareCard">
-      <div class="card-header">
-        <div class="card-title">✨ MI PERFIL CÓSMICO ✨</div>
-        <div class="card-name" id="cardName">Usuario</div>
-      </div>
-      <div class="card-signs">
-        <div class="card-sign"><span class="card-sign-icon">☀️</span><span class="card-sign-text" id="cardWestern">-</span></div>
-        <div class="card-sign"><span class="card-sign-icon">🐉</span><span class="card-sign-text" id="cardChinese">-</span></div>
-        <div class="card-sign"><span class="card-sign-icon">🕉️</span><span class="card-sign-text" id="cardVedic">-</span></div>
-        <div class="card-sign"><span class="card-sign-icon">🔢</span><span class="card-sign-text" id="cardNumero">-</span></div>
-      </div>
-      <div class="card-footer">
-        <div class="card-url">astro3-lovat.vercel.app</div>
-        <div class="card-cta">🔮 Descubre tu perfil</div>
-      </div>
-    </div>
-  </div>
   <canvas id="starfield"></canvas>
 
   <div class="container">
@@ -597,7 +563,6 @@
     </div>
 
     <button class="btn-share" onclick="shareResults()" data-i18n="shareBtn">📤 Compartir mi energía de hoy</button>
-    <button class="btn-share-card" onclick="generateShareCard()" data-i18n="shareCardBtn">🖼️ Crear imagen de mi perfil</button>
     
     <!-- Share Modal -->
   <div class="share-modal" id="shareModal">
@@ -644,7 +609,7 @@
         consultTitle: "💎 Consulta con Tu Guía", consultSub: "¿Dudas sobre amor, carrera o dinero?",
         consultPlaceholder: "Escribe tu pregunta...", consultBtn: "✨ Consultar",
         consulting: "🔮 Consultando...", anotherBtn: "🔄 Otra Consulta",
-        shareBtn: "📤 Compartir mi energía de hoy", shareCardBtn: "🖼️ Crear imagen de mi perfil", madeWith: "Hecho con ♥ por", privacy: "Privacidad",
+        shareBtn: "📤 Compartir mi energía de hoy", madeWith: "Hecho con ♥ por", privacy: "Privacidad",
         shareTitle: "Compartir mi energía", shareNativeBtn: "Compartir", copyBtn: "Copiar texto", closeBtn: "Cerrar", copied: "¡Copiado!",
         feedbackLabel: "¿Te fue útil esta respuesta?", feedbackThanks: "¡Gracias por tu feedback!",
         compatTitle: "💕 Compatibilidad de Pareja", compatSub: "Descubre tu conexión cósmica", partnerBirth: "Fecha de nacimiento de tu pareja", compatBtn: "💕 Calcular Compatibilidad", compatLabel: "Compatibilidad Total", compatHigh: "Excelente", compatMed: "Buena", compatLow: "Desafiante", selectDate: "Selecciona una fecha",
@@ -666,7 +631,7 @@
         consultTitle: "💎 Consult Your Guide", consultSub: "Questions about love, career or money?",
         consultPlaceholder: "Write your question...", consultBtn: "✨ Consult",
         consulting: "🔮 Consulting...", anotherBtn: "🔄 Another Question",
-        shareBtn: "📤 Share my energy today", shareCardBtn: "🖼️ Create profile image", madeWith: "Made with ♥ by", privacy: "Privacy",
+        shareBtn: "📤 Share my energy today", madeWith: "Made with ♥ by", privacy: "Privacy",
         shareTitle: "Share my energy", shareNativeBtn: "Share", copyBtn: "Copy text", closeBtn: "Close", copied: "Copied!",
         feedbackLabel: "Was this response helpful?", feedbackThanks: "Thanks for your feedback!",
         compatTitle: "💕 Partner Compatibility", compatSub: "Discover your cosmic connection", partnerBirth: "Your partner's birth date", compatBtn: "💕 Calculate Compatibility", compatLabel: "Total Compatibility", compatHigh: "Excellent", compatMed: "Good", compatLow: "Challenging", selectDate: "Select a date",
@@ -888,64 +853,6 @@
         '🔮 My ASTRO4 energy:\n☀️ ' + western.name + ' (' + western.element + ')\n🐉 ' + chinese.animal + ' ' + chinese.element + '\n🕉️ Nakshatra: ' + vedic.nakshatra + '\n🔢 Life Number: ' + numerology.lifeNumber + '\n\n✨ Discover yours: https://astro3-lovat.vercel.app';
     }
     
-    
-    async function generateShareCard() {
-      var t = i18n[currentLang];
-      var btn = document.querySelector('.btn-share-card');
-      btn.textContent = currentLang === 'es' ? '⏳ Generando...' : '⏳ Generating...';
-      btn.disabled = true;
-      
-      // Llenar datos de la card
-      document.getElementById('cardName').textContent = nombre;
-      document.getElementById('cardWestern').textContent = western.name + ' (' + western.element + ')';
-      document.getElementById('cardChinese').textContent = chinese.animal + ' ' + chinese.element;
-      document.getElementById('cardVedic').textContent = 'Nakshatra ' + vedic.nakshatra;
-      document.getElementById('cardNumero').textContent = (currentLang === 'es' ? 'Vida ' : 'Life ') + numerology.lifeNumber;
-      
-      try {
-        var cardEl = document.getElementById('shareCard');
-        var canvas = await html2canvas(cardEl, {
-          scale: 2,
-          backgroundColor: null,
-          logging: false
-        });
-        
-        // Convertir a blob y compartir/descargar
-        canvas.toBlob(async function(blob) {
-          var file = new File([blob], 'mi-perfil-cosmico.png', { type: 'image/png' });
-          
-          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-            try {
-              await navigator.share({
-                files: [file],
-                title: 'Mi Perfil Cósmico - ASTRO4',
-                text: currentLang === 'es' ? 'Descubre tu perfil cósmico' : 'Discover your cosmic profile'
-              });
-            } catch (e) {
-              downloadImage(canvas);
-            }
-          } else {
-            downloadImage(canvas);
-          }
-          
-          btn.textContent = t.shareCardBtn;
-          btn.disabled = false;
-        }, 'image/png');
-      } catch (e) {
-        console.error('Error generando card:', e);
-        btn.textContent = t.shareCardBtn;
-        btn.disabled = false;
-        alert(currentLang === 'es' ? 'Error al generar imagen' : 'Error generating image');
-      }
-    }
-    
-    function downloadImage(canvas) {
-      var link = document.createElement('a');
-      link.download = 'mi-perfil-cosmico.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
-
     function shareResults() {
       document.getElementById('shareModal').classList.add('active');
       if (navigator.share) {

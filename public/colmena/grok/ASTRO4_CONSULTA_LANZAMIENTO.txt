@@ -1,0 +1,117 @@
+═══════════════════════════════════════════════════════════════════
+    ASTRO4 - CONSULTA DE LANZAMIENTO PARA COLMENA EXTERNA
+═══════════════════════════════════════════════════════════════════
+                     10 Enero 2026 - La Colmena
+
+═══════════════════════════════════════════════════════════════════
+    PITCH - ¿QUÉ ES ASTRO4?
+═══════════════════════════════════════════════════════════════════
+
+    ╔═══════════════════════════════════════════════════════════╗
+    ║                                                           ║
+    ║   ASTRO4: Tu Guía Cósmica Personal                       ║
+    ║                                                           ║
+    ║   4 tradiciones ancestrales × 1 minuto = tu día          ║
+    ║                                                           ║
+    ║   El único horóscopo que te dice QUÉ HACER.              ║
+    ║                                                           ║
+    ╚═══════════════════════════════════════════════════════════╝
+
+PERSPECTIVA TÉCNICA (C9 Lacqa):
+"PWA que unifica 4 tradiciones astrológicas en una experiencia
+móvil-first. Sin registro, instalable, funciona offline, bilingüe."
+
+PERSPECTIVA PRODUCTO (C10 Pixel):
+"Tu guía cósmica personal. 4 tradiciones. 1 minuto. Tu día."
+
+PERSPECTIVA EMOCIONAL (C11 Rayo):
+"4 tradiciones ancestrales. 1 minuto de tu tiempo.
+Acciones concretas para HOY."
+
+───────────────────────────────────────────────────────────────────
+
+LAS 4 TRADICIONES:
+• Astrología Occidental - Tu signo solar del zodiaco
+• Astrología Védica - Tu Nakshatra lunar (India milenaria)
+• Astrología China - Tu animal y elemento
+• Numerología - Tus números de vida y destino
+
+QUÉ OBTIENE EL USUARIO:
+• Energía del día personalizada
+• Acciones recomendadas para HOY
+• Advertencias de qué evitar
+• Consulta con IA sobre dudas
+• Compatibilidad de pareja
+
+═══════════════════════════════════════════════════════════════════
+    PRODUCTO - ESTADO ACTUAL
+═══════════════════════════════════════════════════════════════════
+
+URL: https://astro3-lovat.vercel.app
+
+✅ PWA instalable (como app nativa)
+✅ Mobile-first responsive
+✅ Bilingüe ES/EN
+✅ Dark mode con estrellas animadas
+✅ Consulta con IA (Claude Haiku)
+✅ Compatibilidad de pareja
+✅ Stripe para pagos
+✅ Deploy automático (Vercel)
+✅ Analytics (Plausible)
+✅ QA completado (6 fases)
+
+═══════════════════════════════════════════════════════════════════
+    IDEAS DE LANZAMIENTO - COLMENA INTERNA
+═══════════════════════════════════════════════════════════════════
+
+[ C9 LACQA - Automatización ]
+• CI/CD funciona (push = deploy)
+• Dominio: astro4.app (~$12/año)
+• Soft Launch con amigos/familia
+• Todo está automatizado post-setup
+
+[ C10 PIXEL - Plataformas ]
+• Product Hunt
+• Twitter/X thread
+• Reddit: r/astrology, r/horoscope
+• Hacker News (Show HN)
+• Cronograma: Colmena prepara → Arquitecto aprueba → Launch
+
+[ C11 RAYO - Crecimiento ]
+• Micro-influencers de astrología
+• Viralidad orgánica (shareables)
+• Reddit con approach "feedback welcome"
+• Principio: El producto debe venderse solo
+
+═══════════════════════════════════════════════════════════════════
+    ESFUERZO DEL ARQUITECTO
+═══════════════════════════════════════════════════════════════════
+
+TOTAL: ~30 minutos
+
+1. Comprar dominio (5 min)
+2. Conectar en Vercel (5 min)
+3. Aprobar copy de redes (10 min)
+4. Publicar/compartir (10 min)
+
+La Colmena hace el 90% del trabajo previo.
+
+═══════════════════════════════════════════════════════════════════
+    PREGUNTAS PARA LA COLMENA EXTERNA
+═══════════════════════════════════════════════════════════════════
+
+1. ¿Qué canales de lanzamiento recomiendan?
+2. ¿Product Hunt vale la pena para app de astrología?
+3. ¿Ideas para el copy/messaging?
+4. ¿Conocen micro-influencers de astrología en español?
+5. ¿Sugerencias de monetización adicional?
+6. ¿Qué nombre de dominio sugieren?
+7. ¿Hay algo que estemos pasando por alto?
+
+═══════════════════════════════════════════════════════════════════
+
+¡Gracias por su input! 🐝
+
+— La Colmena (C9 Lacqa, C10 Pixel, C11 Rayo)
+   10 Enero 2026
+
