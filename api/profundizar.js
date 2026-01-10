@@ -1,5 +1,6 @@
 // API endpoint para lecturas profundas personalizadas por tradición
 // Usa Claude Haiku para generar contenido único
+// v2: Lenguaje neutral de género
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,44 +15,58 @@ export default async function handler(req, res) {
       return res.status(500).json({ lectura: 'Error: API key no configurada' });
     }
 
-    // Prompts específicos por tradición
+    // Instrucción de género neutral para todos los prompts
+    const genderNote = {
+      es: `IMPORTANTE: Usa lenguaje de género neutro. Dirígete a ${nombre} en segunda persona (tú/tu) sin asumir género. Evita palabras como "estimado/estimada", "querido/querida". Usa alternativas como "Hola ${nombre}" o simplemente el nombre.`,
+      en: `IMPORTANT: Use gender-neutral language. Address ${nombre} in second person (you/your) without assuming gender. Avoid words that imply gender. Use alternatives like "Hello ${nombre}" or simply the name.`
+    };
+
+    // Prompts específicos por tradición (con instrucción de género)
     const prompts = {
       western: {
         es: `Eres un astrólogo occidental experto. ${nombre} es ${signo} (elemento ${elemento}). 
+${genderNote.es}
 Genera una lectura personal para HOY (${new Date().toLocaleDateString('es-MX')}). 
 Incluye: energía del día, consejo práctico, y una afirmación positiva.
 Máximo 150 palabras. Tono cálido y esperanzador. NO uses clichés de horóscopo de revista.`,
         en: `You are an expert Western astrologer. ${nombre} is ${signo} (${elemento} element).
+${genderNote.en}
 Generate a personal reading for TODAY (${new Date().toLocaleDateString('en-US')}).
 Include: today's energy, practical advice, and a positive affirmation.
 Maximum 150 words. Warm and hopeful tone. NO magazine horoscope clichés.`
       },
       chinese: {
         es: `Eres un maestro de astrología china. ${nombre} nació en año del ${signo} (${elemento}).
+${genderNote.es}
 Genera una lectura personal para HOY basada en el ciclo lunar actual.
 Incluye: flujo de chi, elemento favorable hoy, y acción recomendada.
 Máximo 150 palabras. Tono sabio y equilibrado.`,
         en: `You are a Chinese astrology master. ${nombre} was born in year of ${signo} (${elemento}).
+${genderNote.en}
 Generate a personal reading for TODAY based on current lunar cycle.
 Include: chi flow, favorable element today, and recommended action.
 Maximum 150 words. Wise and balanced tone.`
       },
       vedic: {
         es: `Eres un jyotishi (astrólogo védico) experto. ${nombre} tiene Nakshatra ${signo}.
+${genderNote.es}
 Genera una lectura personal para HOY según la tradición Jyotish.
 Incluye: energía lunar actual, dharma del día, y mantra sugerido.
 Máximo 150 palabras. Tono espiritual pero accesible.`,
         en: `You are an expert jyotishi (Vedic astrologer). ${nombre}'s Nakshatra is ${signo}.
+${genderNote.en}
 Generate a personal reading for TODAY according to Jyotish tradition.
 Include: current lunar energy, today's dharma, and suggested mantra.
 Maximum 150 words. Spiritual but accessible tone.`
       },
       numerology: {
         es: `Eres un numerólogo experto. ${nombre} tiene número de vida ${signo}.
+${genderNote.es}
 Genera una lectura personal para HOY basada en las vibraciones numéricas del día.
 Incluye: número del día personal, sincronicidades a observar, y número de la suerte.
 Máximo 150 palabras. Tono místico pero práctico.`,
         en: `You are an expert numerologist. ${nombre}'s life number is ${signo}.
+${genderNote.en}
 Generate a personal reading for TODAY based on the day's numerical vibrations.
 Include: personal day number, synchronicities to watch, and lucky number.
 Maximum 150 words. Mystical but practical tone.`
