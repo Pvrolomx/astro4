@@ -353,7 +353,7 @@
             <div class="result-today-text" id="resultInsight"></div>
           </div>
           
-          <button class="btn-profundizar" id="btnProfundizar" onclick="profundizarTradicion()">✨ Profundizar con IA</button>
+          <button class="btn-profundizar" id="btnProfundizar" onclick="profundizarTradicion()">✨ Profundizar</button>
           <div class="profundizar-result" id="profundizarResult">
             <div class="profundizar-loading" id="profundizarLoading">Consultando tu guía cósmica...</div>
             <div class="profundizar-text" id="profundizarText"></div>
@@ -378,11 +378,11 @@
       es: {
         timeHint: "Hora aproximada - opcional para mayor precisión",
         tzAuto: "Detectar automáticamente",
-        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver", personalityTitle: "Tu Personalidad", todayTitle: "✨ Hoy Para Ti", profundizarBtn: "✨ Profundizar con IA", profundizarLoading: "Consultando tu guía cósmica..." },
+        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver", personalityTitle: "Tu Personalidad", todayTitle: "✨ Hoy Para Ti", profundizarBtn: "✨ Profundizar", profundizarLoading: "Consultando tu guía cósmica..." },
       en: {
         timeHint: "Approximate time - optional for better accuracy",
         tzAuto: "Detect automatically",
-        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back", personalityTitle: "Your Personality", todayTitle: "✨ Today For You", profundizarBtn: "✨ Deepen with AI", profundizarLoading: "Consulting your cosmic guide..." }
+        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back", personalityTitle: "Your Personality", todayTitle: "✨ Today For You", profundizarBtn: "✨ Deepen", profundizarLoading: "Consulting your cosmic guide..." }
     };
     let currentLang = localStorage.getItem('astro4_lang') || 'es';
     function openModal(type) {
@@ -490,7 +490,7 @@
       }
       
       btn.disabled = false;
-      btn.textContent = currentLang === 'es' ? '✨ Profundizar con IA' : '✨ Deepen with AI';
+      btn.textContent = currentLang === 'es' ? '✨ Profundizar' : '✨ Deepen';
     }
 
     function setLang(lang) {
