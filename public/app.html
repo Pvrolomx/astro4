@@ -267,7 +267,79 @@
     
     footer { text-align: center; padding: 16px; color: var(--text-muted); font-size: 0.8rem; }
     footer a { color: var(--accent); text-decoration: none; }
-  </style>
+  
+    /* === DARK MODE: Secciones adicionales === */
+    [data-theme="dark"] .avoid-section,
+    [data-theme="dark"] .consult-section,
+    [data-theme="dark"] .compatibility-section,
+    [data-theme="dark"] .share-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+    }
+    
+    [data-theme="dark"] .avoid-section {
+      background: rgba(40, 20, 25, 0.8);
+      border-color: rgba(100, 40, 50, 0.5);
+    }
+    
+    [data-theme="dark"] .consult-section,
+    [data-theme="dark"] .compatibility-section {
+      background: rgba(20, 20, 30, 0.85);
+    }
+    
+    [data-theme="dark"] textarea,
+    [data-theme="dark"] input[type="text"],
+    [data-theme="dark"] input[type="date"],
+    [data-theme="dark"] input[type="number"] {
+      background: var(--bg-input) !important;
+      border-color: var(--border) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    [data-theme="dark"] textarea::placeholder,
+    [data-theme="dark"] input::placeholder {
+      color: var(--text-muted) !important;
+    }
+    
+    [data-theme="dark"] .btn-consult,
+    [data-theme="dark"] .btn-compatibility {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%) !important;
+      color: #0a0a0f !important;
+    }
+    
+    [data-theme="dark"] .section-title,
+    [data-theme="dark"] .card-title,
+    [data-theme="dark"] h2, 
+    [data-theme="dark"] h3 {
+      color: var(--text-title) !important;
+    }
+    
+    [data-theme="dark"] .section-subtitle,
+    [data-theme="dark"] p {
+      color: var(--text-secondary);
+    }
+    
+    [data-theme="dark"] .stat-label {
+      color: var(--text-muted);
+    }
+    
+    [data-theme="dark"] .stat-value {
+      color: var(--text-primary);
+    }
+    
+    [data-theme="dark"] .response-box {
+      background: var(--bg-card-alt);
+      border-color: var(--border);
+    }
+    
+    [data-theme="dark"] .feedback-btn {
+      background: var(--bg-input);
+      border-color: var(--border);
+    }
+
+    </style>
   <link rel="stylesheet" href="astro4-enhancements.css">
 </head>
 <body>
