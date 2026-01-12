@@ -691,8 +691,8 @@
       var edad = Math.floor((hoy - nacimiento) / (365.25 * 24 * 60 * 60 * 1000));
       
       // Etapas de vida (formula: 36 - lifeNumber para primera etapa)
-      var ln = lifeNumber > 9 ? (lifeNumber % 10 || 9) : lifeNumber;
-      var primeraEtapaFin = 36 - ln;
+      // Numeros maestros (11, 22, 33) no se reducen
+      var primeraEtapaFin = 36 - lifeNumber;
       var etapas = {
         primera: { inicio: 0, fin: primeraEtapaFin },
         segunda: { inicio: primeraEtapaFin, fin: primeraEtapaFin + 9 },
