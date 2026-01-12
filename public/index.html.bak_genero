@@ -246,14 +246,6 @@
           <input type="text" id="nombre" data-i18n-placeholder="namePlaceholder" placeholder="¿Cómo te llamas?" required>
         </div>
         <div class="form-group">
-          <label data-i18n="genderLabel">Género</label>
-          <select id="genero" required>
-            <option value="f" data-i18n="genderF">Mujer</option>
-            <option value="m" data-i18n="genderM">Hombre</option>
-            <option value="x" data-i18n="genderX">Prefiero no decir</option>
-          </select>
-        </div>
-        <div class="form-group">
           <label data-i18n="birthLabel">Fecha de nacimiento</label>
           <div class="date-row">
             <select id="dia" required><option value="" data-i18n="day">Día</option></select>
@@ -386,11 +378,11 @@
       es: {
         timeHint: "Hora aproximada - opcional para mayor precisión",
         tzAuto: "Detectar automáticamente",
-        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", genderLabel: "Género", genderF: "Mujer", genderM: "Hombre", genderX: "Prefiero no decir", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver", personalityTitle: "Tu Personalidad", todayTitle: "✨ Hoy Para Ti", profundizarBtn: "✨ Profundizar", profundizarLoading: "Consultando tu guía cósmica..." },
+        tzLabel: "Zona horaria de nacimiento", install: "📲 Instala ASTRO4", installBtn: "Instalar", subtitle: "Tu Guía Cósmica Personal", discover: "Descubre tu energía de hoy", traditions: "4 tradiciones ancestrales te guían.", nameLabel: "Tu nombre", namePlaceholder: "¿Cómo te llamas?", birthLabel: "Fecha de nacimiento", day: "Día", month: "Mes", year: "Año", revealBtn: "✨ Revelar mi energía", revealSingle: "✨ Revelar esta energía", western: "Occidental", westernSub: "Zodiaco solar", vedic: "Védico", vedicSub: "Nakshatra lunar", chinese: "Chino", chineseSub: "Animal y elemento", numerology: "Numerología", numerologySub: "Números de vida", madeWith: "Hecho con ♥ por", privacy: "Privacidad", privacyMsg: "ASTRO4 respeta tu privacidad.", months: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], learnMore: "Conoce las tradiciones:", back: "← Volver", personalityTitle: "Tu Personalidad", todayTitle: "✨ Hoy Para Ti", profundizarBtn: "✨ Profundizar", profundizarLoading: "Consultando tu guía cósmica..." },
       en: {
         timeHint: "Approximate time - optional for better accuracy",
         tzAuto: "Detect automatically",
-        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", genderLabel: "Gender", genderF: "Woman", genderM: "Man", genderX: "Prefer not to say", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back", personalityTitle: "Your Personality", todayTitle: "✨ Today For You", profundizarBtn: "✨ Deepen", profundizarLoading: "Consulting your cosmic guide..." }
+        tzLabel: "Birth timezone", install: "📲 Install ASTRO4", installBtn: "Install", subtitle: "Your Personal Cosmic Guide", discover: "Discover your energy today", traditions: "4 ancestral traditions guide you.", nameLabel: "Your name", namePlaceholder: "What's your name?", birthLabel: "Date of birth", day: "Day", month: "Month", year: "Year", revealBtn: "✨ Reveal my energy", revealSingle: "✨ Reveal this energy", western: "Western", westernSub: "Solar zodiac", vedic: "Vedic", vedicSub: "Lunar nakshatra", chinese: "Chinese", chineseSub: "Animal & element", numerology: "Numerology", numerologySub: "Life numbers", madeWith: "Made with ♥ by", privacy: "Privacy", privacyMsg: "ASTRO4 respects your privacy.", months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], learnMore: "Learn about traditions:", back: "← Back", personalityTitle: "Your Personality", todayTitle: "✨ Today For You", profundizarBtn: "✨ Deepen", profundizarLoading: "Consulting your cosmic guide..." }
     };
     let currentLang = localStorage.getItem('astro4_lang') || 'es';
     function openModal(type) {
@@ -522,7 +514,7 @@
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
     function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then((result) => { if (result.outcome === 'accepted') { document.getElementById('installBanner').style.display = 'none'; } deferredPrompt = null; }); } else { alert(currentLang === 'es' ? 'Para instalar:\n1. Toca el menú ⋮\n2. Selecciona "Añadir a pantalla de inicio"' : 'To install:\n1. Tap menu ⋮\n2. Select "Add to Home Screen"'); } }
     if (window.matchMedia('(display-mode: standalone)').matches) { document.getElementById('installBanner').style.display = 'none'; }
-    document.getElementById('onboarding-form').addEventListener('submit', function(e) { e.preventDefault(); var nombre = document.getElementById('nombre').value; var dia = document.getElementById('dia').value; var mes = document.getElementById('mes').value; var anio = document.getElementById('anio').value; if(mes.length === 1) mes = '0' + mes; if(dia.length === 1) dia = '0' + dia; var fecha = anio + '-' + mes + '-' + dia; var hora = document.getElementById('hora').value || '12:00'; var tz = document.getElementById('timezone').value; if(tz === 'auto') tz = (-new Date().getTimezoneOffset()/60).toString(); var genero = document.getElementById('genero').value; window.location.href = 'app.html?nombre=' + encodeURIComponent(nombre) + '&fecha=' + fecha + '&hora=' + hora + '&tz=' + tz + '&genero=' + genero + '&lang=' + currentLang; });
+    document.getElementById('onboarding-form').addEventListener('submit', function(e) { e.preventDefault(); var nombre = document.getElementById('nombre').value; var dia = document.getElementById('dia').value; var mes = document.getElementById('mes').value; var anio = document.getElementById('anio').value; if(mes.length === 1) mes = '0' + mes; if(dia.length === 1) dia = '0' + dia; var fecha = anio + '-' + mes + '-' + dia; var hora = document.getElementById('hora').value || '12:00'; var tz = document.getElementById('timezone').value; if(tz === 'auto') tz = (-new Date().getTimezoneOffset()/60).toString(); window.location.href = 'app.html?nombre=' + encodeURIComponent(nombre) + '&fecha=' + fecha + '&hora=' + hora + '&tz=' + tz + '&lang=' + currentLang; });
   
     // Register Service Worker
     if ('serviceWorker' in navigator) {
@@ -537,13 +529,11 @@
     // ===== PERSISTENCIA USUARIO (Tarea 2.1) =====
     function saveUserData() {
       const nombre = document.getElementById('nombre').value;
-      const genero = document.getElementById('genero').value;
       const dia = document.getElementById('dia').value;
       const mes = document.getElementById('mes').value;
       const anio = document.getElementById('anio').value;
       
       if (nombre) localStorage.setItem('astro4_name', nombre);
-      if (genero) localStorage.setItem('astro4_genero', genero);
       if (dia && mes && anio) {
         var hora = document.getElementById('hora').value || '12:00';
         var tz = document.getElementById('timezone').value;
@@ -557,11 +547,6 @@
       const savedName = localStorage.getItem('astro4_name');
       if (savedName) {
         document.getElementById('nombre').value = savedName;
-      }
-      // Cargar género
-      const savedGenero = localStorage.getItem('astro4_genero');
-      if (savedGenero) {
-        document.getElementById('genero').value = savedGenero;
       }
       
       // Cargar fecha
@@ -582,7 +567,6 @@
       
       // Event listeners para guardar
       document.getElementById('nombre').addEventListener('change', saveUserData);
-      document.getElementById('genero').addEventListener('change', saveUserData);
       document.getElementById('dia').addEventListener('change', saveUserData);
       document.getElementById('mes').addEventListener('change', saveUserData);
       document.getElementById('anio').addEventListener('change', saveUserData);

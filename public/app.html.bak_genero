@@ -682,126 +682,6 @@
       }
     };
     
-
-    // ========== FUNCIONES V2 CONSULTA ==========
-    
-    function calcularDatosNumerologia(fechaNacimiento, lifeNumber) {
-      var hoy = new Date();
-      var nacimiento = new Date(fechaNacimiento);
-      var edad = Math.floor((hoy - nacimiento) / (365.25 * 24 * 60 * 60 * 1000));
-      
-      // Etapas de vida (formula: 36 - lifeNumber para primera etapa)
-      var ln = lifeNumber > 9 ? (lifeNumber % 10 || 9) : lifeNumber;
-      var primeraEtapaFin = 36 - ln;
-      var etapas = {
-        primera: { inicio: 0, fin: primeraEtapaFin },
-        segunda: { inicio: primeraEtapaFin, fin: primeraEtapaFin + 9 },
-        tercera: { inicio: primeraEtapaFin + 9, fin: primeraEtapaFin + 18 },
-        cuarta: { inicio: primeraEtapaFin + 18, fin: null }
-      };
-      
-      var etapaActual = 1;
-      if (edad >= etapas.cuarta.inicio) etapaActual = 4;
-      else if (edad >= etapas.tercera.inicio) etapaActual = 3;
-      else if (edad >= etapas.segunda.inicio) etapaActual = 2;
-      
-      // Ano personal
-      var mesNac = nacimiento.getMonth() + 1;
-      var diaNac = nacimiento.getDate();
-      var anoActual = hoy.getFullYear();
-      var anoPersonal = reducirNum(mesNac + diaNac + reducirNum(anoActual));
-      
-      return {
-        edad: edad,
-        etapaActual: etapaActual,
-        etapas: etapas,
-        anoPersonal: anoPersonal,
-        proximaEtapa: etapaActual < 4 ? etapas[Object.keys(etapas)[etapaActual]].inicio - edad : null,
-        edadInicioEtapa: etapas[Object.keys(etapas)[etapaActual-1]].inicio
-      };
-    }
-    
-    function reducirNum(n) {
-      while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
-        n = String(n).split('').reduce(function(a,b) { return a + parseInt(b); }, 0);
-      }
-      return n;
-    }
-    
-    function getWesternQualities(signName, lang) {
-      var qualities = {
-        'Aries': { es: 'iniciador, valiente, impulsivo, lider natural', en: 'initiator, brave, impulsive, natural leader' },
-        'Taurus': { es: 'estable, sensual, persistente, leal', en: 'stable, sensual, persistent, loyal' },
-        'Tauro': { es: 'estable, sensual, persistente, leal', en: 'stable, sensual, persistent, loyal' },
-        'Gemini': { es: 'comunicador, curioso, adaptable, mental', en: 'communicator, curious, adaptable, mental' },
-        'Géminis': { es: 'comunicador, curioso, adaptable, mental', en: 'communicator, curious, adaptable, mental' },
-        'Cancer': { es: 'protector, intuitivo, emocional, nutritivo', en: 'protective, intuitive, emotional, nurturing' },
-        'Cáncer': { es: 'protector, intuitivo, emocional, nutritivo', en: 'protective, intuitive, emotional, nurturing' },
-        'Leo': { es: 'expresivo, generoso, dramatico, lider', en: 'expressive, generous, dramatic, leader' },
-        'Virgo': { es: 'analitico, servicial, perfeccionista, practico', en: 'analytical, helpful, perfectionist, practical' },
-        'Libra': { es: 'diplomatico, estetico, equilibrado, social', en: 'diplomatic, aesthetic, balanced, social' },
-        'Scorpio': { es: 'intenso, transformador, investigador, profundo', en: 'intense, transformative, investigator, deep' },
-        'Escorpio': { es: 'intenso, transformador, investigador, profundo', en: 'intense, transformative, investigator, deep' },
-        'Sagittarius': { es: 'explorador, filosofico, optimista, libre', en: 'explorer, philosophical, optimistic, free' },
-        'Sagitario': { es: 'explorador, filosofico, optimista, libre', en: 'explorer, philosophical, optimistic, free' },
-        'Capricorn': { es: 'ambicioso, estructurado, responsable, resistente', en: 'ambitious, structured, responsible, resilient' },
-        'Capricornio': { es: 'ambicioso, estructurado, responsable, resistente', en: 'ambitious, structured, responsible, resilient' },
-        'Aquarius': { es: 'innovador, humanitario, independiente, original', en: 'innovative, humanitarian, independent, original' },
-        'Acuario': { es: 'innovador, humanitario, independiente, original', en: 'innovative, humanitarian, independent, original' },
-        'Pisces': { es: 'empatico, artistico, intuitivo, sonador', en: 'empathic, artistic, intuitive, dreamer' },
-        'Piscis': { es: 'empatico, artistico, intuitivo, sonador', en: 'empathic, artistic, intuitive, dreamer' }
-      };
-      var q = qualities[signName];
-      return q ? q[lang] || q.es : '';
-    }
-    
-    function getChineseQualities(animal, element, lang) {
-      var animals = {
-        'Rata': { es: 'ingenioso, adaptable, encantador', en: 'ingenious, adaptable, charming' },
-        'Rat': { es: 'ingenioso, adaptable, encantador', en: 'ingenious, adaptable, charming' },
-        'Buey': { es: 'trabajador, confiable, determinado', en: 'hardworking, reliable, determined' },
-        'Ox': { es: 'trabajador, confiable, determinado', en: 'hardworking, reliable, determined' },
-        'Tigre': { es: 'valiente, competitivo, impredecible', en: 'brave, competitive, unpredictable' },
-        'Tiger': { es: 'valiente, competitivo, impredecible', en: 'brave, competitive, unpredictable' },
-        'Conejo': { es: 'gentil, elegante, alerta', en: 'gentle, elegant, alert' },
-        'Rabbit': { es: 'gentil, elegante, alerta', en: 'gentle, elegant, alert' },
-        'Dragón': { es: 'confiado, inteligente, entusiasta', en: 'confident, intelligent, enthusiastic' },
-        'Dragon': { es: 'confiado, inteligente, entusiasta', en: 'confident, intelligent, enthusiastic' },
-        'Serpiente': { es: 'enigmatico, intuitivo, sabio', en: 'enigmatic, intuitive, wise' },
-        'Snake': { es: 'enigmatico, intuitivo, sabio', en: 'enigmatic, intuitive, wise' },
-        'Caballo': { es: 'energetico, libre, impaciente', en: 'energetic, free, impatient' },
-        'Horse': { es: 'energetico, libre, impaciente', en: 'energetic, free, impatient' },
-        'Cabra': { es: 'creativo, amable, dependiente', en: 'creative, kind, dependent' },
-        'Goat': { es: 'creativo, amable, dependiente', en: 'creative, kind, dependent' },
-        'Mono': { es: 'ingenioso, curioso, jugueton', en: 'ingenious, curious, playful' },
-        'Monkey': { es: 'ingenioso, curioso, jugueton', en: 'ingenious, curious, playful' },
-        'Gallo': { es: 'observador, trabajador, valiente', en: 'observant, hardworking, brave' },
-        'Rooster': { es: 'observador, trabajador, valiente', en: 'observant, hardworking, brave' },
-        'Perro': { es: 'leal, honesto, prudente', en: 'loyal, honest, prudent' },
-        'Dog': { es: 'leal, honesto, prudente', en: 'loyal, honest, prudent' },
-        'Cerdo': { es: 'compasivo, generoso, diligente', en: 'compassionate, generous, diligent' },
-        'Pig': { es: 'compasivo, generoso, diligente', en: 'compassionate, generous, diligent' }
-      };
-      var elements = {
-        'Madera': { es: 'crecimiento y flexibilidad', en: 'growth and flexibility' },
-        'Wood': { es: 'crecimiento y flexibilidad', en: 'growth and flexibility' },
-        'Fuego': { es: 'pasion y accion', en: 'passion and action' },
-        'Fire': { es: 'pasion y accion', en: 'passion and action' },
-        'Tierra': { es: 'estabilidad y practicidad', en: 'stability and practicality' },
-        'Earth': { es: 'estabilidad y practicidad', en: 'stability and practicality' },
-        'Metal': { es: 'precision y determinacion', en: 'precision and determination' },
-        'Agua': { es: 'adaptabilidad y profundidad', en: 'adaptability and depth' },
-        'Water': { es: 'adaptabilidad y profundidad', en: 'adaptability and depth' }
-      };
-      var animalQ = animals[animal];
-      var elemQ = elements[element];
-      var aText = animalQ ? animalQ[lang] || animalQ.es : '';
-      var eText = elemQ ? elemQ[lang] || elemQ.es : element;
-      return aText + ', ' + (lang === 'es' ? 'con energia de ' : 'with energy of ') + eText;
-    }
-    
-    // ========== FIN FUNCIONES V2 ==========
-
     var urlParams = new URLSearchParams(window.location.search);
     var nombre = urlParams.get('nombre');
     // Guardar en localStorage para persistencia (Tarea 2.1)
@@ -810,8 +690,6 @@
     var horaStr = urlParams.get('hora') || '12:00';
     var tzOffset = parseFloat(urlParams.get('tz')) || (-new Date().getTimezoneOffset()/60);
     var currentLang = urlParams.get('lang') || localStorage.getItem('astro4_lang') || 'es';
-    var genero = urlParams.get('genero') || localStorage.getItem('astro4_genero') || 'x';
-    if (genero) localStorage.setItem('astro4_genero', genero);
     
     if (!nombre || !fechaStr) { window.location.href = 'index.html'; }
     // Guardar fecha en localStorage (Tarea 2.1)
@@ -950,8 +828,7 @@
         personalDay: numerology.personalDay
       };
       
-      var nombreUsuario = nombre;
-      var generoUsuario = genero || 'x';
+      var nombreUsuario = localStorage.getItem('astro4_nombre') || '';
       var hoy = new Date();
       var fechaHoy = currentLang === 'es' ? 
         hoy.toLocaleDateString('es-ES', {weekday: 'long', day: 'numeric', month: 'long'}) :
@@ -963,58 +840,19 @@
       };
       var dayMeaning = dayMeanings[currentLang][perfil.personalDay] || '';
       
-      // Calculos V2
-      var datosNum = calcularDatosNumerologia(birthDate, numerology.lifeNumber);
-      var westernQual = getWesternQualities(western.name, currentLang);
-      var chineseQual = getChineseQualities(chinese.animal, chinese.element, currentLang);
-      var saludoGenero = generoUsuario === 'f' ? (currentLang === 'es' ? 'Querida' : 'Dear') : 
-                         (generoUsuario === 'm' ? (currentLang === 'es' ? 'Querido' : 'Dear') : '');
-      var generoTexto = generoUsuario === 'f' ? (currentLang === 'es' ? 'mujer' : 'woman') :
-                        (generoUsuario === 'm' ? (currentLang === 'es' ? 'hombre' : 'man') : 
-                        (currentLang === 'es' ? 'genero no especificado' : 'gender not specified'));
-      
       var promptText = currentLang === 'es' ? 
-        'Responde en ESPAÑOL. ' +
-        'USUARIO: ' + nombreUsuario + ' (' + generoTexto + ', ' + datosNum.edad + ' años). ' +
+        'Responde en ESPAÑOL a ' + nombreUsuario + '. ' +
         'FECHA: ' + fechaHoy + '. ' +
-        '[PERFIL ENERGÉTICO - USA CUALIDADES NO NOMBRES: ' +
-        'Occidental: ' + westernQual + ', ' +
-        'Chino: ' + chineseQual + ', ' +
-        'Nakshatra: ' + perfil.vedic + ', ' +
-        'Número Vida: ' + perfil.lifeNumber + ' (' + perfil.lifeMeaning + '), ' +
-        'Día Personal: ' + perfil.personalDay + ' (' + dayMeaning + '), ' +
-        'Año Personal: ' + datosNum.anoPersonal + ', ' +
-        'Etapa de Vida: ' + datosNum.etapaActual + ' de 4 (inició a los ' + datosNum.edadInicioEtapa + ')] ' +
+        'Eres un guía espiritual sabio y cálido. ' +
+        '[CONTEXTO INTERNO - NO MENCIONAR: ' + nombreUsuario + ' es ' + perfil.western + ', ' + perfil.chinese + ', Nakshatra ' + perfil.vedic + ', Vida ' + perfil.lifeNumber + ', Día ' + perfil.personalDay + '=' + dayMeaning + '] ' +
         'PREGUNTA: "' + pregunta + '". ' +
-        'INSTRUCCIONES: ' +
-        '1.Inicia con ' + (saludoGenero ? saludoGenero + ' ' + nombreUsuario : nombreUsuario) + '. ' +
-        '2.Responde en 5-7 oraciones sustanciales. ' +
-        '3.NO menciones nombres de signos, animales o nakshatras. SI menciona las CUALIDADES (ej: tu naturaleza intensa, tu energía rápida). ' +
-        '4.Si la pregunta es sobre fechas o etapas, USA LOS NÚMEROS del perfil. ' +
-        '5.Da al menos UN consejo específico y práctico para HOY. ' +
-        '6.Tono: sabio pero directo, no vago ni poético. ' +
-        '7.El usuario debe sentir que le hablas A ÉL/ELLA específicamente, no a un signo.' :
-        'Respond in ENGLISH. ' +
-        'USER: ' + nombreUsuario + ' (' + generoTexto + ', ' + datosNum.edad + ' years old). ' +
+        'INSTRUCCIONES: 1.Dirígete a ' + nombreUsuario + ' por su nombre. 2.Responde en 4-5 oraciones. 3.NO menciones signos, animales, números ni sistemas astrológicos. 4.Da un consejo profundo y práctico para HOY. 5.Tono cálido como abuelo sabio que conoce bien a ' + nombreUsuario + '. 6.USA LENGUAJE NEUTRO (evita él/ella, usa tú).' :
+        'Respond in ENGLISH to ' + nombreUsuario + '. ' +
         'DATE: ' + fechaHoy + '. ' +
-        '[ENERGY PROFILE - USE QUALITIES NOT NAMES: ' +
-        'Western: ' + westernQual + ', ' +
-        'Chinese: ' + chineseQual + ', ' +
-        'Nakshatra: ' + perfil.vedic + ', ' +
-        'Life Number: ' + perfil.lifeNumber + ' (' + perfil.lifeMeaning + '), ' +
-        'Personal Day: ' + perfil.personalDay + ' (' + dayMeaning + '), ' +
-        'Personal Year: ' + datosNum.anoPersonal + ', ' +
-        'Life Stage: ' + datosNum.etapaActual + ' of 4 (started at age ' + datosNum.edadInicioEtapa + ')] ' +
+        'You are a wise and warm spiritual guide. ' +
+        '[INTERNAL CONTEXT - DO NOT MENTION: ' + nombreUsuario + ' is ' + perfil.western + ', ' + perfil.chinese + ', Nakshatra ' + perfil.vedic + ', Life ' + perfil.lifeNumber + ', Day ' + perfil.personalDay + '=' + dayMeaning + '] ' +
         'QUESTION: "' + pregunta + '". ' +
-        'INSTRUCTIONS: ' +
-        '1.Start with ' + (saludoGenero ? saludoGenero + ' ' + nombreUsuario : nombreUsuario) + '. ' +
-        '2.Respond in 5-7 substantial sentences. ' +
-        '3.DO NOT mention sign names, animals or nakshatras. DO mention QUALITIES (e.g., your intense nature, your quick energy). ' +
-        '4.If the question is about dates or stages, USE THE NUMBERS from the profile. ' +
-        '5.Give at least ONE specific and practical advice for TODAY. ' +
-        '6.Tone: wise but direct, not vague or poetic. ' +
-        '7.The user should feel you are speaking TO THEM specifically, not to a sign.';
-
+        'INSTRUCTIONS: 1.Address ' + nombreUsuario + ' by name. 2.Respond in 4-5 sentences. 3.DO NOT mention signs, animals, numbers or astrological systems. 4.Give deep and practical advice for TODAY. 5.Warm tone like a wise grandparent who knows ' + nombreUsuario + ' well. 6.USE NEUTRAL LANGUAGE (avoid he/she, use you).';
       
       try {
         var response = await fetch('/api/consulta', {
