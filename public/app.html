@@ -444,9 +444,383 @@
       color: #ffb4a9 !important;
     }
 
-    </style>
+    
+/* Badge de créditos */
+.credits-badge {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.credits-badge.free {
+  background: rgba(255,255,255,0.1);
+  color: #aaa;
+}
+
+.credits-badge.pack {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.credits-badge.premium {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(240, 147, 251, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(240, 147, 251, 0.8); }
+}
+
+/* Modal de upgrade */
+.upgrade-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.upgrade-modal.show {
+  display: flex;
+}
+
+.upgrade-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.upgrade-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.upgrade-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.upgrade-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.upgrade-subtitle {
+  color: #888;
+  margin-bottom: 30px;
+}
+
+/* Opciones de compra */
+.purchase-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.purchase-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.purchase-card:hover {
+  border-color: #e94560;
+  transform: translateY(-2px);
+}
+
+.purchase-card.popular {
+  border-color: #e94560;
+  position: relative;
+}
+
+.purchase-card.popular::before {
+  content: '⭐ POPULAR';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e94560;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.purchase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.purchase-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.purchase-price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e94560;
+}
+
+.purchase-price span {
+  font-size: 14px;
+  color: #888;
+}
+
+.purchase-features {
+  text-align: left;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.purchase-features li {
+  margin: 5px 0;
+  list-style: none;
+}
+
+.purchase-features li::before {
+  content: '✓ ';
+  color: #4ecdc4;
+}
+
+.purchase-btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.purchase-btn.primary {
+  background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+  color: white;
+}
+
+.purchase-btn.primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+}
+
+.purchase-btn.secondary {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+/* Loader de pago */
+.payment-loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.payment-loader .spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: #e94560;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.payment-loader p {
+  color: white;
+  margin-top: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Paywall blur */
+.content-locked {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.paywall-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.paywall-cta {
+  background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .upgrade-content {
+    padding: 25px;
+    margin: 20px;
+  }
+  
+  .purchase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+
+  
+/* Pricing Cards */
+.pricing-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pricing-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 24px;
+  width: 200px;
+  position: relative;
+}
+
+.pricing-card.premium {
+  border-color: #f093fb;
+  background: linear-gradient(135deg, rgba(240,147,251,0.1), rgba(245,87,108,0.1));
+}
+
+.pricing-popular {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background: #667eea;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pricing-card h3 {
+  color: white;
+  margin-bottom: 8px;
+}
+
+.pricing-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #c9a96e;
+  margin-bottom: 8px;
+}
+
+.pricing-price span {
+  font-size: 14px;
+  color: #888;
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  text-align: left;
+}
+
+.pricing-features li {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.pricing-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transition: transform 0.2s;
+}
+
+.pricing-btn:hover {
+  transform: translateY(-2px);
+}
+
+.pricing-btn.premium {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+/* Hide/Show Upgrade Modal */
+.upgrade-modal {
+  display: none;
+}
+
+.upgrade-modal.show {
+  display: flex;
+}
+
+
+  </style>
   <link rel="stylesheet" href="astro4-enhancements.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
   <!-- Share Card Container (oculto, para generar imagen) -->
@@ -626,6 +1000,46 @@
     <span data-i18n="disclaimerText">ASTRO4 usa interpretaciones de tradiciones ancestrales: Jyotish védico (Brihat Parashara Hora Shastra), astrología occidental clásica, y numerología tradicional. Esta herramienta es de carácter educativo e interpretativo. No sustituye la consulta con un astrólogo profesional.</span>
     <div class="sources" data-i18n="disclaimerSources">Fuentes: textos clásicos védicos, tradición helenística, numerología caldea y pitagórica.</div>
   </div>
+  
+  <!-- Payment UI - Credits Badge -->
+  <div class="credits-badge free" id="creditsBadge" style="display:none;">
+    <span id="creditsCount">0</span> consultas
+  </div>
+
+  <!-- Payment UI - Upgrade Modal -->
+  <div class="upgrade-modal" id="upgradeModal">
+    <div class="upgrade-content">
+      <button class="upgrade-close" onclick="hideUpgradeModal()">&times;</button>
+      <h2>🔮 Desbloquea más consultas</h2>
+      <p style="color:#aaa;margin-bottom:24px;">Elige el plan que mejor se adapte a ti</p>
+      
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <div class="pricing-popular">Popular</div>
+          <h3>Pack 10</h3>
+          <div class="pricing-price">$29 <span>MXN</span></div>
+          <p>10 consultas con tu guía</p>
+          <ul class="pricing-features">
+            <li>✓ Sin vencimiento</li>
+            <li>✓ Pago único</li>
+          </ul>
+          <button class="pricing-btn" onclick="checkoutPack10()">Comprar Pack</button>
+        </div>
+        
+        <div class="pricing-card premium">
+          <h3>Premium</h3>
+          <div class="pricing-price">$49 <span>MXN/mes</span></div>
+          <p>Consultas ilimitadas</p>
+          <ul class="pricing-features">
+            <li>✓ Sin límites</li>
+            <li>✓ Cancela cuando quieras</li>
+          </ul>
+          <button class="pricing-btn premium" onclick="checkoutPremium()">Ser Premium</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer>
       <p>🐝 <span data-i18n="madeWith">Hecho con ♥ por</span> <a href="#">Colmena (C6)</a> · 2026</p>
       <p><a href="#" onclick="showPrivacy()" data-i18n="privacy">Privacidad</a></p>
@@ -1617,6 +2031,36 @@
         init();
       }
     })();
+  </script>
+  <script src="js/stripe-checkout.js">
+// Payment UI Functions
+function showUpgradeModal() {
+  document.getElementById('upgradeModal').classList.add('show');
+}
+
+function hideUpgradeModal() {
+  document.getElementById('upgradeModal').classList.remove('show');
+}
+
+function updateCreditsUI() {
+  const badge = document.getElementById('creditsBadge');
+  const count = document.getElementById('creditsCount');
+  if (typeof getCredits === 'function') {
+    const credits = getCredits();
+    if (credits && (credits.pack > 0 || credits.premium)) {
+      badge.style.display = 'block';
+      badge.className = credits.premium ? 'credits-badge premium' : 'credits-badge pack';
+      count.textContent = credits.premium ? '∞' : credits.pack;
+    }
+  }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof initStripe === 'function') initStripe();
+  updateCreditsUI();
+});
+
   </script>
 </body>
 </html>/* Vercel Pro test - auto deploy */
