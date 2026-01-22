@@ -7,12 +7,12 @@
 
 const STRIPE_CONFIG = {
   // Publishable key (pk_test para pruebas, pk_live para producción)
-  publishableKey: 'pk_test_51SceBWPG43KliMIN8CCrVbsxoryl7hhPAJNs2r4JEk2HZ1tdUsbwGGW5T8ppvjevNoPMja4r3Tdl9mNGC2lkyF6V00TjFTKofG',
+  publishableKey: 'pk_live_51SceBWPG43KliMINorbpT7H9ggnpju2C7OXgvdYdwaCrq5vq12c5AZv7PqDhR4XedTupwhONPhmIaqxi9pvhNljn00cvXoh4zL',
   
   // Price IDs de los productos (crear en Stripe Dashboard)
   prices: {
-    pack10: 'price_1SnkMjPG43KliMINX3cKTTms',      // $29 MXN one-time
-    premiumMonthly: 'price_REEMPLAZAR_PREMIUM' // $49 MXN/month
+    pack10: 'price_1SsVusPG43KliMINvkZ9f1Wo',      // $29 MXN one-time
+    premiumMonthly: 'price_1SsVwKPG43KliMINIuhvF9Fv' // $49 MXN/month
   },
   
   // URLs de retorno
