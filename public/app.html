@@ -158,7 +158,6 @@
     .energy-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0ebe3; }
     .energy-item:last-child { border-bottom: none; }
     .energy-item .icon { font-size: 1.5rem; margin-right: 12px; }
-    .energy-item .icon-img { width: 32px; height: 32px; border-radius: 6px; margin-right: 12px; object-fit: cover; filter: contrast(1.3) saturate(1.35) brightness(1.05); box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
     .energy-item .label { font-size: 0.75rem; color: var(--text-muted); }
     .energy-item .value { font-size: 0.95rem; color: var(--text-title); font-weight: 500; }
     
@@ -861,11 +860,11 @@
     </div>
     
     <div class="card">
-      <h3 data-i18n="yourEnergy">Tu Energía Hoy</h3>
-      <div class="energy-item"><img class="icon-img" src="Sol.jpeg" alt="Occidental"><div><div class="label" data-i18n="western">Occidental</div><div class="value" id="western-sign">...</div></div></div>
-      <div class="energy-item"><img class="icon-img" src="Dragon.jpeg" alt="Chino"><div><div class="label" data-i18n="chinese">Chino</div><div class="value" id="chinese-sign">...</div></div></div>
-      <div class="energy-item"><img class="icon-img" src="Luna.jpeg" alt="Védico"><div><div class="label" data-i18n="vedic">Védico</div><div class="value" id="vedic-sign">...</div></div></div>
-      <div class="energy-item"><img class="icon-img" src="Numeros.jpeg" alt="Numerología"><div><div class="label" data-i18n="numerology">Numerología</div><div class="value" id="numerology">...</div></div></div>
+      <h3 data-i18n="yourEnergy">☀️ Tu Energía Hoy</h3>
+      <div class="energy-item"><span class="icon">☀️</span><div><div class="label" data-i18n="western">Occidental</div><div class="value" id="western-sign">...</div></div></div>
+      <div class="energy-item"><span class="icon">🐉</span><div><div class="label" data-i18n="chinese">Chino</div><div class="value" id="chinese-sign">...</div></div></div>
+      <div class="energy-item"><span class="icon">🕉️</span><div><div class="label" data-i18n="vedic">Védico</div><div class="value" id="vedic-sign">...</div></div></div>
+      <div class="energy-item"><span class="icon">🔢</span><div><div class="label" data-i18n="numerology">Numerología</div><div class="value" id="numerology">...</div></div></div>
     </div>
     
     <div class="card">
@@ -883,7 +882,7 @@
     <div class="card">
       <div class="extras-grid">
         <div class="extra-item"><span class="icon">🎨</span><div class="label" data-i18n="color">Color</div><div class="value" id="lucky-color">...</div></div>
-        <div class="extra-item"><img class="icon-img" src="Numeros.jpeg" alt="Numerología"><div class="label" data-i18n="number">Número</div><div class="value" id="lucky-number">...</div></div>
+        <div class="extra-item"><span class="icon">🔢</span><div class="label" data-i18n="number">Número</div><div class="value" id="lucky-number">...</div></div>
         <div class="extra-item"><span class="icon">⏰</span><div class="label" data-i18n="powerHour">Hora de Poder</div><div class="value" id="power-hour">...</div></div>
       </div>
     </div>
@@ -923,7 +922,7 @@
           <div class="label" data-i18n="compatLabel">Compatibilidad Total</div>
         </div>
         <div class="compat-detail">
-          <img class="icon-img" src="Sol.jpeg" alt="Occidental">
+          <span class="icon">☀️</span>
           <div class="info">
             <div class="tradition" data-i18n="western">Occidental</div>
             <div class="match" id="compatWestern">--</div>
@@ -931,7 +930,7 @@
           </div>
         </div>
         <div class="compat-detail">
-          <img class="icon-img" src="Dragon.jpeg" alt="Chino">
+          <span class="icon">🐉</span>
           <div class="info">
             <div class="tradition" data-i18n="chinese">Chino</div>
             <div class="match" id="compatChinese">--</div>
@@ -939,7 +938,7 @@
           </div>
         </div>
         <div class="compat-detail">
-          <img class="icon-img" src="Luna.jpeg" alt="Védico">
+          <span class="icon">🕉️</span>
           <div class="info">
             <div class="tradition" data-i18n="vedic">Védico</div>
             <div class="match" id="compatVedic">--</div>
@@ -947,7 +946,7 @@
           </div>
         </div>
         <div class="compat-detail">
-          <img class="icon-img" src="Numeros.jpeg" alt="Numerología">
+          <span class="icon">🔢</span>
           <div class="info">
             <div class="tradition" data-i18n="numerology">Numerología</div>
             <div class="match" id="compatNumero">--</div>
@@ -1050,7 +1049,7 @@
   <script>
     const i18n = {
       es: {
-        hello: "Hola", yourEnergy: "Tu Energía Hoy",
+        hello: "Hola", yourEnergy: "☀️ Tu Energía Hoy",
         western: "Occidental", chinese: "Chino", vedic: "Védico", numerology: "Numerología",
         doToday: "✅ Haz Esto Hoy", avoidToday: "⚠️ Evita Hoy",
         color: "Color", number: "Número", powerHour: "Hora de Poder",
@@ -1072,7 +1071,7 @@
         historyTitle: "📜 Historial de Consultas"
       },
       en: {
-        hello: "Hello", yourEnergy: "Your Energy Today",
+        hello: "Hello", yourEnergy: "☀️ Your Energy Today",
         western: "Western", chinese: "Chinese", vedic: "Vedic", numerology: "Numerology",
         doToday: "✅ Do This Today", avoidToday: "⚠️ Avoid Today",
         color: "Color", number: "Number", powerHour: "Power Hour",
