@@ -1,0 +1,9 @@
+# ASTRO4 - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://astro4.duendes.app/sitemap.xml
+
+# Bloquear rutas de API
+Disallow: /api/
