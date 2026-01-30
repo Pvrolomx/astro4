@@ -297,9 +297,9 @@
         <div class="form-group">
           <label data-i18n="birthLabel">Fecha de nacimiento</label>
           <div class="date-row">
-            <select id="dia" required><option value="" data-i18n="day">Día</option></select>
-            <select id="mes" required><option value="" data-i18n="month">Mes</option></select>
-            <select id="anio" required><option value="" data-i18n="year">Año</option></select>
+            <select id="dia" required><option value="">-</option></select>
+            <select id="mes" required><option value="">-</option></select>
+            <select id="anio" required><option value="">-</option></select>
           </div>
           <div class="time-row">
             <input type="time" id="hora" value="12:00">
@@ -379,9 +379,9 @@
         <div class="form-group">
           <label id="modalBirthLabel">Fecha de nacimiento</label>
           <div class="date-row">
-            <select id="modalDia"><option value="">Día</option></select>
-            <select id="modalMes"><option value="">Mes</option></select>
-            <select id="modalAnio"><option value="">Año</option></select>
+            <select id="modalDia"><option value="">-</option></select>
+            <select id="modalMes"><option value="">-</option></select>
+            <select id="modalAnio"><option value="">-</option></select>
           </div>
         </div>
         <button class="btn-primary" onclick="revealSingle()" id="modalBtn">✨ Revelar esta energía</button>
@@ -550,12 +550,12 @@
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if (i18n[lang][key]) el.placeholder = i18n[lang][key]; });
       updateMonths(); updateModalSelects();
     }
-    function updateMonths() { const mesSelect = document.getElementById('mes'); mesSelect.innerHTML = '<option value="">' + i18n[currentLang].month + '</option>'; i18n[currentLang].months.forEach((m, idx) => { mesSelect.innerHTML += '<option value="' + (idx+1) + '">' + m + '</option>'; }); }
+    function updateMonths() { const mesSelect = document.getElementById('mes'); mesSelect.innerHTML = '<option value="">-</option>'; i18n[currentLang].months.forEach((m, idx) => { mesSelect.innerHTML += '<option value="' + (idx+1) + '">' + m + '</option>'; }); }
     function updateModalSelects() {
       const modalDia = document.getElementById('modalDia'), modalMes = document.getElementById('modalMes'), modalAnio = document.getElementById('modalAnio');
-      modalDia.innerHTML = '<option value="">' + i18n[currentLang].day + '</option>'; for(let i=1; i<=31; i++) { modalDia.innerHTML += '<option value="'+i+'">'+i+'</option>'; }
-      modalMes.innerHTML = '<option value="">' + i18n[currentLang].month + '</option>'; i18n[currentLang].months.forEach((m, idx) => { modalMes.innerHTML += '<option value="' + (idx+1) + '">' + m + '</option>'; });
-      modalAnio.innerHTML = '<option value="">' + i18n[currentLang].year + '</option>'; for(let i=2010; i>=1920; i--) { modalAnio.innerHTML += '<option value="'+i+'">'+i+'</option>'; }
+      modalDia.innerHTML = '<option value="">-</option>'; for(let i=1; i<=31; i++) { modalDia.innerHTML += '<option value="'+i+'">'+i+'</option>'; }
+      modalMes.innerHTML = '<option value="">-</option>'; i18n[currentLang].months.forEach((m, idx) => { modalMes.innerHTML += '<option value="' + (idx+1) + '">' + m + '</option>'; });
+      modalAnio.innerHTML = '<option value="">-</option>'; for(let i=2010; i>=1920; i--) { modalAnio.innerHTML += '<option value="'+i+'">'+i+'</option>'; }
     }
     function showPrivacy() { alert(i18n[currentLang].privacyMsg); }
     function initPage() { const diaSelect = document.getElementById('dia'); for(let i=1; i<=31; i++) { diaSelect.innerHTML += '<option value="'+i+'">'+i+'</option>'; } const anioSelect = document.getElementById('anio'); for(let i=2010; i>=1920; i--) { anioSelect.innerHTML += '<option value="'+i+'">'+i+'</option>'; } setLang(currentLang); }
