@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // Debug 0: Log request info
   const debugInfo = {
     method: req.method,
     hasBody: !!req.body,
@@ -12,7 +11,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Si body es string, parsearlo
     let body = req.body;
     if (typeof body === 'string') {
       body = JSON.parse(body);
@@ -28,6 +26,19 @@ export default async function handler(req, res) {
     if (!apiKey) {
       return res.status(500).json({ respuesta: 'No API key', debug: debugInfo });
     }
+
+    // System prompt con validación de garabatos
+    const systemPrompt = `Eres un guía astrológico y numerológico sabio y empático.
+
+INSTRUCCIONES:
+1. Responde de manera cálida y personalizada basándote en el perfil del usuario
+2. Usa la información astrológica/numerológica proporcionada para dar consejos relevantes
+3. Sé conciso pero significativo
+4. Ofrece perspectivas prácticas y esperanzadoras
+5. No inventes datos que no estén en el perfil
+6. Mantén un tono místico pero accesible
+7. Limita tu respuesta a 3-4 párrafos máximo
+8. Si la pregunta es incoherente, sin sentido, o no es una pregunta real (ej: letras random, texto sin significado como "asdfgh" o "jjjjj"), responde amablemente: "No entendí tu pregunta. ¿Puedes reformularla de forma más clara?" y NO des una lectura astrológica.`;
     
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -39,6 +50,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: 'claude-3-haiku-20240307',
         max_tokens: 500,
+        system: systemPrompt,
         messages: [{ role: 'user', content: prompt || 'hola' }]
       })
     });
@@ -72,4 +84,4 @@ export default async function handler(req, res) {
     });
   }
 }
-// v7
+// v8 - agregado system prompt con validación de garabatos
