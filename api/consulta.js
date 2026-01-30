@@ -1,3 +1,34 @@
+// Función para detectar garabatos/texto sin sentido
+function isGibberish(text) {
+  if (!text || typeof text !== 'string') return true;
+  
+  const cleaned = text.trim().toLowerCase();
+  
+  // 1. Muy corto
+  if (cleaned.length < 3) return true;
+  
+  // 2. Solo espacios o caracteres especiales
+  if (!/[a-záéíóúñ]/i.test(cleaned)) return true;
+  
+  // 3. Caracteres repetidos (aaaa, jjjj, etc)
+  if (/(.)\1{3,}/.test(cleaned)) return true;
+  
+  // 4. Sin vocales (mínimo 1 vocal por cada 6 consonantes)
+  const vowels = (cleaned.match(/[aeiouáéíóú]/gi) || []).length;
+  const consonants = (cleaned.match(/[bcdfghjklmnñpqrstvwxyz]/gi) || []).length;
+  if (consonants > 0 && vowels === 0) return true;
+  if (consonants > 6 && vowels < consonants / 6) return true;
+  
+  // 5. Patrones de teclado común (qwerty, asdf, etc)
+  const keyboardPatterns = /qwert|asdf|zxcv|qazwsx|wasd|hjkl/i;
+  if (keyboardPatterns.test(cleaned)) return true;
+  
+  // 6. Mismo caracter alternando (abab, xyxy)
+  if (/^(.{1,2})\1{2,}$/.test(cleaned)) return true;
+  
+  return false;
+}
+
 export default async function handler(req, res) {
   const debugInfo = {
     method: req.method,
@@ -19,6 +50,14 @@ export default async function handler(req, res) {
     const { prompt } = body;
     debugInfo.prompt = prompt ? prompt.substring(0, 50) : 'NO PROMPT';
     
+    // VALIDACIÓN DE GARABATOS EN JS (antes de llamar API)
+    if (isGibberish(prompt)) {
+      return res.status(200).json({ 
+        respuesta: '🔮 No entendí tu pregunta. ¿Puedes formularla de manera más clara para que pueda guiarte mejor?',
+        debug: { ...debugInfo, rejected: 'gibberish' }
+      });
+    }
+    
     const apiKey = process.env.ANTHROPIC_API_KEY;
     debugInfo.hasApiKey = !!apiKey;
     debugInfo.keyStart = apiKey ? apiKey.substring(0, 10) : 'NO KEY';
@@ -27,7 +66,6 @@ export default async function handler(req, res) {
       return res.status(500).json({ respuesta: 'No API key', debug: debugInfo });
     }
 
-    // System prompt con validación de garabatos
     const systemPrompt = `Eres un guía astrológico y numerológico sabio y empático.
 
 INSTRUCCIONES:
@@ -37,8 +75,7 @@ INSTRUCCIONES:
 4. Ofrece perspectivas prácticas y esperanzadoras
 5. No inventes datos que no estén en el perfil
 6. Mantén un tono místico pero accesible
-7. Limita tu respuesta a 3-4 párrafos máximo
-8. Si la pregunta es incoherente, sin sentido, o no es una pregunta real (ej: letras random, texto sin significado como "asdfgh" o "jjjjj"), responde amablemente: "No entendí tu pregunta. ¿Puedes reformularla de forma más clara?" y NO des una lectura astrológica.`;
+7. Limita tu respuesta a 3-4 párrafos máximo`;
     
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -84,4 +121,4 @@ INSTRUCCIONES:
     });
   }
 }
-// v8 - agregado system prompt con validación de garabatos
+// v9 - validación de garabatos en JS antes de API call
